@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>GDG Kolkata | Where Kolkata Builds What&apos;s Next</title>
+        <title>GDGoc FIEM | Built on Ideas. Driven by Innovation.</title>
         <meta name="description" content="A community where developers learn, build, share ideas, and connect through technology in Kolkata." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -21,7 +21,7 @@ export default function Home() {
         <Hero />
         <AboutPreview />
         <ShowcaseGallery />
-        
+
         {/* Placeholder for the rest of the site to allow scrolling past About Preview */}
         <div className="h-[20vh] bg-[#F3F0E8]" />
       </main>
