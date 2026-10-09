@@ -49,12 +49,12 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex relative z-10 items-center gap-8 text-sm font-medium tracking-wide">
+          <div className="hidden md:flex relative z-10 items-center gap-8 lg:gap-12 text-[13px] font-medium tracking-widest uppercase">
             {NAV_LINKS.map((link) => (
               <Link 
                 key={link.label} 
                 href={link.href} 
-                className="opacity-70 hover:opacity-100 transition-opacity"
+                className="px-2 py-1 opacity-60 hover:opacity-100 transition-opacity"
               >
                 {link.label}
               </Link>
