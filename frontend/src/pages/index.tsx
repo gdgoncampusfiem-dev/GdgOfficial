@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import Head from 'next/head';
-import Lenis from 'lenis';
 
 import { Navbar } from '@/components/navigation/Navbar';
 import { Hero } from '@/components/hero/Hero';
@@ -8,30 +6,6 @@ import { AboutPreview } from '@/components/AboutPreview';
 import { ShowcaseGallery } from '@/components/ShowcaseGallery';
 
 export default function Home() {
-  // Initialize Lenis for smooth scrolling
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      touchMultiplier: 2,
-    });
-
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
-  }, []);
 
   return (
     <>

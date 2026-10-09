@@ -5,10 +5,11 @@ import "@fontsource/josefin-sans/400.css";
 import "@fontsource/josefin-sans/700.css";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { ReactLenis } from 'lenis/react';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <ReactLenis root options={{ duration: 1.2, smoothWheel: true, touchMultiplier: 2 }}>
       {/* Mobile Blocker Screen */}
       <div className="md:hidden fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center">
         <h1 className="text-white font-sans font-extralight tracking-widest uppercase text-sm">
@@ -20,6 +21,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="hidden md:block">
         <Component {...pageProps} />
       </div>
-    </>
+    </ReactLenis>
   );
 }
