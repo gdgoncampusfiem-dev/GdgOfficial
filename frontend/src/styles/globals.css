@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Josefin Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   
   --color-warm-white: #F3F0E8;
@@ -55,5 +55,27 @@ body {
 @keyframes liquid-rim-flow {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
+}
+
+@keyframes foil-shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.text-gdg-shimmer {
+  background: linear-gradient(
+    110deg,
+    #F4F1EA 25%,
+    rgba(66, 133, 244, 0.6) 40%,
+    rgba(234, 67, 53, 0.6) 48%,
+    rgba(251, 188, 5, 0.6) 56%,
+    rgba(52, 168, 83, 0.6) 64%,
+    #F4F1EA 75%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: foil-shimmer 6s linear infinite;
 }
 
