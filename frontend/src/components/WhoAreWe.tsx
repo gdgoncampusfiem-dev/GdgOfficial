@@ -12,7 +12,7 @@ export function WhoAreWe() {
   const containerRef = useRef<HTMLDivElement>(null);
   
   const paragraphText = "We are a collective of engineers, designers, and visionaries dedicated to building a culture where technology meets empathy. We bridge the gap between raw talent and world-class engineering to redefine the digital landscape in Kolkata and beyond.";
-  const chars = paragraphText.split("");
+  const words = paragraphText.split(" ");
   
   // Subtle Parallax for the collage
   const { scrollYProgress } = useScroll({
@@ -25,7 +25,7 @@ export function WhoAreWe() {
   const y3 = useTransform(scrollYProgress, [0, 1], [15, -15]);
 
   return (
-    <div ref={containerRef} className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center w-full">
+    <div ref={containerRef} className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-start w-full pt-8 md:pt-12">
       {/* Left: Text Content */}
       <div className="lg:col-span-5 flex flex-col items-start relative z-40">
         <div className="relative inline-block pb-2 mb-6 pr-8 md:pr-12">
@@ -44,16 +44,17 @@ export function WhoAreWe() {
           />
         </div>
 
-        <p className="text-2xl md:text-3xl lg:text-4xl font-thin italic leading-[1.4] tracking-tight text-[#050505]">
-          {chars.map((char, i) => (
+        <p className="text-2xl md:text-3xl lg:text-4xl font-light italic leading-[1.4] tracking-tight text-[#050505] drop-shadow-sm flex flex-wrap gap-x-[0.25em] gap-y-2">
+          {words.map((word, i) => (
             <motion.span
               key={i}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.01, delay: i * 0.02 + 0.2 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, delay: i * 0.03 + 0.2 }}
+              className="inline-block"
             >
-              {char}
+              {word}
             </motion.span>
           ))}
         </p>

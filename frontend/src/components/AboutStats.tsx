@@ -1,4 +1,4 @@
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 
 const stats = [
@@ -49,29 +49,23 @@ function Counter({ from = 0, to, duration = 2, delay = 0 }: { from?: number; to:
 
 export function AboutStats() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "center center"]
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [1.3, 1]);
 
   return (
     <div ref={ref} className="w-full max-w-6xl mx-auto px-6 md:px-12 pt-16">
-      <div className="flex flex-wrap md:flex-nowrap justify-between items-start w-full gap-12 md:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8">
         {stats.map((stat, index) => (
           <motion.div 
             key={index}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-start"
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.8, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center text-center"
           >
-            <motion.div style={{ scale, transformOrigin: 'left bottom' }} className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tighter leading-none">
-              {stat.prefix}<Counter to={stat.value} delay={index * 0.15} />{stat.suffix}
-            </motion.div>
-            <div className="text-xs md:text-sm font-semibold tracking-widest uppercase opacity-40 -mt-1 md:-mt-2">
+            <div className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tighter leading-none tabular-nums">
+              {stat.prefix}<Counter to={stat.value} delay={0} />{stat.suffix}
+            </div>
+            <div className="text-xs md:text-sm font-semibold tracking-widest uppercase opacity-40 mt-2 md:mt-3">
               {stat.label}
             </div>
           </motion.div>

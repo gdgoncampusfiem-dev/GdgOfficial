@@ -1,6 +1,5 @@
 import { WhoAreWe } from './WhoAreWe';
 import { AboutStats } from './AboutStats';
-import { Marquee } from './Marquee';
 
 export function AboutPreview() {
   return (
@@ -22,9 +21,6 @@ export function AboutPreview() {
       <div className="relative z-10 flex flex-col gap-24 md:gap-32 w-full">
         <WhoAreWe />
         <AboutStats />
-      </div>
-      <div className="relative z-10">
-        <Marquee />
       </div>
     </section>
   );
