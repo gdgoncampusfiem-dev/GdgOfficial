@@ -14,6 +14,7 @@ export function AboutPreview() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-4"
+          style={{ willChange: 'transform, opacity' }}
         >
           <span className="text-xs font-mono tracking-widest uppercase opacity-50">
             01 / Identity
@@ -31,6 +32,7 @@ export function AboutPreview() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-lg md:text-xl text-[#575550] leading-relaxed max-w-md"
+            style={{ willChange: 'transform, opacity' }}
           >
             Google Developer Groups Kolkata is not just another tech club. It is a serious technology institution dedicated to bridging the gap between raw talent and world-class engineering.
           </motion.div>
@@ -41,6 +43,7 @@ export function AboutPreview() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-6"
+            style={{ willChange: 'transform, opacity' }}
           >
             <p className="text-base text-[#575550] leading-relaxed">
               Our culture is rooted in genuine collaboration, open source development, and architectural thinking. We believe in building solutions that scale and designing experiences that matter.

@@ -18,7 +18,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 60);
+      setIsScrolled(window.scrollY > window.innerHeight - 80);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -27,55 +27,19 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-6 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-10 md:px-8 md:pt-14 pointer-events-none">
         <nav
           className={cn(
             "relative pointer-events-auto w-full max-w-6xl rounded-full px-6 py-3.5 flex items-center justify-between transition-all duration-500 ease-out",
             isScrolled
-              ? "bg-[#F3F0E8]/40 border border-black/10 shadow-sm text-black"
-              : "bg-black/40 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.4)] text-[#F4F1EA]"
+              ? "bg-white/60 border border-black/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,1),0_10px_34px_-12px_rgba(16,24,40,0.2)] text-black"
+              : "bg-white/10 border border-white/20 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15),0_10px_34px_-12px_rgba(0,0,0,0.5)] text-white"
           )}
           style={{
-            backdropFilter: 'blur(24px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+            backdropFilter: isScrolled ? 'blur(24px) saturate(180%)' : 'blur(12px) saturate(100%)',
+            WebkitBackdropFilter: isScrolled ? 'blur(24px) saturate(180%)' : 'blur(12px) saturate(100%)',
           }}
         >
-          {/* Liquid Glass Fluid Layer - only visible on dark hero */}
-          <div className={cn(
-            "absolute inset-0 rounded-full overflow-hidden pointer-events-none transition-opacity duration-500",
-            isScrolled ? "opacity-0" : "opacity-100"
-          )}>
-            {/* Top glass meniscus highlight */}
-            <div className="absolute top-0 inset-x-12 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            
-            {/* Liquid Flow Primary */}
-            <div 
-              className="absolute w-[200%] h-[200%] -top-[50%] -left-[50%] pointer-events-none mix-blend-screen"
-              style={{
-                background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 70%)',
-                animation: 'liquid-flow-primary 6s ease-in-out infinite alternate'
-              }}
-            />
-
-            {/* Liquid Flow Secondary */}
-            <div 
-              className="absolute w-[200%] h-[200%] -top-[50%] -left-[50%] pointer-events-none mix-blend-screen"
-              style={{
-                background: 'radial-gradient(ellipse 50% 60% at 50% 50%, rgba(200, 230, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%)',
-                animation: 'liquid-flow-secondary 8s ease-in-out infinite alternate-reverse'
-              }}
-            />
-
-            {/* Continuous Liquid Highlight Glide */}
-            <div 
-              className="absolute inset-0 pointer-events-none mix-blend-screen opacity-30"
-              style={{
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
-                animation: 'liquid-rim-flow 4s ease-in-out infinite'
-              }}
-            />
-          </div>
-
           {/* Logo */}
           <Link 
             href="/" 
@@ -95,21 +59,6 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-          </div>
-
-          {/* CTA */}
-          <div className="hidden md:block relative z-10">
-            <Link 
-              href="#join"
-              className={cn(
-                "px-5 py-2 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 flex items-center gap-1.5",
-                isScrolled 
-                  ? "bg-black text-white hover:bg-black/80" 
-                  : "bg-white text-black hover:bg-white/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)]"
-              )}
-            >
-              JOIN US <span className="text-[10px]">↗</span>
-            </Link>
           </div>
 
           {/* Mobile Toggle */}

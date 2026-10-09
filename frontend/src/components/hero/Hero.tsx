@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/Button';
 
 export function Hero() {
   return (
@@ -30,6 +31,7 @@ export function Hero() {
       {/* Micro Chalk Noise Texture (Softened Grain) */}
       <svg
         className="absolute inset-0 w-full h-full opacity-[0.15] mix-blend-screen pointer-events-none"
+        style={{ transform: 'translateZ(0)', willChange: 'transform' }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <filter id="chalkGrain">
@@ -55,6 +57,7 @@ export function Hero() {
       {/* Organic Chalk Flecks & Dust Specks (Softened) */}
       <svg
         className="absolute inset-0 w-full h-full opacity-[0.09] mix-blend-screen pointer-events-none"
+        style={{ transform: 'translateZ(0)', willChange: 'transform' }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <filter id="chalkDustSpecks">
@@ -104,12 +107,12 @@ export function Hero() {
             transformOrigin: 'left center',
           }}
         >
-          <span className="block font-thin opacity-90">
+          <span className="block font-thin text-white drop-shadow-sm">
             {"Beyond the ".split('').map((char, i) => (
               <motion.span 
                 key={`l1-${i}`} 
-                initial={{ opacity: 0, display: 'none' }}
-                animate={{ opacity: 1, display: 'inline' }}
+                initial={{ visibility: 'hidden' }}
+                animate={{ visibility: 'visible' }}
                 transition={{ duration: 0.01, delay: 0.2 + (i * 0.05) }}
               >
                 {char === ' ' ? '\u00A0' : char}
@@ -119,8 +122,8 @@ export function Hero() {
               {"Code.".split('').map((char, i) => (
                 <motion.span 
                   key={`l1-h-${i}`} 
-                  initial={{ opacity: 0, display: 'none' }}
-                  animate={{ opacity: 1, display: 'inline' }}
+                  initial={{ visibility: 'hidden' }}
+                  animate={{ visibility: 'visible' }}
                   transition={{ duration: 0.01, delay: 0.2 + ((11 + i) * 0.05) }}
                 >
                   {char}
@@ -128,12 +131,12 @@ export function Hero() {
               ))}
             </em>
           </span>
-          <span className="block font-thin opacity-90">
+          <span className="block font-thin text-white drop-shadow-sm">
             {"Beyond the ".split('').map((char, i) => (
               <motion.span 
                 key={`l2-${i}`} 
-                initial={{ opacity: 0, display: 'none' }}
-                animate={{ opacity: 1, display: 'inline' }}
+                initial={{ visibility: 'hidden' }}
+                animate={{ visibility: 'visible' }}
                 transition={{ duration: 0.01, delay: 0.2 + ((16 + i) * 0.05) }}
               >
                 {char === ' ' ? '\u00A0' : char}
@@ -143,8 +146,8 @@ export function Hero() {
               {"Ordinary.".split('').map((char, i) => (
                 <motion.span 
                   key={`l2-h-${i}`} 
-                  initial={{ opacity: 0, display: 'none' }}
-                  animate={{ opacity: 1, display: 'inline' }}
+                  initial={{ visibility: 'hidden' }}
+                  animate={{ visibility: 'visible' }}
                   transition={{ duration: 0.01, delay: 0.2 + ((27 + i) * 0.05) }}
                 >
                   {char}
@@ -158,16 +161,29 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 2.0 }}
-          className="font-sans font-light text-[#F4F1EA]/70 max-w-lg text-left"
+          className="font-sans font-light text-white/95 max-w-lg text-left drop-shadow-sm"
           style={{
             fontSize: 'clamp(1rem, 1.25vw, 1.125rem)',
             transform: 'perspective(1000px) rotateX(1deg) translateY(-16px)',
             letterSpacing: '0em',
             lineHeight: 1.4,
+            willChange: 'transform, opacity',
           }}
         >
           Where curious minds come together to explore technology, turn bold ideas into reality, and build what’s next.
         </motion.p>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 2.2 }}
+          className="mt-[25px] md:mt-[41px] pointer-events-auto"
+          style={{ willChange: 'transform, opacity' }}
+        >
+          <Button onClick={() => alert('Join functionality coming soon!')}>
+            Join Our Community
+          </Button>
+        </motion.div>
       </div>
 
       {/* Kolkata City Skyline rising from the extreme bottom */}
@@ -176,6 +192,7 @@ export function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         className="absolute bottom-0 left-0 right-0 w-full flex justify-center items-end pointer-events-none select-none overflow-hidden z-10"
+        style={{ willChange: 'transform, opacity' }}
       >
         <Image
           src="/kolkata-skyline-hd.png"
