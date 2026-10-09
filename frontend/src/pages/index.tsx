@@ -41,7 +41,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="min-h-screen bg-[#F3F0E8] font-sans selection:bg-[#050505] selection:text-[#F4F1EA]">
+      <main className="min-h-screen bg-[#050505] font-sans selection:bg-[#F3F0E8] selection:text-[#050505]">
         <Navbar />
         <Hero />
         <AboutPreview />
