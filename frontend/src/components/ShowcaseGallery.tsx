@@ -77,7 +77,7 @@ const floatVariants = (delay: number) => ({
     transition: {
       duration: 5 + delay * 0.5,
       repeat: Infinity,
-      ease: "easeInOut",
+      ease: "easeInOut" as const,
       delay,
     },
   },
@@ -90,7 +90,7 @@ function Img({ img, index }: { img: typeof scatteredImages[0]; index: number }) 
       opacity: 1, 
       scale: 1, 
       rotate: img.rotate,
-      transition: { duration: 1, delay: 0.1 + index * 0.08, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 1, delay: 0.1 + index * 0.08, ease: [0.16, 1, 0.3, 1] as const }
     }
   };
 

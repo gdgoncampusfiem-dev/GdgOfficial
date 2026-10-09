@@ -1,11 +1,12 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import Image from 'next/image';
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }
 };
 
 export function WhoAreWe() {
@@ -67,10 +68,12 @@ export function WhoAreWe() {
             style={{ y: y1 }}
             className="col-span-2 aspect-[21/9] sm:aspect-[2/1] relative overflow-hidden bg-transparent"
           >
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?q=80&w=800&auto=format&fit=crop"
               alt="Community Event Placeholder"
-              className="w-full h-full object-cover filter grayscale hover:grayscale-0 contrast-125 mix-blend-multiply opacity-90 hover:scale-105 transition-all duration-700"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover filter grayscale hover:grayscale-0 contrast-125 mix-blend-multiply opacity-90 hover:scale-105 transition-all duration-700"
             />
           </motion.div>
 
@@ -78,10 +81,12 @@ export function WhoAreWe() {
             style={{ y: y2 }}
             className="col-span-1 aspect-square sm:aspect-[4/3] relative overflow-hidden bg-transparent"
           >
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
               alt="Collaboration Placeholder"
-              className="w-full h-full object-cover filter grayscale hover:grayscale-0 contrast-125 mix-blend-multiply opacity-90 hover:scale-105 transition-all duration-700"
+              fill
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              className="object-cover filter grayscale hover:grayscale-0 contrast-125 mix-blend-multiply opacity-90 hover:scale-105 transition-all duration-700"
             />
           </motion.div>
 
@@ -89,10 +94,12 @@ export function WhoAreWe() {
             style={{ y: y3 }}
             className="col-span-1 aspect-square sm:aspect-[4/3] relative overflow-hidden bg-transparent"
           >
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800&auto=format&fit=crop"
               alt="Workshop Placeholder"
-              className="w-full h-full object-cover filter grayscale hover:grayscale-0 contrast-125 mix-blend-multiply opacity-90 hover:scale-105 transition-all duration-700"
+              fill
+              sizes="(max-width: 1024px) 50vw, 25vw"
+              className="object-cover filter grayscale hover:grayscale-0 contrast-125 mix-blend-multiply opacity-90 hover:scale-105 transition-all duration-700"
             />
           </motion.div>
         </div>

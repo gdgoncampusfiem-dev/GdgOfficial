@@ -18,8 +18,6 @@ function Counter({ from = 0, to, duration = 2, delay = 0 }: { from?: number; to:
     
     let startTime: number;
     let animationFrame: number;
-    let startTimeout: NodeJS.Timeout;
-
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
@@ -34,7 +32,7 @@ function Counter({ from = 0, to, duration = 2, delay = 0 }: { from?: number; to:
       }
     };
     
-    startTimeout = setTimeout(() => {
+    const startTimeout = setTimeout(() => {
       animationFrame = requestAnimationFrame(animate);
     }, delay * 1000);
 
