@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 const NAV_LINKS = [
-  { label: 'About', href: '#about' },
   { label: 'Events', href: '#events' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Domains', href: '#domains' },
@@ -45,7 +44,7 @@ export function Navbar() {
             href="/" 
             className="relative z-10 font-bold tracking-tight text-lg transition-opacity hover:opacity-80"
           >
-            GDG KOLKATA
+            GDG OC FIEM
           </Link>
 
           {/* Desktop Nav */}
