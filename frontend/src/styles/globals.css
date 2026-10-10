@@ -32,6 +32,10 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+html {
+  background-color: var(--color-near-black);
+}
+
 body {
   background-color: var(--color-warm-white);
   color: var(--color-near-black);

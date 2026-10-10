@@ -4,14 +4,18 @@ import { Menu, X } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 const NAV_LINKS = [
-  { label: 'Events', href: '#events' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Domains', href: '#domains' },
-  { label: 'Team', href: '#team' },
-  { label: 'Sponsor', href: '#sponsor' },
+  { label: 'Events', href: '/events' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Domains', href: '/domains' },
+  { label: 'Team', href: '/teams' },
+  { label: 'Sponsor', href: '/sponsor' },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  theme?: 'light' | 'dark';
+}
+
+export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -32,7 +36,9 @@ export function Navbar() {
             "relative pointer-events-auto w-full max-w-6xl rounded-full px-6 py-3.5 flex items-center justify-between transition-all duration-500 ease-out",
             isScrolled
               ? "bg-white/60 border border-black/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,1),0_10px_34px_-12px_rgba(16,24,40,0.2)] text-black"
-              : "bg-white/10 border border-white/20 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15),0_10px_34px_-12px_rgba(0,0,0,0.5)] text-white"
+              : theme === 'dark'
+                ? "bg-white/10 border border-white/20 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15),0_10px_34px_-12px_rgba(0,0,0,0.5)] text-white"
+                : "bg-black/5 border border-black/10 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05),0_10px_34px_-12px_rgba(0,0,0,0.1)] text-black"
           )}
           style={{
             backdropFilter: isScrolled ? 'blur(24px) saturate(180%)' : 'blur(12px) saturate(100%)',
@@ -62,7 +68,10 @@ export function Navbar() {
 
           {/* Mobile Toggle */}
           <button 
-            className="md:hidden relative z-10 p-1.5 rounded-full hover:bg-white/10 transition-colors"
+            className={cn(
+              "md:hidden relative z-10 p-1.5 rounded-full transition-colors",
+              isScrolled ? "hover:bg-black/5" : theme === 'dark' ? "hover:bg-white/10" : "hover:bg-black/5"
+            )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle Menu"
           >
