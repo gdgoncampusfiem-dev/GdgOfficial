@@ -315,7 +315,7 @@ export default function Domains() {
               className="px-8 py-4 bg-[#050505] text-[#F3F0E8] font-black uppercase tracking-widest text-sm shadow-[6px_6px_0px_#4285F4] hover:shadow-[2px_2px_0px_#4285F4] hover:translate-x-1 hover:translate-y-1 transition-all border-[2px] border-[#050505]"
               onClick={() => window.location.href = '/teams'}
             >
-              Explore Team
+              Explore Teams
             </motion.button>
           </div>
         </section>
