@@ -71,13 +71,13 @@ const DOMAINS = [
 
 // --- Reusable Component ---
 
-const DomainRow = ({ 
-  domain, 
-  isEven, 
-  isSlidUp 
-}: { 
-  domain: typeof DOMAINS[0]; 
-  isEven: boolean; 
+const DomainRow = ({
+  domain,
+  isEven,
+  isSlidUp
+}: {
+  domain: typeof DOMAINS[0];
+  isEven: boolean;
   isSlidUp: boolean;
 }) => {
   const isTech = domain.id === 'tech';
@@ -144,7 +144,6 @@ const DomainRow = ({
             >
               <domain.Visual
                 isReady={isTech ? isSlidUp : true}
-                key={isTech ? (isSlidUp ? 'tech-active' : 'tech-idle') : undefined}
               />
             </motion.div>
 
@@ -184,7 +183,6 @@ const DomainRow = ({
           >
             <domain.Visual
               isReady={isTech ? isSlidUp : true}
-              key={isTech ? (isSlidUp ? 'tech-active' : 'tech-idle') : undefined}
             />
           </motion.div>
         </div>
@@ -206,25 +204,31 @@ const TypewriterHero = ({ onSlidUp }: { onSlidUp?: () => void }) => {
 
   useEffect(() => {
     let index = 0;
+    let slideTimer: NodeJS.Timeout;
+
+    const cursorInterval = setInterval(() => {
+      setCursorVisible(v => !v);
+    }, 500);
+
     const interval = setInterval(() => {
       setDisplayed(fullText.slice(0, index + 1));
       index++;
       if (index >= fullText.length) {
         clearInterval(interval);
         setTypingComplete(true);
-        setTimeout(() => {
+        // Wait for subtitle to appear, pause ~1s for reading, then smoothly slide up
+        slideTimer = setTimeout(() => {
+          clearInterval(cursorInterval);
+          setCursorVisible(true);
           setSlideUp(true);
-        }, 1200); // Wait for 1.2s after typing finishes before sliding up
+        }, 1100);
       }
     }, 150); // Speed of typing
-
-    const cursorInterval = setInterval(() => {
-      setCursorVisible(v => !v);
-    }, 500);
 
     return () => {
       clearInterval(interval);
       clearInterval(cursorInterval);
+      if (slideTimer) clearTimeout(slideTimer);
     };
   }, []);
 
@@ -235,10 +239,10 @@ const TypewriterHero = ({ onSlidUp }: { onSlidUp?: () => void }) => {
 
   useEffect(() => {
     if (slideUp) {
-      // 1.1s transition + buffer as fallback in case onTransitionEnd doesn't fire
+      // 1s transition + 50ms buffer as fallback in case onTransitionEnd doesn't fire
       const timer = setTimeout(() => {
         handleFinish();
-      }, 1150);
+      }, 1050);
       return () => clearTimeout(timer);
     }
   }, [slideUp]);
@@ -250,14 +254,17 @@ const TypewriterHero = ({ onSlidUp }: { onSlidUp?: () => void }) => {
   return (
     <div
       onTransitionEnd={(e) => {
-        if (e.target === e.currentTarget && slideUp) {
+        if (e.target === e.currentTarget && e.propertyName === 'transform' && slideUp) {
           handleFinish();
         }
       }}
       style={{
         transform: slideUp ? 'translate3d(0, -100%, 0)' : 'translate3d(0, 0, 0)',
-        transition: 'transform 1.1s cubic-bezier(0.76, 0, 0.24, 1)',
+        transition: 'transform 1s cubic-bezier(0.7, 0, 0.15, 1)',
         willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        transformStyle: 'preserve-3d',
       }}
       className={`fixed inset-0 bg-[#F3F0E8] flex flex-col justify-center z-50 overflow-hidden ${slideUp ? 'pointer-events-none' : ''}`}
     >
@@ -281,9 +288,9 @@ const TypewriterHero = ({ onSlidUp }: { onSlidUp?: () => void }) => {
           </h1>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: typingComplete ? 1 : 0 }}
-            transition={{ duration: 1 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: typingComplete ? 1 : 0, y: typingComplete ? 0 : 12 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-xl md:text-2xl text-[#575550] max-w-2xl font-bold leading-relaxed border-l-[4px] border-[#050505] pl-6"
           >
             Five focused tracks. Infinite possibilities. Where do you want to build?
@@ -323,10 +330,10 @@ export default function Domains() {
         {/* Alternating Domain Sections (Pre-rendered under curtain to eliminate mount jank) */}
         <div className="w-full">
           {DOMAINS.map((domain, idx) => (
-            <DomainRow 
-              key={domain.id} 
-              domain={domain} 
-              isEven={idx % 2 === 0} 
+            <DomainRow
+              key={domain.id}
+              domain={domain}
+              isEven={idx % 2 === 0}
               isSlidUp={isSlidUp}
             />
           ))}
