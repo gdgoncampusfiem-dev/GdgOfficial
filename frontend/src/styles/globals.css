@@ -34,6 +34,7 @@ html.lenis, html.lenis body {
 
 html {
   background-color: var(--color-near-black);
+  scroll-behavior: auto !important;
 }
 
 body {

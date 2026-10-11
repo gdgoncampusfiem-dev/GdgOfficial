@@ -24,8 +24,10 @@ export const EventsVisual = () => (
       <motion.div 
         initial={{ width: "20%" }}
         whileInView={{ width: "80%" }}
+        viewport={{ once: true, amount: 0.2 }}
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-        className="relative z-10 h-10 md:h-12 bg-[#050505] border-[3px] border-[#050505] flex items-center px-4 text-white font-mono text-xs md:text-sm font-bold shadow-[4px_4px_0px_#FBBC04] hover:scale-[1.02] transition-transform origin-left"
+        className="relative z-10 h-10 md:h-12 bg-[#050505] border-[3px] border-[#050505] flex items-center px-4 text-white font-mono text-xs md:text-sm font-bold shadow-[4px_4px_0px_#FBBC04] origin-left cursor-default"
       >
         INITIATION_
       </motion.div>
@@ -34,8 +36,10 @@ export const EventsVisual = () => (
       <motion.div 
         initial={{ width: "10%", x: "20%" }}
         whileInView={{ width: "70%", x: "20%" }}
+        viewport={{ once: true, amount: 0.2 }}
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-        className="relative z-10 h-10 md:h-12 bg-[#4285F4] border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] flex items-center px-4 text-white font-mono text-xs md:text-sm font-bold hover:scale-[1.02] transition-transform origin-left"
+        className="relative z-10 h-10 md:h-12 bg-[#4285F4] border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] flex items-center px-4 text-white font-mono text-xs md:text-sm font-bold origin-left cursor-default"
       >
         EXECUTION_
       </motion.div>
@@ -44,8 +48,10 @@ export const EventsVisual = () => (
       <motion.div 
         initial={{ width: "10%", x: "50%" }}
         whileInView={{ width: "40%", x: "50%" }}
+        viewport={{ once: true, amount: 0.2 }}
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-        className="relative z-10 h-10 md:h-12 bg-[#34A853] border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] flex items-center px-4 text-[#050505] font-mono text-xs md:text-sm font-bold hover:scale-[1.02] transition-transform origin-left"
+        className="relative z-10 h-10 md:h-12 bg-[#34A853] border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] flex items-center px-4 text-[#050505] font-mono text-xs md:text-sm font-bold origin-left cursor-default"
       >
         WRAP_UP
       </motion.div>

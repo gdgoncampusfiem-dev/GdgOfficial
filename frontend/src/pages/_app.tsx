@@ -12,8 +12,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <ReactLenis 
       root 
       options={{ 
-        lerp: 0.06, 
-        wheelMultiplier: 1, 
+        lerp: 0.09, 
+        wheelMultiplier: 0.9, 
         smoothWheel: true, 
         syncTouch: true 
       }}

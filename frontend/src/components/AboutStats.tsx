@@ -10,8 +10,7 @@ const stats = [
 
 function Counter({ from = 0, to, duration = 2, delay = 0 }: { from?: number; to: number; duration?: number; delay?: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
-  const inView = useInView(nodeRef, { once: true, margin: "-100px" });
-  const [count, setCount] = useState(from);
+  const inView = useInView(nodeRef, { once: true, margin: "-40px" });
 
   useEffect(() => {
     if (!inView) return;
@@ -24,11 +23,16 @@ function Counter({ from = 0, to, duration = 2, delay = 0 }: { from?: number; to:
       
       // Easing function (easeOutExpo)
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const val = Math.floor(easeProgress * (to - from) + from);
       
-      setCount(Math.floor(easeProgress * (to - from) + from));
+      if (nodeRef.current) {
+        nodeRef.current.textContent = String(val);
+      }
       
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate);
+      } else if (nodeRef.current) {
+        nodeRef.current.textContent = String(to);
       }
     };
     
@@ -42,7 +46,7 @@ function Counter({ from = 0, to, duration = 2, delay = 0 }: { from?: number; to:
     };
   }, [inView, from, to, duration, delay]);
 
-  return <span ref={nodeRef}>{count}</span>;
+  return <span ref={nodeRef}>{from}</span>;
 }
 
 export function AboutStats() {

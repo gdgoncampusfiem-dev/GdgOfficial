@@ -71,7 +71,17 @@ const DOMAINS = [
 
 // --- Reusable Component ---
 
-const DomainRow = ({ domain, isEven }: { domain: typeof DOMAINS[0], isEven: boolean }) => {
+const DomainRow = ({ 
+  domain, 
+  isEven, 
+  isSlidUp 
+}: { 
+  domain: typeof DOMAINS[0]; 
+  isEven: boolean; 
+  isSlidUp: boolean;
+}) => {
+  const isTech = domain.id === 'tech';
+
   return (
     <section id={`domain-${domain.id}`} className={`relative w-full py-20 md:py-32 border-t-[3px] border-[#050505] transition-colors duration-700 ${domain.bgColor} overflow-hidden`}>
 
@@ -97,7 +107,8 @@ const DomainRow = ({ domain, isEven }: { domain: typeof DOMAINS[0], isEven: bool
               }
             }}
             initial="hidden"
-            whileInView="show"
+            animate={isTech ? (isSlidUp ? 'show' : 'hidden') : undefined}
+            whileInView={!isTech ? 'show' : undefined}
             viewport={{ once: true, amount: 0.4 }}
           >
             {/* Title */}
@@ -131,7 +142,10 @@ const DomainRow = ({ domain, isEven }: { domain: typeof DOMAINS[0], isEven: bool
               }}
               className="block md:hidden w-full mb-10"
             >
-              <domain.Visual />
+              <domain.Visual
+                isReady={isTech ? isSlidUp : true}
+                key={isTech ? (isSlidUp ? 'tech-active' : 'tech-idle') : undefined}
+              />
             </motion.div>
 
             {/* Technologies */}
@@ -163,11 +177,15 @@ const DomainRow = ({ domain, isEven }: { domain: typeof DOMAINS[0], isEven: bool
         <div className={`hidden md:block w-full ${isEven ? 'md:order-2' : 'md:order-1'}`}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            animate={isTech ? (isSlidUp ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }) : undefined}
+            whileInView={!isTech ? { opacity: 1, scale: 1 } : undefined}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <domain.Visual />
+            <domain.Visual
+              isReady={isTech ? isSlidUp : true}
+              key={isTech ? (isSlidUp ? 'tech-active' : 'tech-idle') : undefined}
+            />
           </motion.div>
         </div>
 
@@ -178,12 +196,13 @@ const DomainRow = ({ domain, isEven }: { domain: typeof DOMAINS[0], isEven: bool
 
 // --- Typewriter Hero Component ---
 
-const TypewriterHero = ({ onReveal }: { onReveal: () => void }) => {
+const TypewriterHero = ({ onSlidUp }: { onSlidUp?: () => void }) => {
   const fullText = "OUR DOMAINS";
   const [displayed, setDisplayed] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
   const [typingComplete, setTypingComplete] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     let index = 0;
@@ -195,7 +214,6 @@ const TypewriterHero = ({ onReveal }: { onReveal: () => void }) => {
         setTypingComplete(true);
         setTimeout(() => {
           setSlideUp(true);
-          onReveal();
         }, 1200); // Wait for 1.2s after typing finishes before sliding up
       }
     }, 150); // Speed of typing
@@ -210,13 +228,37 @@ const TypewriterHero = ({ onReveal }: { onReveal: () => void }) => {
     };
   }, []);
 
+  const handleFinish = () => {
+    setIsDone(true);
+    onSlidUp?.();
+  };
+
+  useEffect(() => {
+    if (slideUp) {
+      // 1.1s transition + buffer as fallback in case onTransitionEnd doesn't fire
+      const timer = setTimeout(() => {
+        handleFinish();
+      }, 1150);
+      return () => clearTimeout(timer);
+    }
+  }, [slideUp]);
+
+  if (isDone) return null;
+
   const parts = displayed.split(' ');
 
   return (
-    <motion.div
-      initial={{ y: 0 }}
-      animate={{ y: slideUp ? "-100vh" : 0 }}
-      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+    <div
+      onTransitionEnd={(e) => {
+        if (e.target === e.currentTarget && slideUp) {
+          handleFinish();
+        }
+      }}
+      style={{
+        transform: slideUp ? 'translate3d(0, -100%, 0)' : 'translate3d(0, 0, 0)',
+        transition: 'transform 1.1s cubic-bezier(0.76, 0, 0.24, 1)',
+        willChange: 'transform',
+      }}
       className={`fixed inset-0 bg-[#F3F0E8] flex flex-col justify-center z-50 overflow-hidden ${slideUp ? 'pointer-events-none' : ''}`}
     >
       {/* Background Gridlines for the Curtain */}
@@ -248,14 +290,14 @@ const TypewriterHero = ({ onReveal }: { onReveal: () => void }) => {
           </motion.p>
         </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 // --- Page Component ---
 
 export default function Domains() {
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isSlidUp, setIsSlidUp] = useState(false);
 
   return (
     <>
@@ -264,7 +306,7 @@ export default function Domains() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className="relative min-h-screen bg-[#F3F0E8] font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-clip">
+      <main className="relative min-h-screen bg-[#F3F0E8] font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-x-clip">
         {/* Background Gridlines */}
         <div
           className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
@@ -276,16 +318,19 @@ export default function Domains() {
 
         <Navbar theme="light" />
 
-        <TypewriterHero onReveal={() => setIsRevealed(true)} />
+        <TypewriterHero onSlidUp={() => setIsSlidUp(true)} />
 
-        {/* Alternating Domain Sections (Rendered when curtain lifts) */}
-        {isRevealed && (
-          <div className="w-full">
-            {DOMAINS.map((domain, idx) => (
-              <DomainRow key={domain.id} domain={domain} isEven={idx % 2 === 0} />
-            ))}
-          </div>
-        )}
+        {/* Alternating Domain Sections (Pre-rendered under curtain to eliminate mount jank) */}
+        <div className="w-full">
+          {DOMAINS.map((domain, idx) => (
+            <DomainRow 
+              key={domain.id} 
+              domain={domain} 
+              isEven={idx % 2 === 0} 
+              isSlidUp={isSlidUp}
+            />
+          ))}
+        </div>
 
         {/* Bottom Call to Action */}
         <section className="relative w-full py-24 md:py-32 border-t-[3px] border-[#050505] bg-white">
