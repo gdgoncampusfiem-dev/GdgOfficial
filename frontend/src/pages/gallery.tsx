@@ -14,6 +14,7 @@ import { ArrowUpRight } from 'lucide-react';
 export default function GalleryPage() {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [lightboxList, setLightboxList] = useState<GalleryItem[]>(GALLERY_ITEMS);
+  const [selectedEventId, setSelectedEventId] = useState<string>('all');
 
   // Lightbox index calculations across active context
   const currentIndex = selectedItem
@@ -72,6 +73,8 @@ export default function GalleryPage() {
         <div className="relative z-10 pt-28 md:pt-36">
           <GalleryMasonry
             items={GALLERY_ITEMS}
+            selectedEventId={selectedEventId}
+            onSelectEvent={setSelectedEventId}
             onSelectImage={(item) => {
               setLightboxList(GALLERY_ITEMS);
               setSelectedItem(item);
@@ -83,6 +86,8 @@ export default function GalleryPage() {
               Select any event to view images related to that specific event with its name on top
              ========================================================================= */}
           <EventGalleryBrowser
+            selectedEventId={selectedEventId}
+            onSelectEvent={setSelectedEventId}
             onSelectImage={(item, eventPhotos) => {
               setLightboxList(eventPhotos);
               setSelectedItem(item);
