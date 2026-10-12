@@ -47,33 +47,39 @@ export const OutreachVisual = () => (
     {/* Top Left */}
     <motion.div 
       initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ delay: 0.5 }}
-      className="absolute top-[20%] left-[10%] md:top-[25%] md:left-[15%] w-12 h-12 bg-white rounded-full border-[3px] border-[#050505] shadow-[4px_4px_0px_#FBBC04] flex items-center justify-center z-10 group-hover:-translate-y-2 transition-transform"
+      className="absolute top-[20%] left-[10%] md:top-[25%] md:left-[15%] z-10"
     >
-      <div className="w-4 h-4 bg-[#FBBC04] rounded-full border-[2px] border-[#050505]" />
+      <div className="w-12 h-12 bg-white rounded-full border-[3px] border-[#050505] shadow-[4px_4px_0px_#FBBC04] flex items-center justify-center group-hover:-translate-y-2 transition-transform duration-300">
+        <div className="w-4 h-4 bg-[#FBBC04] rounded-full border-[2px] border-[#050505]" />
+      </div>
     </motion.div>
     
     {/* Top Right */}
     <motion.div 
       initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ delay: 0.7 }}
-      className="absolute top-[15%] right-[10%] md:top-[20%] md:right-[15%] w-16 h-16 bg-[#EA4335] rounded-full border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] flex items-center justify-center z-10 group-hover:translate-x-2 transition-transform"
+      className="absolute top-[15%] right-[10%] md:top-[20%] md:right-[15%] z-10"
     >
-      <div className="w-8 h-4 bg-white border-[2px] border-[#050505] rounded-full" />
+      <div className="w-16 h-16 bg-[#EA4335] rounded-full border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] flex items-center justify-center group-hover:translate-x-2 transition-transform duration-300">
+        <div className="w-8 h-4 bg-white border-[2px] border-[#050505] rounded-full" />
+      </div>
     </motion.div>
 
     {/* Bottom Right */}
     <motion.div 
       initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ delay: 0.9 }}
-      className="absolute bottom-[10%] right-[15%] md:bottom-[15%] md:right-[20%] w-14 h-14 bg-white rounded-full border-[3px] border-[#050505] shadow-[4px_4px_0px_#4285F4] flex items-center justify-center z-10 group-hover:translate-y-2 transition-transform"
+      className="absolute bottom-[10%] right-[15%] md:bottom-[15%] md:right-[20%] z-10"
     >
-      <div className="w-6 h-6 bg-[#4285F4] rotate-45 border-[2px] border-[#050505]" />
+      <div className="w-14 h-14 bg-white rounded-full border-[3px] border-[#050505] shadow-[4px_4px_0px_#4285F4] flex items-center justify-center group-hover:translate-y-2 transition-transform duration-300">
+        <div className="w-6 h-6 bg-[#4285F4] rotate-45 border-[2px] border-[#050505]" />
+      </div>
     </motion.div>
 
     {/* Bottom Left Speech Bubble */}
     <motion.div 
       initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ delay: 1.1 }}
-      className="absolute bottom-[15%] left-[15%] md:bottom-[20%] md:left-[20%] z-20 group-hover:-translate-x-2 transition-transform"
+      className="absolute bottom-[15%] left-[15%] md:bottom-[20%] md:left-[20%] z-20"
     >
-      <div className="px-4 py-2 bg-white border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] rounded-2xl rounded-bl-none text-xs font-black tracking-widest uppercase text-[#050505]">
+      <div className="px-4 py-2 bg-white border-[3px] border-[#050505] shadow-[4px_4px_0px_#050505] rounded-2xl rounded-bl-none text-xs font-black tracking-widest uppercase text-[#050505] group-hover:-translate-x-2 transition-transform duration-300">
         Connect.
       </div>
     </motion.div>

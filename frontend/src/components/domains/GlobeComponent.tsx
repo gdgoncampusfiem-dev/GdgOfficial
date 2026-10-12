@@ -173,12 +173,20 @@ class GlobeScene {
     }
 
     start() {
+        if (this.disposed || this.frameId) return
         this.lastT = performance.now()
         const loop = () => {
             this.frameId = requestAnimationFrame(loop)
             this.step()
         }
         loop()
+    }
+
+    stop() {
+        if (this.frameId) {
+            cancelAnimationFrame(this.frameId)
+            this.frameId = 0
+        }
     }
 
     setSize(width: number, height: number) {
@@ -369,13 +377,22 @@ function __OriginkitBase_BayerGlobe(props: BayerGlobeProps) {
         }
         sceneRef.current = scene
         scene.setSize(container.clientWidth, container.clientHeight)
-        scene.start()
+
+        const io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                scene.start()
+            } else {
+                scene.stop()
+            }
+        }, { threshold: 0.05 })
+        io.observe(container)
 
         const ro = new ResizeObserver(() => {
             scene.setSize(container.clientWidth, container.clientHeight)
         })
         ro.observe(container)
         return () => {
+            io.disconnect()
             ro.disconnect()
             scene.dispose()
             sceneRef.current = null

@@ -33,7 +33,7 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-10 md:px-8 md:pt-14 pointer-events-none">
         <nav
           className={cn(
-            "relative pointer-events-auto w-full max-w-6xl rounded-full px-6 py-3.5 flex items-center justify-between transition-all duration-500 ease-out",
+            "relative pointer-events-auto w-full max-w-6xl rounded-full px-6 py-3.5 flex items-center justify-between transition-[background-color,border-color,color,box-shadow] duration-500 ease-out",
             isScrolled
               ? "bg-white/60 border border-black/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,1),0_10px_34px_-12px_rgba(16,24,40,0.2)] text-black"
               : theme === 'dark'

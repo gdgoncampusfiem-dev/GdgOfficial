@@ -105,7 +105,8 @@ function Img({ img, index }: { img: typeof scatteredImages[0]; index: number }) 
     >
       <motion.div
         variants={floatVariants(img.delay)}
-        animate="animate"
+        whileInView="animate"
+        viewport={{ amount: 0.1 }}
         style={{ willChange: 'transform' }}
         className="w-full h-full relative shadow-2xl overflow-hidden group"
       >
@@ -152,7 +153,7 @@ export function ShowcaseGallery() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative"
+          className="relative pointer-events-auto cursor-pointer"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >

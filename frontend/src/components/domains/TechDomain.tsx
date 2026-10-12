@@ -1,9 +1,10 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
-export const TechVisual = () => {
+export const TechVisual = ({ isReady = true }: { isReady?: boolean }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = inView && isReady;
 
   return (
     <div ref={ref} className="relative w-full aspect-square md:aspect-[4/3] bg-white overflow-hidden flex items-center justify-center group border-[3px] border-[#050505] shadow-[6px_6px_0px_#050505]">

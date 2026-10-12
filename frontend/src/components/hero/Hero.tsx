@@ -31,7 +31,7 @@ export function Hero() {
       {/* Micro Chalk Noise Texture (Softened Grain) */}
       <svg
         className="absolute inset-0 w-full h-full opacity-[0.15] mix-blend-screen pointer-events-none"
-        style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+        style={{ transform: 'translateZ(0)', contain: 'strict', backfaceVisibility: 'hidden' }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <filter id="chalkGrain">
@@ -57,7 +57,7 @@ export function Hero() {
       {/* Organic Chalk Flecks & Dust Specks (Softened) */}
       <svg
         className="absolute inset-0 w-full h-full opacity-[0.09] mix-blend-screen pointer-events-none"
-        style={{ transform: 'translateZ(0)', willChange: 'transform' }}
+        style={{ transform: 'translateZ(0)', contain: 'strict', backfaceVisibility: 'hidden' }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <filter id="chalkDustSpecks">
@@ -158,13 +158,12 @@ export function Hero() {
         </h1>
         
         <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: -16 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 2.0 }}
           className="font-sans font-light text-white/95 max-w-lg text-left drop-shadow-sm"
           style={{
             fontSize: 'clamp(1rem, 1.25vw, 1.125rem)',
-            transform: 'perspective(1000px) rotateX(1deg) translateY(-16px)',
             letterSpacing: '0em',
             lineHeight: 1.4,
             willChange: 'transform, opacity',

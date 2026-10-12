@@ -12,7 +12,7 @@ export default function Teams() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className="relative min-h-screen bg-white font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-hidden">
+      <main className="relative min-h-screen bg-white font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-x-clip">
         {/* Background Gridlines */}
         <div
           className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
@@ -48,7 +48,7 @@ export default function Teams() {
           <motion.section 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-24"
           >
@@ -70,7 +70,7 @@ export default function Teams() {
           <motion.section 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-24"
           >
@@ -90,7 +90,7 @@ export default function Teams() {
           <motion.section 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-24"
           >
