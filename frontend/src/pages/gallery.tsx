@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation/Navbar';
 import { GalleryMasonry } from '@/components/gallery/GalleryMasonry';
+import { EventGalleryBrowser } from '@/components/gallery/EventGalleryBrowser';
 import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
 import { GALLERY_ITEMS, GalleryItem } from '@/data/gallery';
 import { motion } from 'framer-motion';
@@ -12,25 +13,28 @@ import { ArrowUpRight } from 'lucide-react';
 
 export default function GalleryPage() {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [lightboxList, setLightboxList] = useState<GalleryItem[]>(GALLERY_ITEMS);
 
-  // Lightbox index calculations across all photos
+  // Lightbox index calculations across active context
   const currentIndex = selectedItem
-    ? GALLERY_ITEMS.findIndex((item) => item.id === selectedItem.id)
+    ? lightboxList.findIndex((item) => item.id === selectedItem.id)
     : -1;
 
   const handlePrev = () => {
+    if (lightboxList.length === 0) return;
     if (currentIndex <= 0) {
-      setSelectedItem(GALLERY_ITEMS[GALLERY_ITEMS.length - 1]);
+      setSelectedItem(lightboxList[lightboxList.length - 1]);
     } else {
-      setSelectedItem(GALLERY_ITEMS[currentIndex - 1]);
+      setSelectedItem(lightboxList[currentIndex - 1]);
     }
   };
 
   const handleNext = () => {
-    if (currentIndex >= GALLERY_ITEMS.length - 1) {
-      setSelectedItem(GALLERY_ITEMS[0]);
+    if (lightboxList.length === 0) return;
+    if (currentIndex >= lightboxList.length - 1) {
+      setSelectedItem(lightboxList[0]);
     } else {
-      setSelectedItem(GALLERY_ITEMS[currentIndex + 1]);
+      setSelectedItem(lightboxList[currentIndex + 1]);
     }
   };
 
@@ -68,14 +72,28 @@ export default function GalleryPage() {
         <div className="relative z-10 pt-28 md:pt-36">
           <GalleryMasonry
             items={GALLERY_ITEMS}
-            onSelectImage={(item) => setSelectedItem(item)}
+            onSelectImage={(item) => {
+              setLightboxList(GALLERY_ITEMS);
+              setSelectedItem(item);
+            }}
+          />
+
+          {/* =========================================================================
+              BROWSE BY EVENT SECTION (Event-wise Photo Chronicle)
+              Select any event to view images related to that specific event with its name on top
+             ========================================================================= */}
+          <EventGalleryBrowser
+            onSelectImage={(item, eventPhotos) => {
+              setLightboxList(eventPhotos);
+              setSelectedItem(item);
+            }}
           />
 
           {/* Fullscreen Interactive Lightbox Modal */}
           <GalleryLightbox
             item={selectedItem}
             currentIndex={currentIndex}
-            total={GALLERY_ITEMS.length}
+            total={lightboxList.length}
             onClose={() => setSelectedItem(null)}
             onPrev={handlePrev}
             onNext={handleNext}

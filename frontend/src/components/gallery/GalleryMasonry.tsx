@@ -35,7 +35,7 @@ export function GalleryMasonry({ items, onSelectImage }: GalleryCollageProps) {
   const p8 = getItem(3) || getItem(7); // Bottom-right (packed auditorium hands up)
 
   return (
-    <div ref={containerRef} className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pb-24">
+    <div ref={containerRef} className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pb-10 sm:pb-14">
       {/* =========================================================================
           MOBILE & TABLET VIEW (lg:hidden)
           2-column masonry with full-color high-res photos
