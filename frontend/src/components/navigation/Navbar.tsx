@@ -81,36 +81,30 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
       </header>
 
       {/* Mobile Menu Glass Overlay */}
-      <div 
-        className={cn(
-          "fixed inset-0 z-40 transition-all duration-500 pointer-events-none",
-          isOpen ? "opacity-100" : "opacity-0"
-        )}
-      >
-        <div 
-          className="absolute inset-0 bg-black/40" 
-          style={{ 
-            backdropFilter: 'blur(20px) saturate(150%)', 
-            WebkitBackdropFilter: 'blur(20px) saturate(150%)' 
-          }}
-          onClick={() => setIsOpen(false)}
-        />
-        <div className={cn(
-          "absolute inset-x-4 top-24 rounded-3xl bg-white/10 border border-white/20 p-8 flex flex-col items-center gap-6 shadow-2xl transition-transform duration-500 pointer-events-auto",
-          isOpen ? "translate-y-0" : "-translate-y-4"
-        )}>
-          {NAV_LINKS.map((link) => (
-            <Link 
-              key={link.label} 
-              href={link.href} 
-              className="text-xl font-medium tracking-wide text-white/80 hover:text-white transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+      {isOpen && (
+        <div className="fixed inset-0 z-40 md:hidden transition-all duration-500">
+          <div 
+            className="absolute inset-0 bg-black/40" 
+            style={{ 
+              backdropFilter: 'blur(20px) saturate(150%)', 
+              WebkitBackdropFilter: 'blur(20px) saturate(150%)' 
+            }}
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute inset-x-4 top-24 rounded-3xl bg-white/10 border border-white/20 p-8 flex flex-col items-center gap-6 shadow-2xl transition-transform duration-500 pointer-events-auto">
+            {NAV_LINKS.map((link) => (
+              <Link 
+                key={link.label} 
+                href={link.href} 
+                className="text-xl font-medium tracking-wide text-white/80 hover:text-white transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

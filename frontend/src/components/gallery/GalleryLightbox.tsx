@@ -96,36 +96,40 @@ export function GalleryLightbox({
           </div>
 
           {/* Navigation Prev Button */}
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
               onPrev();
             }}
-            className="absolute left-4 md:left-8 z-30 p-3 md:p-4 rounded-full border border-white/20 bg-white/10 hover:bg-white/25 text-white transition-all duration-200 hover:scale-110 active:scale-95 shadow-2xl backdrop-blur-md hidden sm:flex items-center justify-center"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.92 }}
+            className="absolute left-4 md:left-8 z-30 p-3 md:p-4 rounded-full border border-white/20 bg-white/10 hover:bg-white/25 text-white transition-colors duration-200 shadow-2xl backdrop-blur-md hidden sm:flex items-center justify-center cursor-pointer"
             aria-label="Previous Image"
           >
             <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
+          </motion.button>
 
           {/* Navigation Next Button */}
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
               onNext();
             }}
-            className="absolute right-4 md:right-8 z-30 p-3 md:p-4 rounded-full border border-white/20 bg-white/10 hover:bg-white/25 text-white transition-all duration-200 hover:scale-110 active:scale-95 shadow-2xl backdrop-blur-md hidden sm:flex items-center justify-center"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.92 }}
+            className="absolute right-4 md:right-8 z-30 p-3 md:p-4 rounded-full border border-white/20 bg-white/10 hover:bg-white/25 text-white transition-colors duration-200 shadow-2xl backdrop-blur-md hidden sm:flex items-center justify-center cursor-pointer"
             aria-label="Next Image"
           >
             <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
+          </motion.button>
 
           {/* Main Image Stage */}
           <motion.div
             key={item.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 0.92, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: -16 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-20 max-w-5xl max-h-[72vh] w-[90vw] h-[72vh] flex items-center justify-center p-2"
             onClick={(e) => e.stopPropagation()}
           >
