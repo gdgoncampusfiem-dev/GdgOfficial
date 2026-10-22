@@ -55,18 +55,18 @@ export function DomainsTab() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-gray-400">
+                    <span className="text-xs font-sans uppercase text-gray-400">
                       Track {domain.index}
                     </span>
-                    <h3 className="text-sm font-bold text-gray-900 tracking-tight">
+                    <h3 className="text-sm font-bold text-gray-900 tracking-tight font-sans">
                       {domain.name}
                     </h3>
                   </div>
-                  <span className="text-xs font-mono text-gray-400">{domain.watermark}</span>
+                  <span className="text-xs font-sans text-gray-400">{domain.watermark}</span>
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-gray-400 block mb-0.5">
+                  <span className="text-xs font-sans uppercase text-gray-400 block mb-0.5">
                     Lead
                   </span>
                   {isEditing ? (
@@ -75,17 +75,17 @@ export function DomainsTab() {
                       value={editLead}
                       onChange={(e) => setEditLead(e.target.value)}
                       placeholder="Domain Lead Name"
-                      className="w-full bg-gray-50 border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:bg-white"
+                      className="w-full bg-gray-50 border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:bg-white font-sans"
                     />
                   ) : (
-                    <p className="text-xs text-gray-800 font-semibold">
+                    <p className="text-xs text-gray-800 font-semibold font-sans">
                       {domain.leadName || 'Unassigned'}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-gray-400 block mb-0.5">
+                  <span className="text-xs font-sans uppercase text-gray-400 block mb-0.5">
                     Description
                   </span>
                   {isEditing ? (
@@ -103,14 +103,14 @@ export function DomainsTab() {
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-gray-400 block mb-1.5">
+                  <span className="text-xs font-sans uppercase text-gray-400 block mb-1.5">
                     Focus Areas / Stack
                   </span>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {domain.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-gray-100 border border-gray-200 text-gray-700"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-sans bg-gray-100 border border-gray-200 text-gray-700"
                       >
                         <span>{tech}</span>
                         <button
@@ -136,12 +136,12 @@ export function DomainsTab() {
                           addTag(domain);
                         }
                       }}
-                      className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:bg-white"
+                      className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:bg-white font-sans"
                     />
                     <button
                       type="button"
                       onClick={() => addTag(domain)}
-                      className="px-2.5 py-1 bg-gray-100 hover:bg-black hover:text-white text-gray-700 rounded-lg text-xs font-mono transition-colors"
+                      className="px-2.5 py-1 bg-gray-100 hover:bg-black hover:text-white text-gray-700 rounded-lg text-xs font-sans transition-colors"
                     >
                       Add
                     </button>
@@ -149,18 +149,18 @@ export function DomainsTab() {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-gray-100 flex items-center justify-end">
+              <div className="pt-3 border-t border-gray-100 flex items-center justify-end font-sans">
                 {isEditing ? (
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setEditingDomainId(null)}
-                      className="text-xs text-gray-500 hover:text-black"
+                      className="text-xs text-gray-500 hover:text-black font-sans"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={() => saveEditing(domain.id)}
-                      className="px-3 py-1 bg-black text-white rounded-lg text-xs font-semibold uppercase font-mono"
+                      className="px-3 py-1 bg-black text-white rounded-lg text-xs font-semibold uppercase font-sans"
                     >
                       Save
                     </button>

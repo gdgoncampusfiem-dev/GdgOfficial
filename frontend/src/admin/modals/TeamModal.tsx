@@ -72,7 +72,7 @@ export function TeamModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-gray-900 uppercase font-mono">
+          <h2 className="text-sm font-bold text-gray-900 uppercase font-sans">
             {memberToEdit ? 'Edit Member' : 'Add Member'}
           </h2>
           <button onClick={onClose} className="p-1 text-gray-400 hover:text-gray-700">
@@ -80,80 +80,80 @@ export function TeamModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3 font-sans">
           <div>
-            <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Full Name *</label>
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Full Name *</label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Sarthak Sen"
-              className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+              className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Role *</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Role *</label>
               <input
                 type="text"
                 required
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 placeholder="Organizer / Core Team"
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Domain</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Domain</label>
               <input
                 type="text"
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
                 placeholder="Web / AI / Design"
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Profile Photo URL</label>
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Profile Photo URL</label>
             <input
               type="url"
               required
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-mono focus:outline-none focus:border-black"
+              className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-sans focus:outline-none focus:border-black"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">LinkedIn URL</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">LinkedIn URL</label>
               <input
                 type="text"
                 value={linkedinUrl}
                 onChange={(e) => setLinkedinUrl(e.target.value)}
                 placeholder="https://linkedin.com/..."
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-mono focus:outline-none focus:border-black"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-sans focus:outline-none focus:border-black"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">GitHub URL</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">GitHub URL</label>
               <input
                 type="text"
                 value={githubUrl}
                 onChange={(e) => setGithubUrl(e.target.value)}
                 placeholder="https://github.com/..."
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-mono focus:outline-none focus:border-black"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-sans focus:outline-none focus:border-black"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Bio / Statement</label>
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Bio / Statement</label>
             <textarea
               rows={2}
               value={intro}
@@ -163,17 +163,17 @@ export function TeamModal({
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150">
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150 font-sans">
             <button
               type="button"
               onClick={onClose}
-              className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-mono"
+              className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-sans"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-1.5 text-xs text-white bg-black hover:bg-gray-800 rounded-lg font-mono font-medium shadow-sm"
+              className="px-4 py-1.5 text-xs text-white bg-black hover:bg-gray-800 rounded-lg font-sans font-medium shadow-sm"
             >
               {memberToEdit ? 'Save Changes' : 'Add Member'}
             </button>

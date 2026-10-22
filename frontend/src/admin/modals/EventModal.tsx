@@ -104,7 +104,7 @@ export function EventModal({
       >
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-[10px] font-mono uppercase text-gray-400 block">
+            <span className="text-xs font-sans uppercase text-gray-400 block">
               {eventToEdit ? 'Edit Event' : 'Create Event'}
             </span>
             <h2 className="text-base font-bold text-gray-900 font-sans">
@@ -119,9 +119,9 @@ export function EventModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3 font-sans">
           <div>
-            <label className="block text-[11px] font-mono uppercase text-gray-600 mb-1">
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">
               Title *
             </label>
             <input
@@ -130,12 +130,12 @@ export function EventModal({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. DevFest Kolkata 2025"
-              className="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+              className="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
             />
           </div>
 
           <div>
-            <label className="block text-[11px] font-mono uppercase text-gray-600 mb-1">
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">
               Tagline
             </label>
             <input
@@ -143,17 +143,17 @@ export function EventModal({
               value={tagline}
               onChange={(e) => setTagline(e.target.value)}
               placeholder="Short summary"
-              className="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+              className="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
             />
           </div>
 
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Category</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
-                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none font-sans"
               >
                 <option value="devfest">DevFest</option>
                 <option value="workshops">Workshops</option>
@@ -162,11 +162,11 @@ export function EventModal({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Status</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Status</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as EventStatus)}
-                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none font-sans"
               >
                 <option value="Scheduled">Scheduled</option>
                 <option value="Live">Live</option>
@@ -175,11 +175,11 @@ export function EventModal({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Format</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Format</label>
               <select
                 value={locationType}
                 onChange={(e) => setLocationType(e.target.value as any)}
-                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none font-sans"
               >
                 <option value="In-Person">In-Person</option>
                 <option value="Virtual">Virtual</option>
@@ -190,61 +190,61 @@ export function EventModal({
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Date</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Date</label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-mono focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-sans focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Time</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Time</label>
               <input
                 type="text"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 placeholder="10:00 AM - 05:00 PM"
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-mono focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-sans focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Venue / Location</label>
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Venue / Location</label>
             <input
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Address / Hall"
-              className="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none"
+              className="w-full bg-white border border-gray-300 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none font-sans"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Registration Link</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Registration Link</label>
               <input
                 type="url"
                 value={registrationUrl}
                 onChange={(e) => setRegistrationUrl(e.target.value)}
                 placeholder="https://..."
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-mono focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-sans focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Cover Image URL</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Cover Image URL</label>
               <input
                 type="url"
                 value={coverImageUrl}
                 onChange={(e) => setCoverImageUrl(e.target.value)}
                 placeholder="https://..."
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-mono focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs text-gray-900 font-sans focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-2 py-1">
+          <div className="flex items-center gap-2 py-1 font-sans">
             <input
               type="checkbox"
               id="isFeatured"
@@ -252,13 +252,13 @@ export function EventModal({
               onChange={(e) => setIsFeatured(e.target.checked)}
               className="w-3.5 h-3.5 rounded border-gray-300 text-black focus:ring-0"
             />
-            <label htmlFor="isFeatured" className="text-xs text-gray-700 cursor-pointer">
+            <label htmlFor="isFeatured" className="text-xs text-gray-700 cursor-pointer font-sans">
               Pin as Featured on Homepage
             </label>
           </div>
 
           <div>
-            <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Description</label>
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Description</label>
             <textarea
               rows={2}
               value={description}
@@ -268,17 +268,17 @@ export function EventModal({
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150">
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150 font-sans">
             <button
               type="button"
               onClick={onClose}
-              className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-mono"
+              className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-sans"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-1.5 text-xs text-white bg-black hover:bg-gray-800 rounded-lg font-mono font-medium shadow-sm"
+              className="px-4 py-1.5 text-xs text-white bg-black hover:bg-gray-800 rounded-lg font-sans font-medium shadow-sm"
             >
               {eventToEdit ? 'Save Changes' : 'Create Event'}
             </button>

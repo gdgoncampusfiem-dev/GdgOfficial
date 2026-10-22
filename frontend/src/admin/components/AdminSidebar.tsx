@@ -117,7 +117,7 @@ export function AdminSidebar() {
                       {item.badge !== undefined && (
                         <span
                           className={cn(
-                            "px-1.5 py-0.5 rounded text-[10px] font-mono",
+                            "px-1.5 py-0.5 rounded text-[10px] font-sans font-medium",
                             isActive ? "bg-white text-gray-900 border border-gray-200" : "bg-gray-100 text-gray-500"
                           )}
                         >

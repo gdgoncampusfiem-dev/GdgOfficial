@@ -80,7 +80,7 @@ export function PhotoModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-gray-900 uppercase font-mono">
+          <h2 className="text-sm font-bold text-gray-900 uppercase font-sans">
             {photoToEdit ? 'Edit Photo' : 'Upload Photo'}
           </h2>
           <button onClick={onClose} className="p-1 text-gray-400 hover:text-gray-700">
@@ -88,7 +88,7 @@ export function PhotoModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3 font-sans">
           {imageUrl && (
             <div className="relative rounded-lg overflow-hidden border border-gray-200 bg-gray-100 h-28">
               <img
@@ -103,48 +103,48 @@ export function PhotoModal({
           )}
 
           <div>
-            <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Image URL *</label>
+            <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Image URL *</label>
             <input
               type="url"
               required
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-mono focus:outline-none focus:border-black"
+              className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 font-sans focus:outline-none focus:border-black"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Title *</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Title *</label>
               <input
                 type="text"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Keynote Hall"
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Event Name</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Event Name</label>
               <input
                 type="text"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
                 placeholder="e.g. DevFest 2025"
-                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:border-black font-sans"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Category</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
-                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none font-sans"
               >
                 <option value="devfest">DevFest</option>
                 <option value="workshops">Workshops</option>
@@ -153,11 +153,11 @@ export function PhotoModal({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-mono uppercase text-gray-600 mb-1">Aspect Ratio</label>
+              <label className="block text-xs uppercase text-gray-600 mb-1 font-sans">Aspect Ratio</label>
               <select
                 value={aspect}
                 onChange={(e) => setAspect(e.target.value as any)}
-                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none"
+                className="w-full bg-white border border-gray-300 rounded-lg px-2 py-1.5 text-xs text-gray-900 focus:outline-none font-sans"
               >
                 <option value="aspect-[16/9]">16:9 Landscape</option>
                 <option value="aspect-[4/3]">4:3 Classic</option>
@@ -167,7 +167,7 @@ export function PhotoModal({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 py-1">
+          <div className="flex items-center gap-2 py-1 font-sans">
             <input
               type="checkbox"
               id="isShowcase"
@@ -180,17 +180,17 @@ export function PhotoModal({
             </label>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150">
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150 font-sans">
             <button
               type="button"
               onClick={onClose}
-              className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-mono"
+              className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-sans"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-1.5 text-xs text-white bg-black hover:bg-gray-800 rounded-lg font-mono font-medium shadow-sm"
+              className="px-4 py-1.5 text-xs text-white bg-black hover:bg-gray-800 rounded-lg font-sans font-medium shadow-sm"
             >
               {photoToEdit ? 'Save Changes' : 'Upload'}
             </button>

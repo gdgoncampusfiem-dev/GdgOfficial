@@ -74,13 +74,13 @@ export function EventsTab({ onEditEvent, onNewEvent }: EventsTabProps) {
             <option value="Completed">Completed</option>
             <option value="Draft">Draft</option>
           </select>
-          <span className="text-xs font-mono text-gray-400">{filteredEvents.length} events</span>
+          <span className="text-xs font-sans text-gray-400">{filteredEvents.length} events</span>
         </div>
       </div>
 
       {/* Events List */}
       {filteredEvents.length === 0 ? (
-        <div className="text-center py-12 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <div className="text-center py-12 bg-white border border-gray-200 rounded-xl p-6 shadow-sm font-sans">
           <p className="text-xs text-gray-500 mb-3">No matching events found.</p>
           <button
             onClick={onNewEvent}
@@ -90,7 +90,7 @@ export function EventsTab({ onEditEvent, onNewEvent }: EventsTabProps) {
           </button>
         </div>
       ) : (
-        <div className="divide-y divide-gray-150 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+        <div className="divide-y divide-gray-150 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm font-sans">
           {filteredEvents.map((event) => (
             <div
               key={event.id}
@@ -98,25 +98,25 @@ export function EventsTab({ onEditEvent, onNewEvent }: EventsTabProps) {
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono uppercase text-gray-500 font-semibold">
+                  <span className="text-xs font-sans uppercase text-gray-500 font-semibold">
                     {event.category}
                   </span>
                   <span className="text-gray-300">•</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-gray-100 text-gray-700 border border-gray-200">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] font-sans bg-gray-100 text-gray-700 border border-gray-200">
                     {event.status}
                   </span>
                   {event.isFeatured && (
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-amber-50 text-amber-800 border border-amber-200 font-semibold flex items-center gap-1">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-sans bg-amber-50 text-amber-800 border border-amber-200 font-semibold flex items-center gap-1">
                       <Sparkles className="w-2.5 h-2.5" /> Featured
                     </span>
                   )}
                 </div>
 
-                <h3 className="text-sm font-bold text-gray-900 tracking-tight">
+                <h3 className="text-sm font-bold text-gray-900 tracking-tight font-sans">
                   {event.title}
                 </h3>
 
-                <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-500 font-sans">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-sans">
                   <span>{event.date}</span>
                   <span>{event.time}</span>
                   <span>{event.location}</span>
@@ -140,7 +140,7 @@ export function EventsTab({ onEditEvent, onNewEvent }: EventsTabProps) {
                 <button
                   onClick={() => toggleEventStatus(event.id)}
                   title="Cycle status"
-                  className="px-2 py-1 rounded-lg border border-gray-200 text-gray-600 hover:text-black hover:bg-gray-50 text-[10px] font-mono"
+                  className="px-2 py-1 rounded-lg border border-gray-200 text-gray-600 hover:text-black hover:bg-gray-50 text-xs font-sans"
                 >
                   Status
                 </button>

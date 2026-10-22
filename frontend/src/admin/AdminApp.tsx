@@ -83,7 +83,10 @@ function AdminMainContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFBFA] text-[#111827] font-sans flex antialiased">
+    <div 
+      className="min-h-screen bg-[#FBFBFA] text-[#111827] font-sans flex antialiased"
+      style={{ fontFamily: "'Josefin Sans', system-ui, -apple-system, sans-serif" }}
+    >
       {/* Side Navigation Panel */}
       <AdminSidebar />
 

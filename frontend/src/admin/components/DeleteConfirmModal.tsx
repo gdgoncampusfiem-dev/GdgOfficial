@@ -25,7 +25,7 @@ export function DeleteConfirmModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h3 className="font-bold text-sm tracking-tight uppercase font-mono text-gray-900">{title}</h3>
+          <h3 className="font-bold text-sm tracking-tight uppercase font-sans text-gray-900">{title}</h3>
           <button
             onClick={onCancel}
             className="p-1 text-gray-400 hover:text-gray-700"
@@ -34,20 +34,20 @@ export function DeleteConfirmModal({
           </button>
         </div>
 
-        <p className="text-xs text-gray-600 leading-relaxed">
+        <p className="text-xs text-gray-600 leading-relaxed font-sans">
           Are you sure you want to permanently delete <span className="text-gray-950 font-semibold">"{itemName}"</span>? This action cannot be undone.
         </p>
 
-        <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150">
+        <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-150 font-sans">
           <button
             onClick={onCancel}
-            className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-mono"
+            className="px-3 py-1.5 text-xs text-gray-600 hover:text-black rounded-lg border border-gray-200 hover:bg-gray-50 font-sans"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="px-3 py-1.5 text-xs text-white bg-red-600 hover:bg-red-700 rounded-lg font-mono font-medium shadow-sm"
+            className="px-3 py-1.5 text-xs text-white bg-red-600 hover:bg-red-700 rounded-lg font-sans font-medium shadow-sm"
           >
             Confirm Delete
           </button>

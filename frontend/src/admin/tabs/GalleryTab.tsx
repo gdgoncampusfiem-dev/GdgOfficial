@@ -72,13 +72,13 @@ export function GalleryTab({ onEditPhoto, onNewPhoto }: GalleryTabProps) {
             <Sparkles className="w-3 h-3 text-amber-500" />
             <span>Showcase Only</span>
           </button>
-          <span className="text-xs font-mono text-gray-400">{filteredPhotos.length} photos</span>
+          <span className="text-xs font-sans text-gray-400">{filteredPhotos.length} photos</span>
         </div>
       </div>
 
       {/* Photos Grid */}
       {filteredPhotos.length === 0 ? (
-        <div className="text-center py-12 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <div className="text-center py-12 bg-white border border-gray-200 rounded-xl p-6 shadow-sm font-sans">
           <p className="text-xs text-gray-500 mb-3">No photos found.</p>
           <button
             onClick={onNewPhoto}
@@ -88,7 +88,7 @@ export function GalleryTab({ onEditPhoto, onNewPhoto }: GalleryTabProps) {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 font-sans">
           {filteredPhotos.map((photo) => {
             const isShowcase = photo.location === 'Homepage Showcase';
             return (
@@ -106,11 +106,11 @@ export function GalleryTab({ onEditPhoto, onNewPhoto }: GalleryTabProps) {
                     }}
                   />
                   <div className="absolute top-2 left-2 flex items-center gap-1">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] font-mono uppercase bg-black/70 text-white backdrop-blur-sm">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-sans uppercase bg-black/70 text-white backdrop-blur-sm">
                       {photo.category}
                     </span>
                     {isShowcase && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-amber-400 text-black font-bold">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-sans bg-amber-400 text-black font-bold">
                         Home
                       </span>
                     )}
@@ -119,8 +119,8 @@ export function GalleryTab({ onEditPhoto, onNewPhoto }: GalleryTabProps) {
 
                 <div className="p-3.5 space-y-2">
                   <div>
-                    <h4 className="text-xs font-bold text-gray-900 truncate">{photo.title}</h4>
-                    <p className="text-[10px] text-gray-400 font-mono mt-0.5">{photo.date} • {photo.location || photo.eventName}</p>
+                    <h4 className="text-xs font-bold text-gray-900 truncate font-sans">{photo.title}</h4>
+                    <p className="text-xs text-gray-500 font-sans mt-0.5">{photo.date} • {photo.location || photo.eventName}</p>
                   </div>
 
                   <div className="flex items-center justify-between pt-2 border-t border-gray-100">

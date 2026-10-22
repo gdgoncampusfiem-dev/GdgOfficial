@@ -100,14 +100,14 @@ export function TeamTab({ onEditMember, onNewMember }: TeamTabProps) {
           ))}
         </div>
 
-        <span className="text-xs font-mono text-gray-400">
+        <span className="text-xs font-sans text-gray-400">
           {filteredMembers.length} members
         </span>
       </div>
 
       {/* Team Roster Grid */}
       {filteredMembers.length === 0 ? (
-        <div className="text-center py-12 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <div className="text-center py-12 bg-white border border-gray-200 rounded-xl p-6 shadow-sm font-sans">
           <p className="text-xs text-gray-500 mb-3">No members found.</p>
           <button
             onClick={onNewMember}
@@ -117,7 +117,7 @@ export function TeamTab({ onEditMember, onNewMember }: TeamTabProps) {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-sans">
           {filteredMembers.map((member) => (
             <div
               key={member.id}
@@ -135,10 +135,10 @@ export function TeamTab({ onEditMember, onNewMember }: TeamTabProps) {
                   />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h4 className="text-xs font-bold text-gray-900 truncate">{member.name}</h4>
-                  <p className="text-[11px] text-gray-500 truncate font-mono">{member.role}</p>
+                  <h4 className="text-xs font-bold text-gray-900 truncate font-sans">{member.name}</h4>
+                  <p className="text-xs text-gray-500 truncate font-sans">{member.role}</p>
                   {member.domain && (
-                    <span className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-gray-100 border border-gray-200 text-gray-600">
+                    <span className="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-sans bg-gray-100 border border-gray-200 text-gray-600">
                       {member.domain}
                     </span>
                   )}
