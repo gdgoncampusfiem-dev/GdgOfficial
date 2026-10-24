@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 
 const TARGET_TEXT = 'Ordinary Ends Here';
 const CHARS = TARGET_TEXT.split('');
 
 export function OrdinaryEndsHere() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const lenis = useLenis();
 
   // Positive margin fires intersection 400px before the element enters the
   // viewport, so typing begins while the user is still scrolling toward it.
@@ -41,15 +43,19 @@ export function OrdinaryEndsHere() {
   }, [isInView, shouldReduceMotion]);
 
   // After typing finishes, smooth-scroll down to the GDG On Campus showcase.
+  // Must use Lenis API — native scrollIntoView is overridden by Lenis.
   useEffect(() => {
     if (!isTypingComplete) return;
 
     const scrollTimer = setTimeout(() => {
-      document.getElementById('showcase')?.scrollIntoView({ behavior: 'smooth' });
+      const target = document.getElementById('showcase');
+      if (target && lenis) {
+        lenis.scrollTo(target, { duration: 2, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+      }
     }, 900);
 
     return () => clearTimeout(scrollTimer);
-  }, [isTypingComplete]);
+  }, [isTypingComplete, lenis]);
 
   // For reduced-motion: show all chars at once (safe — derived, no setState).
   // isInView is false on SSR, so visibleCount is 0 there too.
