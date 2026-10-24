@@ -1,5 +1,6 @@
 import { WhoAreWe } from './WhoAreWe';
 import { AboutStats } from './AboutStats';
+import { OrdinaryEndsHere } from './OrdinaryEndsHere';
 
 export function AboutPreview() {
   return (
@@ -21,6 +22,7 @@ export function AboutPreview() {
       <div className="relative z-10 flex flex-col gap-24 md:gap-32 w-full">
         <WhoAreWe />
         <AboutStats />
+        <OrdinaryEndsHere />
       </div>
     </section>
   );
