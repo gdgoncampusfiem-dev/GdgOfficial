@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 
@@ -8,11 +10,18 @@ export function OrdinaryEndsHere() {
   const isInView = useInView(containerRef, { once: true, margin: '-60px' });
   const shouldReduceMotion = useReducedMotion();
 
+  // `displayedText` starts empty on both server and client,
+  // eliminating the SSR / hydration mismatch.
+  // The typing animation only fires client-side inside useEffect.
   const [displayedText, setDisplayedText] = useState('');
 
-  const textToRender = shouldReduceMotion ? TARGET_TEXT : displayedText;
+  // useReducedMotion() is null on the server but boolean on the client.
+  // To keep SSR output identical to the initial client render we derive
+  // textToRender from isInView as well — both are false until the client
+  // runs, so the span will be empty on first paint everywhere.
+  const textToRender = (isInView && shouldReduceMotion) ? TARGET_TEXT : displayedText;
 
-  // Typewriting character effect with natural cadence
+  // Typewriting character effect — runs only client-side after scroll trigger
   useEffect(() => {
     if (shouldReduceMotion || !isInView) return;
 
@@ -23,9 +32,7 @@ export function OrdinaryEndsHere() {
       currentIndex++;
       setDisplayedText(TARGET_TEXT.slice(0, currentIndex));
 
-      if (currentIndex >= TARGET_TEXT.length) {
-        return;
-      }
+      if (currentIndex >= TARGET_TEXT.length) return;
 
       const char = TARGET_TEXT[currentIndex - 1];
       const delay = char === ' ' ? 120 : 80;
