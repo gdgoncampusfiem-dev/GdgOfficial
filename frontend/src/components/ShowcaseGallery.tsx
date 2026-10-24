@@ -128,6 +128,7 @@ export function ShowcaseGallery() {
 
   return (
     <section
+      id="showcase"
       ref={containerRef}
       aria-label="Community Showcase Gallery"
       className="relative w-full h-[90vh] md:h-[130vh] bg-[#F3F0E8] overflow-hidden flex items-center justify-center"
