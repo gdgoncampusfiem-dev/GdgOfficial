@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import { Navbar } from '@/components/navigation/Navbar';
-import { teacherMentor, organizers, coreTeam } from '@/data/team';
+import { useTeamRoster } from '@/hooks/useTeamRoster';
 import { TeamCard } from '@/components/team/TeamCard';
 import { motion } from 'framer-motion';
 
 export default function Teams() {
+  const { faculty, organizers, coreTeam } = useTeamRoster();
+
   return (
     <>
       <Head>
@@ -45,66 +47,72 @@ export default function Teams() {
           </div>
 
           {/* Teacher Mentor */}
-          <motion.section 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-30px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-24"
-          >
-            <div className="text-center w-full mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
-                Faculty Coordinator
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
-              {teacherMentor.map((member) => (
-                <div key={member.id} className="lg:col-span-1">
-                  <TeamCard member={member} />
-                </div>
-              ))}
-            </div>
-          </motion.section>
+          {faculty.length > 0 && (
+            <motion.section 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-24"
+            >
+              <div className="text-center w-full mb-10">
+                <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
+                  Faculty Coordinator
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
+                {faculty.map((member) => (
+                  <div key={member.id} className="lg:col-span-1">
+                    <TeamCard member={member} />
+                  </div>
+                ))}
+              </div>
+            </motion.section>
+          )}
 
           {/* Organizers */}
-          <motion.section 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-30px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-24"
-          >
-            <div className="text-center w-full mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
-                Organizers
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-              {organizers.map((member) => (
-                <TeamCard key={member.id} member={member} />
-              ))}
-            </div>
-          </motion.section>
+          {organizers.length > 0 && (
+            <motion.section 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-24"
+            >
+              <div className="text-center w-full mb-10">
+                <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
+                  Organizers & Leads
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+                {organizers.map((member) => (
+                  <TeamCard key={member.id} member={member} />
+                ))}
+              </div>
+            </motion.section>
+          )}
 
           {/* Core Team */}
-          <motion.section 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-30px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-24"
-          >
-            <div className="text-center w-full mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
-                Core Team
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:gap-8">
-              {coreTeam.map((member) => (
-                <TeamCard key={member.id} member={member} />
-              ))}
-            </div>
-          </motion.section>
+          {coreTeam.length > 0 && (
+            <motion.section 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-24"
+            >
+              <div className="text-center w-full mb-10">
+                <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
+                  Core Team
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:gap-8">
+                {coreTeam.map((member) => (
+                  <TeamCard key={member.id} member={member} />
+                ))}
+              </div>
+            </motion.section>
+          )}
         </div>
       </main>
     </>

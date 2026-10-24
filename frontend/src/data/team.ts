@@ -10,6 +10,19 @@ export interface TeamMember {
   githubUrl?: string;
   intro?: string;
   accentColor: GoogleColor;
+  socials?: Record<string, string>;
+  customSocialPlatforms?: Record<string, { name: string; icon?: string }>;
+}
+
+export function getTeamMemberSocials(member: TeamMember): Record<string, string> {
+  const map: Record<string, string> = { ...(member.socials || {}) };
+  if (member.linkedinUrl && !map.linkedin) {
+    map.linkedin = member.linkedinUrl;
+  }
+  if (member.githubUrl && !map.github) {
+    map.github = member.githubUrl;
+  }
+  return map;
 }
 
 const colors: GoogleColor[] = ['blue', 'red', 'yellow', 'green'];

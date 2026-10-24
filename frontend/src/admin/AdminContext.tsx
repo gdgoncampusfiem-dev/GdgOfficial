@@ -11,7 +11,7 @@ import {
   InquiryStatus
 } from './types';
 import { GALLERY_ITEMS, GalleryItem } from '@/data/gallery';
-import { teacherMentor, organizers, coreTeam, TeamMember, GoogleColor } from '@/data/team';
+import { teacherMentor, organizers, coreTeam, TeamMember } from '@/data/team';
 
 // Initial Mock Data
 const INITIAL_EVENTS: AdminEvent[] = [
@@ -291,44 +291,38 @@ const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 const LOCAL_STORAGE_KEY = 'gdg_fiem_admin_state_v1';
 
+const getSavedState = <T,>(key: string, fallback: T): T => {
+  if (typeof window === 'undefined') return fallback;
+  try {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed[key] !== undefined) return parsed[key];
+    }
+  } catch {
+    // Ignore error
+  }
+  return fallback;
+};
+
 export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [activeTab, setActiveTab] = useState<AdminTab>('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // States
-  const [events, setEvents] = useState<AdminEvent[]>(INITIAL_EVENTS);
-  const [photos, setPhotos] = useState<GalleryItem[]>(GALLERY_ITEMS);
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
+  // States initialized lazily
+  const [events, setEvents] = useState<AdminEvent[]>(() => getSavedState('events', INITIAL_EVENTS));
+  const [photos, setPhotos] = useState<GalleryItem[]>(() => getSavedState('photos', GALLERY_ITEMS));
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() => getSavedState('teamMembers', [
     ...teacherMentor,
     ...organizers,
     ...coreTeam
-  ]);
-  const [domains, setDomains] = useState<AdminDomain[]>(INITIAL_DOMAINS);
-  const [inquiries, setInquiries] = useState<AdminInquiry[]>(INITIAL_INQUIRIES);
-  const [stats, setStats] = useState<AdminStat[]>(INITIAL_STATS);
-  const [announcement, setAnnouncement] = useState<AdminAnnouncement>(INITIAL_ANNOUNCEMENT);
-  const [activityLogs, setActivityLogs] = useState<ActivityItem[]>(INITIAL_ACTIVITY);
-
-  // Load from LocalStorage if present
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.events) setEvents(parsed.events);
-        if (parsed.photos) setPhotos(parsed.photos);
-        if (parsed.teamMembers) setTeamMembers(parsed.teamMembers);
-        if (parsed.domains) setDomains(parsed.domains);
-        if (parsed.inquiries) setInquiries(parsed.inquiries);
-        if (parsed.stats) setStats(parsed.stats);
-        if (parsed.announcement) setAnnouncement(parsed.announcement);
-        if (parsed.activityLogs) setActivityLogs(parsed.activityLogs);
-      }
-    } catch {
-      // Ignore local storage parse error
-    }
-  }, []);
+  ]));
+  const [domains, setDomains] = useState<AdminDomain[]>(() => getSavedState('domains', INITIAL_DOMAINS));
+  const [inquiries, setInquiries] = useState<AdminInquiry[]>(() => getSavedState('inquiries', INITIAL_INQUIRIES));
+  const [stats, setStats] = useState<AdminStat[]>(() => getSavedState('stats', INITIAL_STATS));
+  const [announcement, setAnnouncement] = useState<AdminAnnouncement>(() => getSavedState('announcement', INITIAL_ANNOUNCEMENT));
+  const [activityLogs, setActivityLogs] = useState<ActivityItem[]>(() => getSavedState('activityLogs', INITIAL_ACTIVITY));
 
   // Sync to LocalStorage on changes
   useEffect(() => {
