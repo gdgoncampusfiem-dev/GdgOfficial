@@ -12,6 +12,12 @@ import {
 } from './types';
 import { GALLERY_ITEMS, GalleryItem } from '@/data/gallery';
 import { teacherMentor, organizers, coreTeam, TeamMember } from '@/data/team';
+import { 
+  fetchTeamMembers, 
+  createTeamMemberApi, 
+  updateTeamMemberApi, 
+  deleteTeamMemberApi 
+} from '@/services/teamApi';
 
 // Initial Mock Data
 const INITIAL_EVENTS: AdminEvent[] = [
@@ -342,6 +348,24 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     }
   }, [events, photos, teamMembers, domains, inquiries, stats, announcement, activityLogs]);
 
+  // Synchronize team roster from Express backend on mount
+  useEffect(() => {
+    let isMounted = true;
+    fetchTeamMembers()
+      .then((liveMembers) => {
+        if (isMounted && Array.isArray(liveMembers) && liveMembers.length > 0) {
+          setTeamMembers(liveMembers);
+        }
+      })
+      .catch((err) => {
+        console.warn('[AdminContext] Operating with cached team roster:', err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
@@ -443,28 +467,54 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     triggerToast('Homepage showcase photo toggled');
   };
 
-  // --- Team Handlers ---
-  const addTeamMember = (memberData: Omit<TeamMember, 'id'>) => {
-    const newMember: TeamMember = {
+  // --- Team Handlers (Backend Connected) ---
+  const addTeamMember = async (memberData: Omit<TeamMember, 'id'>) => {
+    const tempId = 'team-' + Date.now();
+    const optimisticMember: TeamMember = {
       ...memberData,
-      id: 'team-' + Date.now(),
+      id: tempId,
     };
-    setTeamMembers(prev => [newMember, ...prev]);
-    addLog('create', 'Team Member', `Added team member: ${newMember.name}`);
-    triggerToast(`Added ${newMember.name} to team roster`);
+    // 1. Optimistic local update
+    setTeamMembers(prev => [optimisticMember, ...prev]);
+    addLog('create', 'Team Member', `Added team member: ${memberData.name}`);
+    triggerToast(`Added ${memberData.name} to team roster`);
+
+    // 2. Persist to Express backend
+    try {
+      const persisted = await createTeamMemberApi(memberData);
+      setTeamMembers(prev => prev.map(m => m.id === tempId ? persisted : m));
+    } catch (err) {
+      console.warn('[AdminContext] Backend create error (kept in local cache):', err);
+    }
   };
 
-  const updateTeamMember = (id: string, updates: Partial<TeamMember>) => {
+  const updateTeamMember = async (id: string, updates: Partial<TeamMember>) => {
+    // 1. Optimistic local update
     setTeamMembers(prev => prev.map(m => m.id === id ? { ...m, ...updates } : m));
     addLog('update', 'Team Member', `Updated profile of: ${updates.name || id}`);
     triggerToast('Team member profile updated');
+
+    // 2. Persist to Express backend
+    try {
+      await updateTeamMemberApi(id, updates);
+    } catch (err) {
+      console.warn('[AdminContext] Backend update error (kept in local cache):', err);
+    }
   };
 
-  const deleteTeamMember = (id: string) => {
+  const deleteTeamMember = async (id: string) => {
     const target = teamMembers.find(m => m.id === id);
+    // 1. Optimistic local update
     setTeamMembers(prev => prev.filter(m => m.id !== id));
     addLog('delete', 'Team Member', `Removed team member: ${target?.name || id}`);
     triggerToast('Member removed from team');
+
+    // 2. Persist to Express backend
+    try {
+      await deleteTeamMemberApi(id);
+    } catch (err) {
+      console.warn('[AdminContext] Backend delete error:', err);
+    }
   };
 
   // --- Domain Handlers ---

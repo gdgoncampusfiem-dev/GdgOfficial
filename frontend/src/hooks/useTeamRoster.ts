@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TeamMember, teacherMentor as defaultMentor, organizers as defaultOrganizers, coreTeam as defaultCore } from '@/data/team';
+import { fetchTeamMembers } from '@/services/teamApi';
 
 const LOCAL_STORAGE_KEY = 'gdg_fiem_admin_state_v1';
 
@@ -8,6 +9,8 @@ export interface GroupedTeam {
   organizers: TeamMember[];
   coreTeam: TeamMember[];
   all: TeamMember[];
+  isLoading: boolean;
+  isLiveBackend: boolean;
 }
 
 const getInitialRoster = (): TeamMember[] => {
@@ -29,10 +32,28 @@ const getInitialRoster = (): TeamMember[] => {
 
 export function useTeamRoster(): GroupedTeam {
   const [roster, setRoster] = useState<TeamMember[]>(getInitialRoster);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLiveBackend, setIsLiveBackend] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
 
-    // Listen to storage events across tabs or local updates
+    // 1. Fetch live roster from Express backend
+    fetchTeamMembers()
+      .then((liveMembers) => {
+        if (isMounted && Array.isArray(liveMembers) && liveMembers.length > 0) {
+          setRoster(liveMembers);
+          setIsLiveBackend(true);
+        }
+      })
+      .catch((err) => {
+        console.warn('[useTeamRoster] Operating with cached/default data:', err);
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    // 2. Listen to storage events across tabs or local updates
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === LOCAL_STORAGE_KEY && e.newValue) {
         try {
@@ -47,7 +68,10 @@ export function useTeamRoster(): GroupedTeam {
     };
 
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const faculty = roster.filter(m => 
@@ -72,5 +96,7 @@ export function useTeamRoster(): GroupedTeam {
     organizers: organizers.length > 0 ? organizers : defaultOrganizers,
     coreTeam: coreTeam.length > 0 ? coreTeam : defaultCore,
     all: roster,
+    isLoading,
+    isLiveBackend,
   };
 }
