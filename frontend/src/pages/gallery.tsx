@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation/Navbar';
 import { GalleryMasonry } from '@/components/gallery/GalleryMasonry';
+import { AllPhotosGallery } from '@/components/gallery/AllPhotosGallery';
 import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
 import { GALLERY_ITEMS, GalleryItem } from '@/data/gallery';
 import { motion } from 'framer-motion';
@@ -76,6 +77,18 @@ export default function GalleryPage() {
             onSelectEvent={setSelectedEventId}
             onSelectImage={(item, currentPhotos) => {
               setLightboxList(currentPhotos && currentPhotos.length > 0 ? currentPhotos : GALLERY_ITEMS);
+              setSelectedItem(item);
+            }}
+          />
+
+          {/* =========================================================================
+              COMPLETE PHOTO ARCHIVE (All Photos Grid - Clean, No Filter UI)
+              Full photographic exhibition grid of all community moments
+             ========================================================================= */}
+          <AllPhotosGallery
+            photos={GALLERY_ITEMS}
+            onSelectImage={(item, allPhotos) => {
+              setLightboxList(allPhotos);
               setSelectedItem(item);
             }}
           />
