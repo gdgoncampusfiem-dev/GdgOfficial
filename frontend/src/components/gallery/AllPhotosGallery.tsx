@@ -18,7 +18,7 @@ export function AllPhotosGallery({ photos, onSelectImage }: AllPhotosGalleryProp
     >
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Clean Architectural Header (No Filter Controls) */}
-        <div className="mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-[#050505]/10">
+        <div className="mb-8 sm:mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-3xl">
               {/* Venue & Location Badge */}
