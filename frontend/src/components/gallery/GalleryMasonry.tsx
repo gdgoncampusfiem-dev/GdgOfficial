@@ -8,7 +8,7 @@ import { Maximize2, Search, X } from 'lucide-react';
 
 interface GalleryCollageProps {
   items: GalleryItem[];
-  onSelectImage: (item: GalleryItem) => void;
+  onSelectImage: (item: GalleryItem, currentPhotos?: GalleryItem[]) => void;
   selectedEventId?: string;
   onSelectEvent?: (eventId: string) => void;
 }
@@ -328,7 +328,7 @@ export function GalleryMasonry({
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="break-inside-avoid mb-3 sm:mb-4 group relative overflow-hidden rounded-2xl border border-[#050505]/15 bg-white shadow-[0_4px_18px_-4px_rgba(5,5,5,0.07)] hover:shadow-[0_16px_32px_-8px_rgba(5,5,5,0.16)] hover:border-[#050505]/40 hover:-translate-y-1 cursor-pointer transition-all duration-300"
-              onClick={() => onSelectImage(item)}
+              onClick={() => onSelectImage(item, effectiveItems)}
             >
               <div className={`relative w-full ${item.aspect} overflow-hidden bg-[#E5E0D8]`}>
                 <Image
@@ -590,7 +590,7 @@ export function GalleryMasonry({
                   y: cfg.y,
                 }}
                 className="absolute overflow-hidden rounded-2xl border border-[#050505]/15 bg-white shadow-[0_4px_22px_-3px_rgba(5,5,5,0.07),0_1px_3px_rgba(5,5,5,0.04)] hover:shadow-[0_22px_45px_-10px_rgba(5,5,5,0.18)] hover:border-[#050505]/40 hover:-translate-y-1.5 hover:scale-[1.012] cursor-pointer group transition-all duration-300 ease-out"
-                onClick={() => onSelectImage(itm)}
+                onClick={() => onSelectImage(itm, effectiveItems)}
               >
                 {/* Photo Arising Animation on Search & Filter Change */}
                 <motion.div

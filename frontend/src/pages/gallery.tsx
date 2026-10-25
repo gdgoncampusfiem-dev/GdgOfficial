@@ -5,7 +5,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation/Navbar';
 import { GalleryMasonry } from '@/components/gallery/GalleryMasonry';
-import { EventGalleryBrowser } from '@/components/gallery/EventGalleryBrowser';
 import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
 import { GALLERY_ITEMS, GalleryItem } from '@/data/gallery';
 import { motion } from 'framer-motion';
@@ -67,29 +66,16 @@ export default function GalleryPage() {
         <Navbar theme="light" />
 
         {/* =========================================================================
-            THE SIGNATURE PHOTO GALLERY (Jigsaw Canvas inspired by GDG Noida)
-            No external headings or filter bars - the title sits in the center hole!
+            THE SIGNATURE PHOTO GALLERY (Jigsaw Canvas)
+            Integrated event searching, interactive arise wave, and fluid photo grid
            ========================================================================= */}
         <div className="relative z-10 pt-28 md:pt-36">
           <GalleryMasonry
             items={GALLERY_ITEMS}
             selectedEventId={selectedEventId}
             onSelectEvent={setSelectedEventId}
-            onSelectImage={(item) => {
-              setLightboxList(GALLERY_ITEMS);
-              setSelectedItem(item);
-            }}
-          />
-
-          {/* =========================================================================
-              BROWSE BY EVENT SECTION (Event-wise Photo Chronicle)
-              Select any event to view images related to that specific event with its name on top
-             ========================================================================= */}
-          <EventGalleryBrowser
-            selectedEventId={selectedEventId}
-            onSelectEvent={setSelectedEventId}
-            onSelectImage={(item, eventPhotos) => {
-              setLightboxList(eventPhotos);
+            onSelectImage={(item, currentPhotos) => {
+              setLightboxList(currentPhotos && currentPhotos.length > 0 ? currentPhotos : GALLERY_ITEMS);
               setSelectedItem(item);
             }}
           />
