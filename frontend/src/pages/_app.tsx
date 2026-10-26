@@ -4,6 +4,7 @@ import "@fontsource/josefin-sans/300.css";
 import "@fontsource/josefin-sans/400.css";
 import "@fontsource/josefin-sans/700.css";
 import "@/styles/globals.css";
+import "@/styles/sponsor-deck.css";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { ReactLenis } from "lenis/react";
