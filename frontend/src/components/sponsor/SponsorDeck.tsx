@@ -3,6 +3,29 @@ import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navigation/Navbar"
 
+const PARTNERSHIP_VALUES = [
+  {
+    number: "01",
+    name: "Reach",
+    description: "Meet student developers through community programming.",
+  },
+  {
+    number: "02",
+    name: "Experience",
+    description: "Bring practical ideas into workshops and hands-on events.",
+  },
+  {
+    number: "03",
+    name: "Talent",
+    description: "Support learning, mentorship, and meaningful technical work.",
+  },
+  {
+    number: "04",
+    name: "Community",
+    description: "Help sustain an open space to learn, share, and build.",
+  },
+]
+
 type IconName = "arrow"
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
@@ -72,6 +95,38 @@ function KolkataHero() {
           <br />
           <em>what’s next.</em>
         </h1>
+      </div>
+    </section>
+  )
+}
+
+function PartnershipMarquee() {
+  return (
+    <section
+      aria-labelledby="partnership-marquee-heading"
+      className="partnership-marquee"
+    >
+      <div className="partnership-marquee-heading">
+        <p className="eyebrow">Partnership, in motion</p>
+        <h2 id="partnership-marquee-heading">Build together.</h2>
+      </div>
+      <div aria-hidden="true" className="marquee-viewport">
+        <div className="marquee-track">
+          {[false, true].map((isDuplicate) => (
+            <div
+              aria-hidden={isDuplicate}
+              className="marquee-group"
+              key={isDuplicate ? "duplicate" : "original"}
+            >
+              {PARTNERSHIP_VALUES.map(({ name }) => (
+                <span className="marquee-item" key={name}>
+                  {name}
+                  <span className="marquee-separator" />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -246,6 +301,7 @@ export default function App() {
       <Navbar theme="light" />
 
       <KolkataHero />
+      <PartnershipMarquee />
 
       <section className="partnership-section" id="partnership">
         <div className="partnership-intro">
@@ -257,34 +313,15 @@ export default function App() {
           </p>
         </div>
         <ol className="partnership-values">
-          <li>
-            <span>01</span>
-            <div>
-              <h3>Reach</h3>
-              <p>Meet student developers through community programming.</p>
-            </div>
-          </li>
-          <li>
-            <span>02</span>
-            <div>
-              <h3>Experience</h3>
-              <p>Bring practical ideas into workshops and hands-on events.</p>
-            </div>
-          </li>
-          <li>
-            <span>03</span>
-            <div>
-              <h3>Talent</h3>
-              <p>Support learning, mentorship, and meaningful technical work.</p>
-            </div>
-          </li>
-          <li>
-            <span>04</span>
-            <div>
-              <h3>Community</h3>
-              <p>Help sustain an open space to learn, share, and build.</p>
-            </div>
-          </li>
+          {PARTNERSHIP_VALUES.map(({ number, name, description }) => (
+            <li key={number}>
+              <span>{number}</span>
+              <div>
+                <h3>{name}</h3>
+                <p>{description}</p>
+              </div>
+            </li>
+          ))}
         </ol>
       </section>
 
