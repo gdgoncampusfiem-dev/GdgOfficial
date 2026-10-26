@@ -1,12 +1,9 @@
-import {
-  FormEvent,
-  PointerEvent as ReactPointerEvent,
-  useEffect,
-  useState,
-} from "react"
-import { sponsors, sponsorStoryPlaceholders } from "@/data/sponsors"
+import { FormEvent, useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { Navbar } from "@/components/navigation/Navbar"
 
-type IconName = "arrow" | "check"
+type IconName = "arrow"
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, React.ReactNode> = {
@@ -16,7 +13,6 @@ function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
         <path d="m13 6 6 6-6 6" />
       </>
     ),
-    check: <path d="m5 12 4 4L19 6" />,
   }
 
   return (
@@ -39,16 +35,9 @@ function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
 function BrandMark() {
   return (
     <span className="brand-mark">
-      <img alt="" src="/gdg-mark.png" />
+      <Image alt="" height={447} src="/gdg-mark.png" width={447} />
     </span>
   )
-}
-
-const colorClass = {
-  blue: "story-blue",
-  green: "story-green",
-  red: "story-red",
-  yellow: "story-yellow",
 }
 
 function KolkataHero() {
@@ -78,13 +67,11 @@ function KolkataHero() {
         <p className="eyebrow">
           <span /> GDG on Campus · FIEM · Kolkata
         </p>
-        <h1
-          dangerouslySetInnerHTML={{
-            __html:
-              '<span class="hero-heading-primary">Back the people building</span><br><em style="background:none;color:#4285f4;-webkit-text-fill-color:#4285f4">what’s next.</em>',
-          }}
-          key="hero-headline-v2"
-        />
+        <h1 className="sponsor-hero-title">
+          <span className="hero-heading-primary">Back the people building</span>
+          <br />
+          <em>what’s next.</em>
+        </h1>
       </div>
     </section>
   )
@@ -104,9 +91,11 @@ function KolkataSkyline() {
         }
       `}</style>
       <div className="footer-city-art">
-        <img
+        <Image
           alt="Kolkata landmarks illustrated across the city skyline"
+          height={460}
           src="/kolkata-footer-art-rygb.png"
+          width={1916}
         />
       </div>
     </div>
@@ -142,13 +131,13 @@ function KolkataFooter() {
       <KolkataSkyline />
 
       <div className="footer-meta">
-        <a className="footer-brand" href="#top" aria-label="Back to top">
+        <Link className="footer-brand" href="/" aria-label="GDG OC FIEM home">
           <BrandMark />
           <span>
             <strong>GDG on Campus</strong>
             <small>Future Institute of Engineering and Management</small>
           </span>
-        </a>
+        </Link>
         <p>Developer community · Kolkata, India</p>
       </div>
     </footer>
@@ -167,15 +156,15 @@ function ContactForm() {
     return (
       <div className="contact-success" aria-live="polite">
         <span>
-          <Icon name="check" size={26} />
+          <Icon name="arrow" size={26} />
         </span>
-        <p className="contact-success-title">Message received.</p>
+        <p className="contact-success-title">No message sent.</p>
         <p>
-          Thank you for reaching out. The GDG OC FIEM team will get back to you
-          shortly.
+          This preview is not connected to an inquiry service, so no message was
+          sent or stored.
         </p>
         <button onClick={() => setSubmitted(false)} type="button">
-          Send another message
+          Return to form preview
         </button>
       </div>
     )
@@ -183,55 +172,33 @@ function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit}>
+      <p className="form-preview-note">
+        Preview only — do not enter real contact details. This form does not
+        send or store inquiries.
+      </p>
       <div className="form-grid">
         <label className="field">
           <span>Organization name</span>
-          <input name="organization" placeholder="Acme Technologies" required />
+          <input
+            autoComplete="off"
+            name="organization"
+            placeholder="Organization"
+            required
+          />
         </label>
         <label className="field">
           <span>Work email</span>
           <input
+            autoComplete="off"
             name="email"
-            placeholder="you@organization.com"
+            placeholder="name@example.com"
             required
             type="email"
-          />
-        </label>
-        <label className="field">
-          <span>Phone number</span>
-          <input
-            name="phone"
-            placeholder="+91 00000 00000"
-            required
-            type="tel"
-          />
-        </label>
-        <label className="field">
-          <span>Organization website</span>
-          <input
-            name="website"
-            placeholder="https://organization.com"
-            required
-            type="url"
           />
         </label>
       </div>
       <button
         className="submit-button"
-        onMouseEnter={(event) => {
-          event.currentTarget.style.backgroundColor = "#fbbc04"
-          event.currentTarget.style.color = "#171717"
-        }}
-        onMouseLeave={(event) => {
-          event.currentTarget.style.backgroundColor = "#171717"
-          event.currentTarget.style.color = "#ffffff"
-        }}
-        style={{
-          backgroundColor: "#171717",
-          color: "#ffffff",
-          transition:
-            "background-color 180ms ease, color 180ms ease, transform 180ms ease",
-        }}
         type="submit"
       >
         Contact us <Icon name="arrow" size={18} />
@@ -241,18 +208,13 @@ function ContactForm() {
 }
 
 export default function App() {
-  const [storyIndex, setStoryIndex] = useState(0)
-  const [dragStart, setDragStart] = useState<number | null>(null)
-  const [dragOffset, setDragOffset] = useState(0)
-  const [storyExitDirection, setStoryExitDirection] = useState<-1 | 0 | 1>(0)
-
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return
     }
 
     const revealTargets = document.querySelectorAll<HTMLElement>(
-      "#partners, #stories, #contact, .site-footer",
+      "#partnership, #opportunities, #contact, .site-footer",
     )
 
     revealTargets.forEach((target) => {
@@ -279,244 +241,96 @@ export default function App() {
     return () => observer.disconnect()
   }, [])
 
-  function previousStory() {
-    setStoryIndex((current) =>
-      current === 0 ? sponsorStoryPlaceholders.length - 1 : current - 1,
-    )
-  }
-
-  function nextStory() {
-    setStoryIndex((current) =>
-      current === sponsorStoryPlaceholders.length - 1 ? 0 : current + 1,
-    )
-  }
-
-  function startStoryDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    if (storyExitDirection !== 0) return
-    if (event.pointerType === "mouse" && event.button !== 0) return
-    setDragStart(event.clientX)
-    setDragOffset(0)
-    event.currentTarget.setPointerCapture(event.pointerId)
-  }
-
-  function moveStoryDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    if (dragStart === null) return
-    setDragOffset(event.clientX - dragStart)
-  }
-
-  function cancelStoryDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    setDragStart(null)
-    setDragOffset(0)
-
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
-    }
-  }
-
-  function finishStoryDrag(event: ReactPointerEvent<HTMLDivElement>) {
-    if (dragStart === null) return
-
-    setDragStart(null)
-
-    const finalDragOffset = event.clientX - dragStart
-    const exitDirection: -1 | 0 | 1 =
-      finalDragOffset < -60 ? -1 : finalDragOffset > 60 ? 1 : 0
-
-    if (exitDirection !== 0) {
-      setStoryExitDirection(exitDirection)
-      setDragOffset(exitDirection * event.currentTarget.clientWidth * 1.08)
-
-      window.setTimeout(() => {
-        if (exitDirection < 0) nextStory()
-        if (exitDirection > 0) previousStory()
-        setStoryExitDirection(0)
-        setDragOffset(0)
-      }, 720)
-    } else {
-      setDragOffset(0)
-    }
-
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
-    }
-  }
-
   return (
     <main className="app-shell theme-light" id="top">
-      <header className="site-header">
-        <nav className="nav-shell">
-          <a className="brand-link" href="#top" aria-label="GDG OC FIEM home">
-            <BrandMark />
-            <span>
-              <strong>Google Developer Group on Campus FIEM</strong>
-              <small>Partner deck</small>
-            </span>
-          </a>
-
-          <div className="nav-links">
-            <a href="#partners">Partners</a>
-            <a href="#stories">Stories</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </nav>
-      </header>
+      <Navbar theme="light" />
 
       <KolkataHero />
 
-      <section className="marquee-section" id="partners">
-        <div className="section-heading section-heading-on-dark">
-          <div>
-            <h2>Meet our sponsors.</h2>
-          </div>
+      <section className="partnership-section" id="partnership">
+        <div className="partnership-intro">
+          <p className="eyebrow">Partnership, with purpose</p>
+          <h2>Build the conditions for what comes next.</h2>
+          <p>
+            A partnership is a practical exchange: create useful experiences,
+            share expertise, and make room for the next generation of builders.
+          </p>
         </div>
-        <div className="marquee">
-          <div className="marquee-track">
-            {[...sponsors, ...sponsors].map((sponsor, index) => (
-              <div
-                className="sponsor-logo"
-                key={`${sponsor.id}-${
-                  index < sponsors.length ? "primary" : "duplicate"
-                }`}
-              >
-                <img
-                  className={`sponsor-image${
-                    sponsor.monochrome ? " sponsor-image-white" : ""
-                  }`}
-                  src={sponsor.logo}
-                  alt={`${sponsor.name} logo`}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <ol className="partnership-values">
+          <li>
+            <span>01</span>
+            <div>
+              <h3>Reach</h3>
+              <p>Meet student developers through community programming.</p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <h3>Experience</h3>
+              <p>Bring practical ideas into workshops and hands-on events.</p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <h3>Talent</h3>
+              <p>Support learning, mentorship, and meaningful technical work.</p>
+            </div>
+          </li>
+          <li>
+            <span>04</span>
+            <div>
+              <h3>Community</h3>
+              <p>Help sustain an open space to learn, share, and build.</p>
+            </div>
+          </li>
+        </ol>
       </section>
 
-      <section className="stories-section" id="stories">
+      <section className="opportunities-section" id="opportunities">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Sponsor stories</p>
-            <h2 style={{ color: "#ea4335" }}>What contribution feels like.</h2>
+            <p className="eyebrow">Ways to collaborate</p>
+            <h2>Start with a shared idea.</h2>
           </div>
-          <div className="story-swipe-hint" aria-hidden="true">
-            <span />
-            Swipe or drag to turn the page
-          </div>
+          <p>
+            Each collaboration is shaped around the people, skills, and
+            resources both sides can bring.
+          </p>
         </div>
-
-        <div
-          aria-label="Draggable sponsor story gallery"
-          className={`story-window ${dragStart !== null ? "is-dragging" : ""}`}
-          onPointerCancel={cancelStoryDrag}
-          onPointerDown={startStoryDrag}
-          onPointerMove={moveStoryDrag}
-          onPointerUp={finishStoryDrag}
-          onKeyDown={(event) => {
-            if (event.key === "ArrowLeft") previousStory()
-            if (event.key === "ArrowRight") nextStory()
-          }}
-          role="region"
-          tabIndex={0}
-        >
-          <div className="story-track">
-            {sponsorStoryPlaceholders.map((story, index) => {
-              const storyCount = sponsorStoryPlaceholders.length
-              const previousIndex = (storyIndex - 1 + storyCount) % storyCount
-              const forwardPosition =
-                (index - storyIndex + storyCount) % storyCount
-              const position =
-                index === storyIndex
-                  ? 0
-                  : index === previousIndex
-                    ? -1
-                    : forwardPosition
-              const depth = Math.min(Math.max(position, 0), 3)
-              const isPreviousRevealed = position === -1 && dragOffset > 0
-
-              let transform = `translate3d(${depth * 10}px, ${depth * 10}px, ${-depth * 18}px) scale(${1 - depth * 0.018})`
-              let opacity = position > 3 ? 0 : 1
-              let zIndex =
-                position > 0 ? sponsorStoryPlaceholders.length - position : 0
-              let transformOrigin = "left center"
-
-              if (position < 0) {
-                transform = "translate3d(-108%, 0, 0) rotateZ(-4deg)"
-                opacity = 0
-                zIndex = 1
-              }
-
-              if (isPreviousRevealed) {
-                transform = "translate3d(0, 0, -1px)"
-                opacity = 1
-                zIndex = sponsorStoryPlaceholders.length
-              }
-
-              if (position === 0) {
-                transform = `translate3d(${dragOffset}px, 0, 0) rotateZ(${dragOffset / 140}deg)`
-                opacity = storyExitDirection === 0 ? 1 : 0
-                zIndex = sponsorStoryPlaceholders.length + 2
-                transformOrigin =
-                  dragOffset > 0 ? "right center" : "left center"
-              }
-
-              return (
-                <article
-                  aria-hidden={position !== 0}
-                  className={`story-slide ${
-                    position === 0
-                      ? `is-active-story ${
-                          storyExitDirection !== 0 ? "is-exiting-story" : ""
-                        }`
-                      : position < 0
-                        ? "is-past-story"
-                        : "is-stacked-story"
-                  }`}
-                  key={story.id}
-                  style={{
-                    opacity,
-                    pointerEvents:
-                      position === 0 && storyExitDirection === 0
-                        ? "auto"
-                        : "none",
-                    transform,
-                    transformOrigin,
-                    zIndex,
-                  }}
-                >
-                  <div
-                    className={`story-card ${
-                      colorClass[(story.color as keyof typeof colorClass)]
-                    }`}
-                  >
-                    <span className="quote-mark">“</span>
-                    <blockquote>{story.quote}</blockquote>
-                    <div className="story-person">
-                      <span aria-hidden="true">ID</span>
-                      <div>
-                        <strong>{story.name}</strong>
-                        <small>{story.role}</small>
-                      </div>
-                    </div>
-                    <p className="story-company">{story.company}</p>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-        <div
-          aria-label="Sponsor story progress"
-          aria-valuemax={sponsorStoryPlaceholders.length}
-          aria-valuemin={1}
-          aria-valuenow={storyIndex + 1}
-          className="story-progress"
-          role="progressbar"
-        >
-          <span
-            style={{
-              width: `${((storyIndex + 1) / sponsorStoryPlaceholders.length) * 100}%`,
-            }}
-          />
-        </div>
+        <ol className="opportunity-list">
+          <li>
+            <span>01</span>
+            <h3>Event partnerships</h3>
+            <p>Contribute to community events and developer meetups.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>Workshops</h3>
+            <p>Share tools and practical knowledge in hands-on sessions.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>Hackathons</h3>
+            <p>Help participants explore problems and build solutions together.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <h3>Technology support</h3>
+            <p>Offer technical resources, including cloud support where available.</p>
+          </li>
+          <li>
+            <span>05</span>
+            <h3>Speakers and mentorship</h3>
+            <p>Make time for useful conversations and guidance from practitioners.</p>
+          </li>
+          <li>
+            <span>06</span>
+            <h3>Community partnerships</h3>
+            <p>Connect people and organizations around shared learning goals.</p>
+          </li>
+        </ol>
       </section>
 
       <section className="contact-section" id="contact">
@@ -571,8 +385,8 @@ export default function App() {
               `}</style>
             </h2>
             <p className="contact-copy">
-              Share your organization details and our community team will reach
-              out to explore what we can build together.
+              The inquiry form is a non-connected preview. It does not transmit
+              or store your information.
             </p>
           </div>
           <ContactForm />
