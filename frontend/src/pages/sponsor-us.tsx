@@ -9,7 +9,7 @@ export default function SponsorUsPage() {
         <title>Sponsor Us | GDG on Campus FIEM</title>
         <meta
           name="description"
-          content="Partner with GDG on Campus FIEM. Placeholder sponsor stories will be replaced with verified quotes after review."
+          content="Explore partnership opportunities with GDG on Campus FIEM, from events and workshops to mentorship and community collaboration."
         />
       </Head>
       <SponsorDeck />
