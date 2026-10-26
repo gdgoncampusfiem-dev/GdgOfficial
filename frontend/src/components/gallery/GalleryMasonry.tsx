@@ -2,13 +2,13 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, MotionConfig } from 'framer-motion';
 import { GalleryItem, EVENT_GALLERIES, EventGallery } from '@/data/gallery';
 import { Maximize2, Search, X } from 'lucide-react';
 
 interface GalleryCollageProps {
   items: GalleryItem[];
-  onSelectImage: (item: GalleryItem) => void;
+  onSelectImage: (item: GalleryItem, currentPhotos?: GalleryItem[]) => void;
   selectedEventId?: string;
   onSelectEvent?: (eventId: string) => void;
 }
@@ -46,6 +46,140 @@ function formatEditorialDate(dateStr: string): string {
   return dateStr.toUpperCase();
 }
 
+/**
+ * CameraShutterFlash
+ * Master-Crafted, Unmistakable Pro Camera Shutter Animation:
+ * 1. Rangefinder Viewfinder HUD [   ]:
+ *    - Extended visibility (1.35s) so the camera HUD elements are clearly readable
+ *    - Precision white corner brackets with high-contrast ambient drop shadow
+ *    - Center autofocus target box + crosshairs with green #34A853 AF-Lock LED
+ *    - Camera metadata tags: [ RAW · 1/500s · f/1.8 ] and [ ● AF LOCKED ]
+ * 2. Mechanical Shutter Curtain (Micro-Darkness Contrast Pulse):
+ *    - 80ms dark shutter blink (bg-[#050505]) creating immediate optical contrast
+ * 3. Xenon Strobe Burst & Optical Core Flare:
+ *    - 100% brilliant white xenon flash (opacity 1.0) with realistic phosphor decay
+ *    - Expanding radial bloom beam expanding from center
+ *    - Expanding circular aperture shockwave ring
+ */
+function CameraShutterFlash({
+  activeKey,
+  delay,
+}: {
+  activeKey: string;
+  delay: number;
+}) {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden">
+      {/* 1. Rangefinder Viewfinder Reticle & Camera HUD [   ] — Held for 1.35s for full visibility */}
+      <motion.div
+        key={`hud-${activeKey}`}
+        initial={{ opacity: 0, scale: 1.15 }}
+        animate={{
+          opacity: [0, 1, 1, 0],
+          scale: [1.15, 1.0, 1.0, 1.03],
+        }}
+        transition={{
+          duration: 1.35,
+          times: [0, 0.12, 0.85, 1],
+          delay: delay,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="absolute inset-3 sm:inset-5 flex items-center justify-center z-20"
+      >
+        {/* Prominent High-Contrast Corner Brackets */}
+        <div className="absolute top-0 left-0 w-5 h-5 sm:w-7 sm:h-7 border-t-2 border-l-2 border-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]" />
+        <div className="absolute top-0 right-0 w-5 h-5 sm:w-7 sm:h-7 border-t-2 border-r-2 border-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]" />
+        <div className="absolute bottom-0 left-0 w-5 h-5 sm:w-7 sm:h-7 border-b-2 border-l-2 border-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]" />
+        <div className="absolute bottom-0 right-0 w-5 h-5 sm:w-7 sm:h-7 border-b-2 border-r-2 border-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]" />
+
+        {/* Center Target Box & Focus Crosshairs */}
+        <div className="relative flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 border border-white/80 rounded-sm drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+          <div className="absolute -top-2 w-[1.5px] h-2 bg-white/90" />
+          <div className="absolute -bottom-2 w-[1.5px] h-2 bg-white/90" />
+          <div className="absolute -left-2 h-[1.5px] w-2 bg-white/90" />
+          <div className="absolute -right-2 h-[1.5px] w-2 bg-white/90" />
+          {/* Green AF Lock Core LED */}
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#34A853] shadow-[0_0_10px_#34A853]" />
+        </div>
+
+        {/* Top-Left Camera Exposure HUD Badge */}
+        <div className="absolute top-0.5 left-0.5 flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-[8px] font-mono font-bold tracking-widest text-white uppercase bg-black/75 backdrop-blur-md border border-white/20 shadow-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#EA4335] animate-pulse" />
+          <span>RAW · 1/500s · f/1.8</span>
+        </div>
+
+        {/* Bottom-Right Focus Lock Status Badge */}
+        <div className="absolute bottom-0.5 right-0.5 flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-[9px] font-mono font-bold tracking-widest text-white uppercase bg-black/75 backdrop-blur-md border border-white/20 shadow-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] shadow-[0_0_8px_#34A853]" />
+          <span>AF LOCKED</span>
+        </div>
+      </motion.div>
+
+      {/* 2. Mechanical Shutter Curtain (Micro-Darkness Contrast Pulse) */}
+      <motion.div
+        key={`curtain-${activeKey}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0.88, 0] }}
+        transition={{
+          duration: 0.08,
+          times: [0, 0.45, 1],
+          delay: delay + 0.22,
+          ease: 'easeInOut',
+        }}
+        className="absolute inset-0 bg-[#050505] z-30"
+      />
+
+      {/* 3. Xenon Strobe Burst — Full Brilliant White Camera Flash with Richer Decay */}
+      <motion.div
+        key={`xenon-${activeKey}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1.0, 0] }}
+        transition={{
+          duration: 0.46,
+          times: [0, 0.10, 1],
+          delay: delay + 0.28,
+          ease: [0.05, 0.9, 0.2, 1],
+        }}
+        className="absolute inset-0 bg-white z-40"
+      />
+
+      {/* 4. Optical Center Flare Bloom */}
+      <motion.div
+        key={`flare-${activeKey}`}
+        initial={{ opacity: 0, scale: 0.2 }}
+        animate={{
+          opacity: [0, 1.0, 0],
+          scale: [0.2, 1.5, 2.5],
+        }}
+        transition={{
+          duration: 0.50,
+          times: [0, 0.15, 1],
+          delay: delay + 0.28,
+          ease: [0.08, 0.85, 0.15, 1],
+        }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,#ffffff_0%,rgba(255,255,255,0.95)_25%,rgba(66,133,244,0.45)_52%,transparent_75%)] z-40"
+      />
+
+      {/* 5. Expanding Aperture Shockwave Ring */}
+      <motion.div
+        key={`ring-${activeKey}`}
+        initial={{ opacity: 0, scale: 0.1 }}
+        animate={{
+          opacity: [0, 0.95, 0],
+          scale: [0.1, 1.5, 2.3],
+        }}
+        transition={{
+          duration: 0.44,
+          times: [0, 0.20, 1],
+          delay: delay + 0.28,
+          ease: 'easeOut',
+        }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full border-2 border-white/90 shadow-[0_0_18px_rgba(255,255,255,0.9)] z-40 pointer-events-none"
+      />
+    </div>
+  );
+}
+
 export function GalleryMasonry({
   items,
   onSelectImage,
@@ -57,6 +191,11 @@ export function GalleryMasonry({
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Subtle Multi-Plane Scroll Parallax
   const { scrollYProgress } = useScroll({
@@ -143,22 +282,15 @@ export function GalleryMasonry({
   // Safe mapping helper
   const getItem = (idx: number) => effectiveItems[idx % effectiveItems.length];
 
-  const p1 = trimmedQuery ? getItem(0) : getItem(0);
-  const p2 = trimmedQuery ? getItem(1) : getItem(1);
-  const p3 = trimmedQuery ? getItem(2) : getItem(5);
-  const p4 = trimmedQuery ? getItem(3) : (items[16] || getItem(3));
-  const p5 = trimmedQuery ? getItem(4) : getItem(4);
-  const p6 = trimmedQuery ? getItem(5) : (items[10] || getItem(6));
-  const p7 = trimmedQuery ? getItem(6) : getItem(2);
-  const p8 = trimmedQuery ? getItem(7) : (items[3] || getItem(7));
-
-  const handleScrollToArchive = () => {
-    if (matchedEvent) {
-      onSelectEvent?.(matchedEvent.id);
-    }
-    const target = document.getElementById('events-by-day');
-    target?.scrollIntoView({ behavior: 'smooth' });
-  };
+    const isFiltered = Boolean(trimmedQuery || (matchedEvent && matchedEvent.id !== 'all') || (selectedEventId && selectedEventId !== 'all'));
+  const p1 = isFiltered ? getItem(0) : (items[8] || getItem(0));
+  const p2 = isFiltered ? getItem(1) : (items[15] || getItem(1));
+  const p3 = isFiltered ? getItem(2) : (items[1] || getItem(5));
+  const p4 = isFiltered ? getItem(3) : (items[22] || getItem(3));
+  const p5 = isFiltered ? getItem(4) : (items[26] || getItem(4));
+  const p6 = isFiltered ? getItem(5) : (items[18] || getItem(6));
+  const p7 = isFiltered ? getItem(6) : (items[0] || getItem(2));
+  const p8 = isFiltered ? getItem(7) : (items[27] || getItem(7));
 
   const handleOpenSearch = () => {
     setIsSearchOpen(true);
@@ -173,7 +305,8 @@ export function GalleryMasonry({
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pb-10 sm:pb-14">
+    <MotionConfig reducedMotion="never">
+      <div ref={containerRef} className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pb-10 sm:pb-14">
       {/* =========================================================================
           MOBILE & TABLET VIEW (lg:hidden)
           2-column masonry with full-color high-res photos
@@ -315,50 +448,87 @@ export function GalleryMasonry({
           </AnimatePresence>
         </motion.div>
 
-        {/* 2-Column Responsive Masonry */}
+        {/* 2-Column Mobile Masonry — Magnetic Scatter & Snap (Zipper) */}
         <div className="columns-2 gap-3 sm:gap-4">
-          {effectiveItems.map((item, idx) => (
-            <motion.div
-              key={`m-${searchCycleKey}-${item.id}-${idx}`}
-              initial={{ opacity: 0, y: 32, scale: 0.94 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                duration: 0.52,
-                delay: Math.min((idx % 4) * 0.07, 0.28),
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="break-inside-avoid mb-3 sm:mb-4 group relative overflow-hidden rounded-2xl border border-[#050505]/15 bg-white shadow-[0_4px_18px_-4px_rgba(5,5,5,0.07)] hover:shadow-[0_16px_32px_-8px_rgba(5,5,5,0.16)] hover:border-[#050505]/40 hover:-translate-y-1 cursor-pointer transition-all duration-300"
-              onClick={() => onSelectImage(item)}
-            >
-              <div className={`relative w-full ${item.aspect} overflow-hidden bg-[#E5E0D8]`}>
-                <Image
-                  src={item.imageUrl}
-                  alt={item.title}
-                  fill
-                  quality={90}
-                  sizes="48vw"
-                  className="object-cover saturate-[1.06] contrast-[1.02] transition-transform duration-700 ease-out group-hover:scale-105"
-                />
+          {effectiveItems.map((item, idx) => {
+            const isLeft = idx % 2 === 0;
+            const row = Math.floor(idx / 2);
+            const scatterX = isLeft ? -100 : 100;
+            const scatterY = -65 + row * 15;
+            const scatterR = isLeft ? -10 : 10;
+            return (
+              <div
+                key={`mob-card-${idx}`}
+                className="break-inside-avoid mb-3 sm:mb-4 group relative overflow-hidden rounded-2xl border border-[#050505]/15 bg-white shadow-[0_4px_18px_-4px_rgba(5,5,5,0.07)] hover:shadow-[0_16px_32px_-8px_rgba(5,5,5,0.16)] hover:border-[#050505]/40 hover:-translate-y-1 cursor-pointer transition-shadow transition-[border-color] duration-300 isolate"
+                onClick={() => onSelectImage(item, effectiveItems)}
+              >
+                <div className={`relative w-full ${item.aspect} overflow-hidden bg-[#E5E0D8]`}>
+                  <AnimatePresence mode="sync">
+                    <motion.div
+                      key={`mob-snap-${searchCycleKey}-${item.id}-${idx}`}
+                      exit={{
+                        opacity: 0,
+                        x: scatterX * 0.6,
+                        y: scatterY * 0.6,
+                        scale: 0.65,
+                        rotate: scatterR,
+                        transition: { duration: 0.22, ease: [0.45, 0, 0.85, 0.15] },
+                      }}
+                      initial={isMounted ? {
+                        opacity: 0,
+                        x: scatterX,
+                        y: scatterY,
+                        scale: 0.60,
+                        rotate: scatterR,
+                      } : false}
+                      animate={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 }}
+                      transition={{
+                        delay: isMounted ? Math.min(row * 0.08 + (isLeft ? 0 : 0.04), 0.36) : 0,
+                        opacity: { duration: 0.30, ease: 'easeOut' },
+                        x: { type: 'spring', stiffness: 190, damping: 30, mass: 1.05 },
+                        y: { type: 'spring', stiffness: 190, damping: 30, mass: 1.05 },
+                        scale: { type: 'spring', stiffness: 220, damping: 33, mass: 0.95 },
+                        rotate: { type: 'spring', stiffness: 170, damping: 28, mass: 1.05 },
+                      }}
+                      className="absolute inset-0 w-full h-full overflow-hidden"
+                    >
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.title}
+                        fill
+                        quality={90}
+                        sizes="48vw"
+                        className="object-cover saturate-[1.06] contrast-[1.02] transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
 
-                {/* Hover Gradient with Details */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 sm:p-4">
-                  <div className="flex items-center justify-between w-full text-white">
-                    <div className="pr-2">
-                      <span className="inline-block px-1.5 py-0.5 rounded-sm bg-white/20 backdrop-blur-md text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-white mb-1">
-                        {item.category}
-                      </span>
-                      <p className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1 drop-shadow-sm font-sans">
-                        {item.title}
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0 p-1.5 rounded-full bg-white/20 backdrop-blur-md text-white">
-                      <Maximize2 className="w-3.5 h-3.5" />
-                    </div>
-                  </div>
+                      {/* Camera Shutter Snap: Viewfinder Reticle + Xenon Flash */}
+                      <CameraShutterFlash
+                        activeKey={`mob-${searchCycleKey}-${idx}`}
+                        delay={isMounted ? Math.min(row * 0.08 + 0.30, 0.48) : 0}
+                      />
+
+                      {/* Hover Gradient with Details */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 sm:p-4">
+                        <div className="flex items-center justify-between w-full text-white">
+                          <div className="pr-2">
+                            <span className="inline-block px-1.5 py-0.5 rounded-sm bg-white/20 backdrop-blur-md text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-white mb-1">
+                              {item.category}
+                            </span>
+                            <p className="text-xs sm:text-sm font-bold tracking-tight text-white line-clamp-1 drop-shadow-sm font-sans">
+                              {item.title}
+                            </p>
+                          </div>
+                          <div className="flex-shrink-0 p-1.5 rounded-full bg-white/20 backdrop-blur-md text-white">
+                            <Maximize2 className="w-3.5 h-3.5" />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -378,7 +548,13 @@ export function GalleryMasonry({
               height: '31.41%',
             }}
           >
-            <div className="text-center flex flex-col items-center justify-center w-full">
+            <motion.div
+              key={`center-breathe-${searchCycleKey}`}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 0.985, 1] }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="text-center flex flex-col items-center justify-center w-full"
+            >
               {/* Dynamic Title Animated Transformation */}
               <AnimatePresence mode="wait">
                 <motion.div
@@ -511,7 +687,7 @@ export function GalleryMasonry({
                       </button>
                     </div>
 
-                    {/* Quick Suggestion Chips */}
+                                        {/* Quick Suggestion Chips with Gliding Active Pill */}
                     <div className="flex items-center justify-center flex-wrap gap-1.5 mt-2">
                       <span className="text-[10px] font-mono text-[#575550] uppercase tracking-wider mr-1">
                         QUICK:
@@ -534,108 +710,140 @@ export function GalleryMasonry({
                                 onSelectEvent?.(qEvt.id);
                               }
                             }}
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-mono uppercase tracking-wider transition-all border cursor-pointer ${
-                              isCurrent
-                                ? 'bg-[#050505] text-white border-[#050505] shadow-[1px_1px_0px_#050505]'
-                                : 'bg-white text-[#575550] hover:text-[#050505] border-[#050505]/20 hover:border-[#050505] shadow-[1px_1px_0px_rgba(5,5,5,0.04)]'
-                            }`}
+                            className="relative px-2.5 py-0.5 rounded-md text-[10px] font-mono uppercase tracking-wider transition-colors border border-[#050505]/20 hover:border-[#050505] cursor-pointer group shadow-[1px_1px_0px_rgba(5,5,5,0.04)]"
                           >
-                            {qEvt.label}
+                            {isCurrent && (
+                              <motion.span
+                                layoutId="activeChipPillDesktop"
+                                className="absolute inset-0 bg-[#050505] rounded-md shadow-[1px_1px_0px_#050505] z-0"
+                                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                              />
+                            )}
+                            <span className={`relative z-10 font-bold transition-colors ${isCurrent ? 'text-white' : 'text-[#575550] group-hover:text-[#050505]'}`}>
+                              {qEvt.label}
+                            </span>
                           </button>
                         );
                       })}
                     </div>
-
-                    {/* Link to Jump to Full Timeline Archive */}
-                    {matchedEvent && (
-                      <div className="mt-2 text-center">
-                        <button
-                          type="button"
-                          onClick={handleScrollToArchive}
-                          className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#575550] hover:text-[#050505] transition-colors group cursor-pointer"
-                        >
-                          <span>TIMELINE ARCHIVE</span>
-                          <span className="transition-transform group-hover:translate-y-0.5">↓</span>
-                        </button>
-                      </div>
-                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Interlocking Desktop Frames (Clean, Unobstructed, Pure Photography) */}
+          {/* Interlocking Desktop Frames — Silky Architectural Convergence & Pro Camera Capture */}
           {[
-            { item: p1, left: '0%', top: '0%', width: '28.60%', height: '31.41%', y: yTop, delay: 0.04, priority: true },
-            { item: p2, left: '30.70%', top: '0%', width: '18.25%', height: '31.41%', y: yTop, delay: 0.08, priority: true },
-            { item: p3, left: '51.05%', top: '0%', width: '18.33%', height: '31.41%', y: yTop, delay: 0.12, priority: true },
-            { item: p4, left: '71.48%', top: '0%', width: '28.52%', height: '45.88%', y: yTop, delay: 0.16, priority: false },
-            { item: p5, left: '0%', top: '34.19%', width: '28.60%', height: '31.41%', y: yMid, delay: 0.2, priority: false },
-            { item: p6, left: '0%', top: '68.59%', width: '41.90%', height: '31.41%', y: yBottom, delay: 0.24, priority: false },
-            { item: p7, left: '44.00%', top: '68.59%', width: '25.32%', height: '31.41%', y: yBottom, delay: 0.28, priority: false },
-            { item: p8, left: '71.48%', top: '48.85%', width: '28.52%', height: '51.15%', y: yBottom, delay: 0.32, priority: false },
+            { item: p1, left: '0%',    top: '0%',     width: '28.60%', height: '31.41%', y: yTop,    dirX: -1, dirY: -1, scR: -2.5, snapDelay: 0.04, priority: true  },
+            { item: p2, left: '30.70%',top: '0%',     width: '18.25%', height: '31.41%', y: yTop,    dirX:  0, dirY: -1, scR: -1.5, snapDelay: 0.08, priority: true  },
+            { item: p3, left: '51.05%',top: '0%',     width: '18.33%', height: '31.41%', y: yTop,    dirX:  0, dirY: -1, scR:  1.5, snapDelay: 0.12, priority: true  },
+            { item: p4, left: '71.48%',top: '0%',     width: '28.52%', height: '45.88%', y: yTop,    dirX:  1, dirY: -1, scR:  2.5, snapDelay: 0.16, priority: false },
+            { item: p5, left: '0%',    top: '34.19%', width: '28.60%', height: '31.41%', y: yMid,    dirX: -1, dirY:  0, scR: -2.0, snapDelay: 0.10, priority: false },
+            { item: p6, left: '0%',    top: '68.59%', width: '41.90%', height: '31.41%', y: yBottom, dirX: -1, dirY:  1, scR: -2.0, snapDelay: 0.20, priority: false },
+            { item: p7, left: '44.00%',top: '68.59%', width: '25.32%', height: '31.41%', y: yBottom, dirX:  0, dirY:  1, scR:  0.0, snapDelay: 0.14, priority: false },
+            { item: p8, left: '71.48%',top: '48.85%', width: '28.52%', height: '51.15%', y: yBottom, dirX:  1, dirY:  1, scR:  2.0, snapDelay: 0.24, priority: false },
           ].map((cfg, idx) => {
             const itm = cfg.item;
             if (!itm) return null;
 
             return (
-              <motion.figure
+              <motion.div
                 key={`slot-${idx}`}
-                style={{
-                  left: cfg.left,
-                  top: cfg.top,
-                  width: cfg.width,
-                  height: cfg.height,
-                  y: cfg.y,
-                }}
-                className="absolute overflow-hidden rounded-2xl border border-[#050505]/15 bg-white shadow-[0_4px_22px_-3px_rgba(5,5,5,0.07),0_1px_3px_rgba(5,5,5,0.04)] hover:shadow-[0_22px_45px_-10px_rgba(5,5,5,0.18)] hover:border-[#050505]/40 hover:-translate-y-1.5 hover:scale-[1.012] cursor-pointer group transition-all duration-300 ease-out"
-                onClick={() => onSelectImage(itm)}
+                style={{ left: cfg.left, top: cfg.top, width: cfg.width, height: cfg.height, y: cfg.y }}
+                className="absolute pointer-events-auto"
               >
-                {/* Photo Arising Animation on Search & Filter Change */}
-                <motion.div
-                  key={`arise-${searchCycleKey}-${itm.id}`}
-                  initial={{ opacity: 0, y: 34, scale: 0.93 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.55,
-                    delay: cfg.delay,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="relative w-full h-full overflow-hidden bg-[#E5E0D8]"
-                >
-                  <Image
-                    src={itm.imageUrl}
-                    alt={itm.title}
-                    fill
-                    priority={cfg.priority}
-                    quality={90}
-                    sizes="(min-width: 1024px) 35vw, 50vw"
-                    className="object-cover saturate-[1.06] contrast-[1.02] transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+                <AnimatePresence mode="popLayout">
+                  <motion.figure
+                    key={`card-${searchCycleKey}-${itm.id}-${idx}`}
+                    onClick={() => onSelectImage(itm, effectiveItems)}
+                    initial={isMounted ? {
+                      opacity: 0,
+                      scale: 0.88,
+                      x: cfg.dirX * 32,
+                      y: cfg.dirY * 26,
+                      rotate: cfg.scR,
+                      filter: 'blur(4px)',
+                    } : false}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      x: 0,
+                      y: 0,
+                      rotate: 0,
+                      filter: 'blur(0px)',
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.90,
+                      x: -cfg.dirX * 22,
+                      y: -cfg.dirY * 18,
+                      rotate: -cfg.scR * 0.5,
+                      filter: 'blur(4px)',
+                      transition: { duration: 0.28, ease: [0.32, 0, 0.67, 0] },
+                    }}
+                    transition={{
+                      delay: isMounted ? cfg.snapDelay : 0,
+                      duration: 0.62,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="relative w-full h-full overflow-hidden rounded-2xl border border-[#050505]/15 bg-[#E5E0D8] shadow-[0_4px_22px_-3px_rgba(5,5,5,0.07),0_1px_3px_rgba(5,5,5,0.04)] hover:shadow-[0_22px_45px_-10px_rgba(5,5,5,0.18)] hover:border-[#050505]/40 hover:-translate-y-1.5 hover:scale-[1.012] cursor-pointer group transition-shadow transition-[border-color] duration-300 ease-out isolate"
+                  >
+                    {/* Photo with Mechanical Recoil */}
+                    <motion.div
+                      key={`recoil-${searchCycleKey}-${itm.id}-${idx}`}
+                      initial={{ scale: 1 }}
+                      animate={{
+                        scale: [1, 0.965, 1.018, 1],
+                      }}
+                      transition={{
+                        duration: 0.28,
+                        delay: isMounted ? cfg.snapDelay + 0.44 : 0,
+                        times: [0, 0.25, 0.65, 1],
+                        ease: 'easeOut',
+                      }}
+                      className="relative w-full h-full overflow-hidden"
+                    >
+                      <Image
+                        src={itm.imageUrl}
+                        alt={itm.title}
+                        fill
+                        priority={cfg.priority}
+                        quality={90}
+                        sizes="(min-width: 1024px) 35vw, 50vw"
+                        className="object-cover saturate-[1.06] contrast-[1.02] transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    </motion.div>
 
-                  {/* Refined Editorial Gradient & Hover Info Tag (Only on hover) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 lg:p-5 pointer-events-none">
-                    <div className="flex items-center justify-between w-full text-white">
-                      <div className="pr-3">
-                        <span className="inline-block px-2 py-0.5 rounded-sm bg-white/20 backdrop-blur-md text-[10px] font-mono font-bold uppercase tracking-wider text-white mb-1.5">
-                          {itm.category}
-                        </span>
-                        <p className="text-sm lg:text-base font-bold tracking-tight text-white line-clamp-1 drop-shadow-sm font-sans">
-                          {itm.title}
-                        </p>
-                      </div>
-                      <div className="flex-shrink-0 p-2 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:scale-110 transition-transform duration-200">
-                        <Maximize2 className="w-4 h-4" />
+                    {/* Camera Shutter Snap: Viewfinder Reticle + Xenon Flash + Aperture Ring */}
+                    <CameraShutterFlash
+                      activeKey={`desk-${searchCycleKey}-${idx}`}
+                      delay={isMounted ? cfg.snapDelay + 0.16 : 0}
+                    />
+
+                    {/* Editorial Gradient + Hover Info */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 lg:p-5 pointer-events-none z-20">
+                      <div className="flex items-center justify-between w-full text-white">
+                        <div className="pr-3">
+                          <span className="inline-block px-2 py-0.5 rounded-sm bg-white/20 backdrop-blur-md text-[10px] font-mono font-bold uppercase tracking-wider text-white mb-1.5">
+                            {itm.category}
+                          </span>
+                          <p className="text-sm lg:text-base font-bold tracking-tight text-white line-clamp-1 drop-shadow-sm font-sans">
+                            {itm.title}
+                          </p>
+                        </div>
+                        <div className="flex-shrink-0 p-2 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:scale-110 transition-transform duration-200">
+                          <Maximize2 className="w-4 h-4" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              </motion.figure>
+                  </motion.figure>
+                </AnimatePresence>
+              </motion.div>
             );
           })}
         </div>
       </div>
     </div>
+    </MotionConfig>
   );
 }

@@ -5,7 +5,6 @@ import {
   useState,
 } from "react"
 import { sponsors, sponsorStoryPlaceholders } from "@/data/sponsors"
-import "@/styles/sponsor-deck.css"
 
 type IconName = "arrow" | "check"
 
