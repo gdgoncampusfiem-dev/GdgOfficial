@@ -1,9 +1,55 @@
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, PointerEvent, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navigation/Navbar"
 
-type IconName = "arrow"
+const SPONSOR_STORIES = [
+  {
+    quote:
+      "[ Verified sponsor story will appear here after review and approval by the GDG OC FIEM team. ]",
+    name: "[ Sponsor representative ]",
+    role: "[ Role · Organization ]",
+    company: "[ Partner name ]",
+    color: "blue",
+  },
+  {
+    quote:
+      "[ Add an approved quote about supporting student developers, community learning or technical collaboration. ]",
+    name: "[ Sponsor representative ]",
+    role: "[ Role · Organization ]",
+    company: "[ Partner name ]",
+    color: "green",
+  },
+  {
+    quote:
+      "[ Add an approved reflection on the partnership experience and its verified community impact. ]",
+    name: "[ Sponsor representative ]",
+    role: "[ Role · Organization ]",
+    company: "[ Partner name ]",
+    color: "red",
+  },
+  {
+    quote:
+      "[ Add an approved sponsor story here. Keep the final quote concise, specific and attributable. ]",
+    name: "[ Sponsor representative ]",
+    role: "[ Role · Organization ]",
+    company: "[ Partner name ]",
+    color: "yellow",
+  },
+]
+
+const SPONSORS = [
+  { name: "Google", image: "/sponsors/google.png" },
+  { name: "AMD", image: "/sponsors/amd.png", monochrome: true },
+  { name: "GitHub", image: "/sponsors/github.png", monochrome: true },
+  { name: "Neo4j", image: "/sponsors/neo4j.png" },
+  {
+    name: "Google for Developers",
+    image: "/sponsors/google-for-developers.png",
+  },
+]
+
+type IconName = "arrow" | "check"
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, React.ReactNode> = {
@@ -13,6 +59,7 @@ function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
         <path d="m13 6 6 6-6 6" />
       </>
     ),
+    check: <path d="m5 12 4 4L19 6" />,
   }
 
   return (
@@ -72,6 +119,235 @@ function KolkataHero() {
           <br />
           <em>what’s next.</em>
         </h1>
+      </div>
+    </section>
+  )
+}
+
+function PartnershipMarquee() {
+  return (
+    <section
+      aria-labelledby="sponsor-marquee-heading"
+      className="marquee-section"
+      id="partners"
+    >
+      <div className="section-heading section-heading-on-dark">
+        <div>
+          <h2 id="sponsor-marquee-heading">Meet our sponsors.</h2>
+        </div>
+      </div>
+      <div className="marquee">
+        <div className="marquee-track">
+          {[...SPONSORS, ...SPONSORS].map(
+            ({ name, image, monochrome }, index) => {
+              const isDuplicate = index >= SPONSORS.length
+
+              return (
+                <div
+                  aria-hidden={isDuplicate}
+                  className="sponsor-logo"
+                  key={`${name}-${index}`}
+                >
+                  <Image
+                    alt={isDuplicate ? "" : `${name} logo`}
+                    className={`sponsor-image${monochrome ? " sponsor-image-white" : ""}`}
+                    height={120}
+                    src={image}
+                    width={460}
+                  />
+                </div>
+              )
+            },
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SponsorStories() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [exitDirection, setExitDirection] = useState<-1 | 0 | 1>(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const pointerStart = useRef<number | null>(null)
+  const advanceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(
+    () => () => {
+      if (advanceTimeout.current !== null) {
+        clearTimeout(advanceTimeout.current)
+      }
+    },
+    [],
+  )
+
+  function showPrevious() {
+    setActiveIndex((index) =>
+      index === 0 ? SPONSOR_STORIES.length - 1 : index - 1,
+    )
+  }
+
+  function showNext() {
+    setActiveIndex((index) =>
+      index === SPONSOR_STORIES.length - 1 ? 0 : index + 1,
+    )
+  }
+
+  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (exitDirection !== 0) return
+    if (event.pointerType === "mouse" && event.button !== 0) return
+
+    pointerStart.current = event.clientX
+    setIsDragging(true)
+    setDragOffset(0)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (pointerStart.current !== null) {
+      setDragOffset(event.clientX - pointerStart.current)
+    }
+  }
+
+  function handlePointerCancel(event: PointerEvent<HTMLDivElement>) {
+    pointerStart.current = null
+    setIsDragging(false)
+    setDragOffset(0)
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+  }
+
+  function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
+    const startX = pointerStart.current
+    if (startX === null) return
+
+    pointerStart.current = null
+    setIsDragging(false)
+    const distance = event.clientX - startX
+    const direction: -1 | 0 | 1 = distance < -60 ? -1 : distance > 60 ? 1 : 0
+
+    if (direction === 0) {
+      setDragOffset(0)
+    } else {
+      setExitDirection(direction)
+      setDragOffset(direction * event.currentTarget.clientWidth * 1.08)
+      advanceTimeout.current = setTimeout(() => {
+        setActiveIndex((index) =>
+          direction < 0
+            ? (index + 1) % SPONSOR_STORIES.length
+            : index === 0
+              ? SPONSOR_STORIES.length - 1
+              : index - 1,
+        )
+        setExitDirection(0)
+        setDragOffset(0)
+      }, 720)
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+  }
+
+  return (
+    <section className="stories-section" id="stories">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">Sponsor stories</p>
+          <h2 className="stories-heading">What contribution feels like.</h2>
+        </div>
+        <div aria-hidden="true" className="story-swipe-hint">
+          <span />
+          Swipe or drag to turn the page
+        </div>
+      </div>
+      <div
+        aria-label="Draggable sponsor story gallery"
+        className={`story-window${isDragging ? " is-dragging" : ""}`}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault()
+            showPrevious()
+          }
+          if (event.key === "ArrowRight") {
+            event.preventDefault()
+            showNext()
+          }
+        }}
+        onPointerCancel={handlePointerCancel}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        role="region"
+        tabIndex={0}
+      >
+        <div className="story-track">
+          {SPONSOR_STORIES.map((story, index) => {
+            const relativeIndex =
+              (index - activeIndex + SPONSOR_STORIES.length) %
+              SPONSOR_STORIES.length
+            const isActive = relativeIndex === 0
+            const isPast = relativeIndex === SPONSOR_STORIES.length - 1
+            const stackDepth = Math.min(Math.max(relativeIndex, 0), 3)
+            const activeOffset =
+              exitDirection === 0
+                ? `${dragOffset}px`
+                : `${exitDirection * 108}%`
+            const transform = isActive
+              ? `translate3d(${activeOffset}, 0, 0) rotateZ(${dragOffset / 140}deg)`
+              : isPast
+                ? "translate3d(-108%, 0, 0) rotateZ(-4deg)"
+                : `translate3d(${stackDepth * 10}px, ${stackDepth * 10}px, ${-stackDepth * 18}px) scale(${1 - stackDepth * 0.018})`
+
+            return (
+              <article
+                aria-hidden={!isActive}
+                className={`story-slide${isActive ? ` is-active-story${exitDirection === 0 ? "" : " is-exiting-story"}` : isPast ? " is-past-story" : " is-stacked-story"}`}
+                key={story.color}
+                style={{
+                  opacity: isPast ? 0 : 1,
+                  pointerEvents: isActive ? "auto" : "none",
+                  transform,
+                  transformOrigin: isActive && dragOffset > 0 ? "right center" : "left center",
+                  zIndex: isActive
+                    ? SPONSOR_STORIES.length + 2
+                    : SPONSOR_STORIES.length - relativeIndex,
+                }}
+              >
+                <div className={`story-card story-${story.color}`}>
+                  <span aria-hidden="true" className="quote-mark">
+                    “
+                  </span>
+                  <blockquote>{story.quote}</blockquote>
+                  <div className="story-person">
+                    <span aria-hidden="true">ID</span>
+                    <div>
+                      <strong>{story.name}</strong>
+                      <small>{story.role}</small>
+                    </div>
+                  </div>
+                  <p className="story-company">{story.company}</p>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+      <div
+        aria-label="Sponsor story progress"
+        aria-valuemax={SPONSOR_STORIES.length}
+        aria-valuemin={1}
+        aria-valuenow={activeIndex + 1}
+        className="story-progress"
+        role="progressbar"
+      >
+        <span
+          style={{
+            width: `${((activeIndex + 1) / SPONSOR_STORIES.length) * 100}%`,
+          }}
+        />
       </div>
     </section>
   )
@@ -156,7 +432,7 @@ function ContactForm() {
     return (
       <div className="contact-success" aria-live="polite">
         <span>
-          <Icon name="arrow" size={26} />
+          <Icon name="check" size={26} />
         </span>
         <p className="contact-success-title">No message sent.</p>
         <p>
@@ -182,7 +458,7 @@ function ContactForm() {
           <input
             autoComplete="off"
             name="organization"
-            placeholder="Organization"
+            placeholder="Acme Technologies"
             required
           />
         </label>
@@ -191,9 +467,29 @@ function ContactForm() {
           <input
             autoComplete="off"
             name="email"
-            placeholder="name@example.com"
+            placeholder="you@organization.com"
             required
             type="email"
+          />
+        </label>
+        <label className="field">
+          <span>Phone number</span>
+          <input
+            autoComplete="off"
+            name="phone"
+            placeholder="+91 00000 00000"
+            required
+            type="tel"
+          />
+        </label>
+        <label className="field">
+          <span>Organization website</span>
+          <input
+            autoComplete="off"
+            name="website"
+            placeholder="https://organization.com"
+            required
+            type="url"
           />
         </label>
       </div>
@@ -214,7 +510,7 @@ export default function App() {
     }
 
     const revealTargets = document.querySelectorAll<HTMLElement>(
-      "#partnership, #opportunities, #contact, .site-footer",
+      "#partners, #stories, #contact, .site-footer",
     )
 
     revealTargets.forEach((target) => {
@@ -246,104 +542,14 @@ export default function App() {
       <Navbar theme="light" />
 
       <KolkataHero />
-
-      <section className="partnership-section" id="partnership">
-        <div className="partnership-intro">
-          <p className="eyebrow">Partnership, with purpose</p>
-          <h2>Build the conditions for what comes next.</h2>
-          <p>
-            A partnership is a practical exchange: create useful experiences,
-            share expertise, and make room for the next generation of builders.
-          </p>
-        </div>
-        <ol className="partnership-values">
-          <li>
-            <span>01</span>
-            <div>
-              <h3>Reach</h3>
-              <p>Meet student developers through community programming.</p>
-            </div>
-          </li>
-          <li>
-            <span>02</span>
-            <div>
-              <h3>Experience</h3>
-              <p>Bring practical ideas into workshops and hands-on events.</p>
-            </div>
-          </li>
-          <li>
-            <span>03</span>
-            <div>
-              <h3>Talent</h3>
-              <p>Support learning, mentorship, and meaningful technical work.</p>
-            </div>
-          </li>
-          <li>
-            <span>04</span>
-            <div>
-              <h3>Community</h3>
-              <p>Help sustain an open space to learn, share, and build.</p>
-            </div>
-          </li>
-        </ol>
-      </section>
-
-      <section className="opportunities-section" id="opportunities">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Ways to collaborate</p>
-            <h2>Start with a shared idea.</h2>
-          </div>
-          <p>
-            Each collaboration is shaped around the people, skills, and
-            resources both sides can bring.
-          </p>
-        </div>
-        <ol className="opportunity-list">
-          <li>
-            <span>01</span>
-            <h3>Event partnerships</h3>
-            <p>Contribute to community events and developer meetups.</p>
-          </li>
-          <li>
-            <span>02</span>
-            <h3>Workshops</h3>
-            <p>Share tools and practical knowledge in hands-on sessions.</p>
-          </li>
-          <li>
-            <span>03</span>
-            <h3>Hackathons</h3>
-            <p>Help participants explore problems and build solutions together.</p>
-          </li>
-          <li>
-            <span>04</span>
-            <h3>Technology support</h3>
-            <p>Offer technical resources, including cloud support where available.</p>
-          </li>
-          <li>
-            <span>05</span>
-            <h3>Speakers and mentorship</h3>
-            <p>Make time for useful conversations and guidance from practitioners.</p>
-          </li>
-          <li>
-            <span>06</span>
-            <h3>Community partnerships</h3>
-            <p>Connect people and organizations around shared learning goals.</p>
-          </li>
-        </ol>
-      </section>
+      <PartnershipMarquee />
+      <SponsorStories />
 
       <section className="contact-section" id="contact">
         <div className="contact-layout">
           <div>
             <p className="eyebrow">Contact us</p>
-            <h2
-              data-typing-heading
-              style={{
-                color: "#34a853",
-                fontSize: "clamp(2.5rem, 4.2vw, 4.5rem)",
-              }}
-            >
+            <h2 className="contact-heading" data-typing-heading>
               <span className="typing-intro">Let’s start with a</span>
               <br />
               <span className="typing-hello">hello.</span>
@@ -385,8 +591,8 @@ export default function App() {
               `}</style>
             </h2>
             <p className="contact-copy">
-              The inquiry form is a non-connected preview. It does not transmit
-              or store your information.
+              Share your organization details and our community team will reach
+              out to explore what we can build together.
             </p>
           </div>
           <ContactForm />
