@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react"
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
+import { Navbar } from "@/components/navigation/Navbar"
 
 type IconName = "arrow"
 
@@ -130,13 +131,13 @@ function KolkataFooter() {
       <KolkataSkyline />
 
       <div className="footer-meta">
-        <a className="footer-brand" href="#top" aria-label="Back to top">
+        <Link className="footer-brand" href="/" aria-label="GDG OC FIEM home">
           <BrandMark />
           <span>
             <strong>GDG on Campus</strong>
             <small>Future Institute of Engineering and Management</small>
           </span>
-        </a>
+        </Link>
         <p>Developer community · Kolkata, India</p>
       </div>
     </footer>
@@ -242,23 +243,7 @@ export default function App() {
 
   return (
     <main className="app-shell theme-light" id="top">
-      <header className="site-header">
-        <nav className="nav-shell">
-          <Link className="brand-link" href="/" aria-label="GDG OC FIEM home">
-            <BrandMark />
-            <span>
-              <strong>Google Developer Group on Campus FIEM</strong>
-              <small>Partner deck</small>
-            </span>
-          </Link>
-
-          <div className="nav-links">
-            <a href="#partnership">Partnership</a>
-            <a href="#opportunities">Opportunities</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </nav>
-      </header>
+      <Navbar theme="light" />
 
       <KolkataHero />
 

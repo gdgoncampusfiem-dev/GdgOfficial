@@ -1,11 +1,11 @@
 .app-shell {
-  --surface: #ffffff;
-  --surface-soft: #f2f4f6;
-  --surface-raised: #ffffff;
-  --ink: #171717;
-  --muted: #666d75;
-  --line: rgb(23 23 23 / 12%);
-  --shadow: rgb(28 34 41 / 10%);
+  --surface: #f3f0e8;
+  --surface-soft: #eae7df;
+  --surface-raised: #faf9f5;
+  --ink: #050505;
+  --muted: #575550;
+  --line: rgb(5 5 5 / 12%);
+  --shadow: rgb(5 5 5 / 10%);
   min-height: 100vh;
   overflow-x: hidden;
   background: var(--surface);
@@ -58,40 +58,6 @@
   transform: translateY(0);
 }
 
-.site-header {
-  position: fixed;
-  z-index: 50;
-  top: 0;
-  right: 0;
-  left: 0;
-  padding: 1.25rem;
-}
-
-.nav-shell {
-  position: relative;
-  display: flex;
-  width: 100%;
-  max-width: 80rem;
-  min-height: 4.25rem;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 0.55rem 0.6rem 0.55rem 1rem;
-  border: 1px solid var(--line);
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--surface-raised) 82%, transparent);
-  box-shadow: 0 1rem 3rem var(--shadow);
-  backdrop-filter: blur(20px) saturate(160%);
-}
-
-.brand-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  color: var(--ink);
-  text-decoration: none;
-}
-
 .brand-mark {
   display: inline-flex;
   width: 2.4rem;
@@ -109,41 +75,6 @@
   height: 100%;
   object-fit: cover;
   transform: scale(1.55);
-}
-
-.brand-link > span {
-  display: grid;
-  gap: 0.05rem;
-}
-
-.brand-link strong {
-  font-size: 0.78rem;
-}
-
-.brand-link small {
-  color: var(--muted);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.nav-links a {
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: color 180ms ease;
-}
-
-.nav-links a:hover {
-  color: var(--ink);
 }
 
 .hero {
@@ -611,20 +542,6 @@
 }
 
 @media (max-width: 767px) {
-  .site-header {
-    padding: 0.8rem;
-  }
-
-  .nav-shell {
-    min-height: 3.8rem;
-    padding-left: 0.7rem;
-  }
-
-  .brand-link small,
-  .nav-links {
-    display: none;
-  }
-
   .brand-mark {
     width: 2.2rem;
     height: 2.2rem;
