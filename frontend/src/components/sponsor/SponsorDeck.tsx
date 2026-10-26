@@ -26,6 +26,17 @@ const PARTNERSHIP_VALUES = [
   },
 ]
 
+const SPONSORS = [
+  { name: "Google", image: "/sponsors/google.png" },
+  { name: "AMD", image: "/sponsors/amd.png", monochrome: true },
+  { name: "GitHub", image: "/sponsors/github.png", monochrome: true },
+  { name: "Neo4j", image: "/sponsors/neo4j.png" },
+  {
+    name: "Google for Developers",
+    image: "/sponsors/google-for-developers.png",
+  },
+]
+
 type IconName = "arrow"
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
@@ -103,29 +114,37 @@ function KolkataHero() {
 function PartnershipMarquee() {
   return (
     <section
-      aria-labelledby="partnership-marquee-heading"
-      className="partnership-marquee"
+      aria-labelledby="sponsor-marquee-heading"
+      className="marquee-section"
     >
-      <div className="partnership-marquee-heading">
-        <p className="eyebrow">Partnership, in motion</p>
-        <h2 id="partnership-marquee-heading">Build together.</h2>
+      <div className="section-heading section-heading-on-dark">
+        <div>
+          <h2 id="sponsor-marquee-heading">Meet our sponsors.</h2>
+        </div>
       </div>
-      <div aria-hidden="true" className="marquee-viewport">
+      <div className="marquee">
         <div className="marquee-track">
-          {[false, true].map((isDuplicate) => (
-            <div
-              aria-hidden={isDuplicate}
-              className="marquee-group"
-              key={isDuplicate ? "duplicate" : "original"}
-            >
-              {PARTNERSHIP_VALUES.map(({ name }) => (
-                <span className="marquee-item" key={name}>
-                  {name}
-                  <span className="marquee-separator" />
-                </span>
-              ))}
-            </div>
-          ))}
+          {[...SPONSORS, ...SPONSORS].map(
+            ({ name, image, monochrome }, index) => {
+              const isDuplicate = index >= SPONSORS.length
+
+              return (
+                <div
+                  aria-hidden={isDuplicate}
+                  className="sponsor-logo"
+                  key={`${name}-${index}`}
+                >
+                  <Image
+                    alt={isDuplicate ? "" : `${name} logo`}
+                    className={`sponsor-image${monochrome ? " sponsor-image-white" : ""}`}
+                    height={120}
+                    src={image}
+                    width={460}
+                  />
+                </div>
+              )
+            },
+          )}
         </div>
       </div>
     </section>
