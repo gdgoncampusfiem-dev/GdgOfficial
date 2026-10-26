@@ -5,27 +5,17 @@ import "@fontsource/josefin-sans/400.css";
 import "@fontsource/josefin-sans/700.css";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import { ReactLenis } from "lenis/react";
-
-const SPONSOR_ROUTES = new Set(["/sponsor", "/sponsor-us"]);
+import { ReactLenis } from 'lenis/react';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const isSponsorPage = SPONSOR_ROUTES.has(router.pathname);
-
-  if (isSponsorPage) {
-    return <Component {...pageProps} />;
-  }
-
   return (
-    <ReactLenis
-      root
-      options={{
-        lerp: 0.09,
-        wheelMultiplier: 0.9,
-        smoothWheel: true,
-        syncTouch: true,
+    <ReactLenis 
+      root 
+      options={{ 
+        lerp: 0.09, 
+        wheelMultiplier: 0.9, 
+        smoothWheel: true, 
+        syncTouch: true 
       }}
     >
       {/* Mobile Blocker Screen */}
@@ -34,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
           Under Development
         </h1>
       </div>
-
+      
       {/* Desktop App */}
       <div className="hidden md:block">
         <Component {...pageProps} />
