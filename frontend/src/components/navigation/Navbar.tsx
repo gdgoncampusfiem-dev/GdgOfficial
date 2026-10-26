@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: 'Gallery', href: '/gallery' },
   { label: 'Domains', href: '/domains' },
   { label: 'Team', href: '/teams' },
-  { label: 'Sponsor', href: '/sponsor' },
+  { label: 'Sponsor us', href: '/sponsors' },
 ];
 
 interface NavbarProps {

@@ -9,15 +9,11 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { ReactLenis } from "lenis/react";
 
-const SPONSOR_ROUTES = new Set(["/sponsor", "/sponsor-us"]);
+const SPONSOR_ROUTES = new Set(["/sponsor", "/sponsor-us", "/sponsors"]);
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isSponsorPage = SPONSOR_ROUTES.has(router.pathname);
-
-  if (isSponsorPage) {
-    return <Component {...pageProps} />;
-  }
 
   return (
     <ReactLenis
@@ -29,17 +25,21 @@ export default function App({ Component, pageProps }: AppProps) {
         syncTouch: true,
       }}
     >
-      {/* Mobile Blocker Screen */}
-      <div className="md:hidden fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center">
-        <h1 className="text-white font-sans font-extralight tracking-widest uppercase text-sm">
-          Under Development
-        </h1>
-      </div>
+      {!isSponsorPage && (
+        <div className="md:hidden fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center">
+          <h1 className="text-white font-sans font-extralight tracking-widest uppercase text-sm">
+            Under Development
+          </h1>
+        </div>
+      )}
 
-      {/* Desktop App */}
-      <div className="hidden md:block">
+      {isSponsorPage ? (
         <Component {...pageProps} />
-      </div>
+      ) : (
+        <div className="hidden md:block">
+          <Component {...pageProps} />
+        </div>
+      )}
     </ReactLenis>
   );
 }
