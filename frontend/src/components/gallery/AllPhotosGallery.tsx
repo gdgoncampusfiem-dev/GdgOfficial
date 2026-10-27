@@ -30,12 +30,13 @@ export function AllPhotosGallery({ photos, onSelectImage }: AllPhotosGalleryProp
               </div>
 
               {/* Section Heading */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#050505] uppercase tracking-tight leading-[0.95] mb-3 font-sans">
-                All Captured Moments
+              <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#050505] uppercase tracking-tight leading-[0.95] mb-3 font-sans">
+                <span className="subheading-words font-light">All Captured </span>
+                <span className="subheading-last font-bold">Moments</span>
               </h2>
 
               {/* Description */}
-              <p className="text-sm sm:text-base text-[#575550] font-medium leading-relaxed max-w-2xl">
+              <p className="text-sm sm:text-base text-[#575550] font-normal leading-relaxed max-w-2xl">
                 Every captured moment across all our conferences, hackathons, coding workshops, and campus meetups.
               </p>
             </div>

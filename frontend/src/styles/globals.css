@@ -1,9 +1,79 @@
+@import url('https://fonts.cdnfonts.com/css/product-sans');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Product Sans Thin';
+  font-style: normal;
+  font-weight: 200;
+  src: url('https://fonts.cdnfonts.com/s/14955/ProductSans-Thin.woff') format('woff'), local('Product Sans Thin');
+}
+
+@font-face {
+  font-family: 'Product Sans Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url('https://fonts.cdnfonts.com/s/14955/ProductSans-Light.woff') format('woff'), local('Product Sans Light');
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 200;
+  src: url('https://fonts.cdnfonts.com/s/14955/ProductSans-Thin.woff') format('woff'), local('Product Sans Thin');
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: url('https://fonts.cdnfonts.com/s/14955/ProductSans-Light.woff') format('woff'), local('Product Sans Light');
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.cdnfonts.com/s/14955/ProductSans-Regular.woff') format('woff'), local('Product Sans Regular'), local('Product Sans');
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Product Sans Italic'), url('https://fonts.cdnfonts.com/s/14955/ProductSans-Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Product Sans Bold'), url('https://fonts.cdnfonts.com/s/14955/ProductSans-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Product Sans Black'), url('https://fonts.cdnfonts.com/s/14955/ProductSans-Black.woff') format('woff');
+}
+
+:root {
+  /* =========================================================================
+   * SUBHEADING FONT WEIGHT VARIABLES
+   * =========================================================================
+   * Adjust these values directly to change font weights across all subheadings:
+   * - --subheading-weight-words: Weight of words before the last word (e.g. 170, 200, 300)
+   * - --subheading-weight-last:  Weight of the last word (e.g. 600, 700, 750)
+   */
+  --subheading-weight-words: 300;
+  --subheading-weight-last: 700;
+}
+
 @theme {
-  --font-sans: 'Josefin Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
+  --font-product: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  
+
   --color-warm-white: #F3F0E8;
   --color-warm-white-darker: #D8D4CB;
   --color-graphite: #575550;
@@ -11,8 +81,36 @@
   --color-near-black-lighter: #151515;
 }
 
+/* Subheadings default to Product Sans, sans-serif */
+h2,
+.sub-heading,
+.font-product {
+  font-family: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
+  text-transform: none;
+}
+
+/* Subheading font weight helper classes */
+.subheading-words {
+  font-weight: var(--subheading-weight-words, 200) !important;
+}
+
+.subheading-last {
+  font-weight: var(--subheading-weight-last, 700) !important;
+}
+
+.sub-heading {
+  font-weight: var(--subheading-weight-words, 200);
+}
+
+.sub-heading .last-word,
+.sub-heading b,
+.sub-heading strong {
+  font-weight: var(--subheading-weight-last, 700);
+}
+
 /* Base styles for Lenis smooth scrolling */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -38,45 +136,78 @@ html {
 }
 
 body {
+  font-family: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 300;
   background-color: var(--color-warm-white);
   color: var(--color-near-black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Global body, description, and paragraph typography - Product Sans Light (Reduced Weight) */
+p,
+.description {
+  font-family: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 300;
+}
+
 /* Liquid Glass Fluid Animations */
 @keyframes liquid-flow-primary {
-  0% { transform: translate3d(-15%, -10%, 0) scale(1, 0.95); }
-  50% { transform: translate3d(15%, 10%, 0) scale(1.05, 1); }
-  100% { transform: translate3d(-10%, 15%, 0) scale(0.95, 1.05); }
+  0% {
+    transform: translate3d(-15%, -10%, 0) scale(1, 0.95);
+  }
+
+  50% {
+    transform: translate3d(15%, 10%, 0) scale(1.05, 1);
+  }
+
+  100% {
+    transform: translate3d(-10%, 15%, 0) scale(0.95, 1.05);
+  }
 }
 
 @keyframes liquid-flow-secondary {
-  0% { transform: translate3d(15%, 15%, 0) scale(0.95, 1); }
-  50% { transform: translate3d(-15%, -15%, 0) scale(1, 1.05); }
-  100% { transform: translate3d(10%, -10%, 0) scale(1.05, 0.95); }
+  0% {
+    transform: translate3d(15%, 15%, 0) scale(0.95, 1);
+  }
+
+  50% {
+    transform: translate3d(-15%, -15%, 0) scale(1, 1.05);
+  }
+
+  100% {
+    transform: translate3d(10%, -10%, 0) scale(1.05, 0.95);
+  }
 }
 
 @keyframes liquid-rim-flow {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes foil-shimmer {
-  0% { background-position: 200% center; }
-  100% { background-position: -200% center; }
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
 }
 
 .text-gdg-shimmer {
-  background: linear-gradient(
-    110deg,
-    #F4F1EA 25%,
-    rgba(66, 133, 244, 0.6) 40%,
-    rgba(234, 67, 53, 0.6) 48%,
-    rgba(251, 188, 5, 0.6) 56%,
-    rgba(52, 168, 83, 0.6) 64%,
-    #F4F1EA 75%
-  );
+  background: linear-gradient(110deg,
+      #F4F1EA 25%,
+      rgba(66, 133, 244, 0.6) 40%,
+      rgba(234, 67, 53, 0.6) 48%,
+      rgba(251, 188, 5, 0.6) 56%,
+      rgba(52, 168, 83, 0.6) 64%,
+      #F4F1EA 75%);
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;
@@ -84,3 +215,14 @@ body {
   animation: foil-shimmer 6s linear infinite;
 }
 
+/* Sponsor Marquee Animation */
+@keyframes sponsor-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.animate-sponsor-marquee {
+  display: flex;
+  animation: sponsor-marquee 22s linear infinite;
+  will-change: transform;
+}

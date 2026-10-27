@@ -10,7 +10,7 @@
   overflow-x: hidden;
   background: var(--surface);
   color: var(--ink);
-  font-family: "Josefin Sans", sans-serif;
+  font-family: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
   font-weight: 400;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
@@ -274,9 +274,18 @@
 .contact-layout h2 {
   margin: 0.55rem 0 0;
   font-size: clamp(3rem, 5.4vw, 5.5rem);
-  font-weight: 700;
+  font-weight: 200;
   line-height: 0.9;
   letter-spacing: -0.065em;
+}
+
+.section-heading h2 .font-bold,
+.section-heading h2 b,
+.section-heading h2 strong,
+.contact-layout h2 .font-bold,
+.contact-layout h2 b,
+.contact-layout h2 strong {
+  font-weight: 700;
 }
 
 .contact-layout .contact-heading {

@@ -39,14 +39,10 @@ const SPONSOR_STORIES = [
 ]
 
 const SPONSORS = [
-  { name: "Google", image: "/sponsors/google.png" },
-  { name: "AMD", image: "/sponsors/amd.png", monochrome: true },
-  { name: "GitHub", image: "/sponsors/github.png", monochrome: true },
-  { name: "Neo4j", image: "/sponsors/neo4j.png" },
-  {
-    name: "Google for Developers",
-    image: "/sponsors/google-for-developers.png",
-  },
+  { name: "Google for Developers", image: "/sponsors/gfdlogo.svg" },
+  { name: "AMD",                   image: "/sponsors/amdlogo.svg",  monochrome: true },
+  { name: "GitHub",                image: "/sponsors/githublogo.svg", monochrome: true },
+  { name: "Neo4j",                 image: "/sponsors/neo4jlogo.svg" },
 ]
 
 type IconName = "arrow" | "check"
@@ -133,7 +129,10 @@ function PartnershipMarquee() {
     >
       <div className="section-heading section-heading-on-dark">
         <div>
-          <h2 id="sponsor-marquee-heading">Meet our sponsors.</h2>
+          <h2 id="sponsor-marquee-heading">
+            <span className="subheading-words font-light">Meet our </span>
+            <span className="subheading-last font-bold">sponsors.</span>
+          </h2>
         </div>
       </div>
       <div className="marquee">
@@ -151,9 +150,9 @@ function PartnershipMarquee() {
                   <Image
                     alt={isDuplicate ? "" : `${name} logo`}
                     className={`sponsor-image${monochrome ? " sponsor-image-white" : ""}`}
-                    height={120}
+                    height={140}
                     src={image}
-                    width={460}
+                    width={500}
                   />
                 </div>
               )
@@ -256,7 +255,10 @@ function SponsorStories() {
       <div className="section-heading">
         <div>
           <p className="eyebrow">Sponsor stories</p>
-          <h2 className="stories-heading">What contribution feels like.</h2>
+          <h2 className="stories-heading">
+            <span className="subheading-words font-light">What contribution feels </span>
+            <span className="subheading-last font-bold">like.</span>
+          </h2>
         </div>
         <div aria-hidden="true" className="story-swipe-hint">
           <span />

@@ -115,7 +115,7 @@ function Img({ img, index }: { img: typeof scatteredImages[0]; index: number }) 
           alt="Community event showcase"
           fill
           sizes="(max-width: 768px) 30vw, 20vw"
-          className="object-cover filter grayscale group-hover:grayscale-0 contrast-110 transition-all duration-700 group-hover:scale-110"
+          className="object-cover filter contrast-105 transition-transform duration-700 group-hover:scale-110"
         />
       </motion.div>
     </motion.div>
@@ -132,14 +132,6 @@ export function ShowcaseGallery() {
       aria-label="Community Showcase Gallery"
       className="relative w-full h-[90vh] md:h-[130vh] bg-[#F3F0E8] overflow-hidden flex items-center justify-center"
     >
-      {/* Grid texture */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `linear-gradient(to right,#000 1px,transparent 1px),linear-gradient(to bottom,#000 1px,transparent 1px)`,
-          backgroundSize: '4rem 4rem',
-        }}
-      />
 
       {/* ── SCATTERED IMAGES ────────── */}
       {scatteredImages.map((img, i) => (

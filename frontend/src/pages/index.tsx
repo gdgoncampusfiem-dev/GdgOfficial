@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Hero } from '@/components/hero/Hero';
 import { AboutPreview } from '@/components/AboutPreview';
-import { ShowcaseGallery } from '@/components/ShowcaseGallery';
 
 export default function Home() {
 
@@ -21,7 +20,6 @@ export default function Home() {
         <Navbar />
         <Hero />
         <AboutPreview />
-        <ShowcaseGallery />
 
         {/* Placeholder for the rest of the site to allow scrolling past About Preview */}
         <div className="h-[20vh] bg-[#F3F0E8]" />

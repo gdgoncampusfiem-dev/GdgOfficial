@@ -33,7 +33,7 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-2.5 md:px-8 md:pt-2.5 pointer-events-none">
         <nav
           className={cn(
-            "relative pointer-events-auto w-full max-w-6xl rounded-full px-6 py-3.5 flex items-center justify-between transition-[background-color,border-color,color,box-shadow] duration-500 ease-out",
+            "relative pointer-events-auto w-full max-w-6xl rounded-full px-6 py-3.5 flex items-center justify-between transition-[background-color,border-color,color,box-shadow] duration-500 ease-out font-product",
             isScrolled
               ? "bg-white/60 border border-black/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,1),0_10px_34px_-12px_rgba(16,24,40,0.2)] text-black"
               : theme === 'dark'
@@ -41,6 +41,7 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
                 : "bg-white/60 border border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.9),0_10px_34px_-12px_rgba(16,24,40,0.16)] text-black"
           )}
           style={{
+            fontFamily: "'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif",
             backdropFilter: isScrolled || theme === 'light' ? 'blur(24px) saturate(160%)' : 'blur(12px) saturate(100%)',
             WebkitBackdropFilter: isScrolled || theme === 'light' ? 'blur(24px) saturate(160%)' : 'blur(12px) saturate(100%)',
           }}
@@ -48,18 +49,18 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
           {/* Logo */}
           <Link 
             href="/" 
-            className="relative z-10 font-bold tracking-tight text-lg transition-opacity hover:opacity-80"
+            className="relative z-10 font-black tracking-tight text-lg transition-opacity hover:opacity-80 font-product"
           >
             GDG OC FIEM
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex relative z-10 items-center gap-8 lg:gap-12 text-[13px] font-medium tracking-widest uppercase">
+          <div className="hidden md:flex relative z-10 items-center gap-8 lg:gap-12 text-[18px] font-bold tracking-normal capitalize font-product">
             {NAV_LINKS.map((link) => (
               <Link 
                 key={link.label} 
                 href={link.href} 
-                className="px-2 py-1 opacity-60 hover:opacity-100 transition-opacity"
+                className="px-2 py-1 opacity-85 hover:opacity-100 transition-opacity"
               >
                 {link.label}
               </Link>
@@ -82,7 +83,7 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
 
       {/* Mobile Menu Glass Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 md:hidden transition-all duration-500">
+        <div className="fixed inset-0 z-40 md:hidden transition-all duration-500 font-product">
           <div 
             className="absolute inset-0 bg-black/40" 
             style={{ 
@@ -91,12 +92,17 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
             }}
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute inset-x-4 top-24 rounded-3xl bg-white/10 border border-white/20 p-8 flex flex-col items-center gap-6 shadow-2xl transition-transform duration-500 pointer-events-auto">
+          <div 
+            className="absolute inset-x-4 top-24 rounded-3xl bg-white/10 border border-white/20 p-8 flex flex-col items-center gap-6 shadow-2xl transition-transform duration-500 pointer-events-auto font-product"
+            style={{
+              fontFamily: "'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif",
+            }}
+          >
             {NAV_LINKS.map((link) => (
               <Link 
                 key={link.label} 
                 href={link.href} 
-                className="text-xl font-medium tracking-wide text-white/80 hover:text-white transition-colors"
+                className="text-[25px] font-bold tracking-normal capitalize text-white/95 hover:text-white transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
