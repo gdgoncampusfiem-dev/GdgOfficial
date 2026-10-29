@@ -1,9 +1,14 @@
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Navbar } from '@/components/navigation/Navbar';
 import { motion } from 'framer-motion';
 
 import { TechVisual } from '@/components/domains/TechDomain';
+import { TechDomainModal } from '@/components/domains/TechDomainModal';
+import { CreativeDomainModal } from '@/components/domains/CreativeDomainModal';
+import { OutreachDomainModal } from '@/components/domains/OutreachDomainModal';
+import { EventsDomainModal } from '@/components/domains/EventsDomainModal';
+import { PhotographyDomainModal } from '@/components/domains/PhotographyDomainModal';
 import { CreativesVisual } from '@/components/domains/CreativesDomain';
 import { OutreachVisual } from '@/components/domains/OutreachDomain';
 import { EventsVisual } from '@/components/domains/EventsDomain';
@@ -69,6 +74,49 @@ const DOMAINS = [
   }
 ];
 
+// --- Helper for Domain Tech Tag Styling ---
+
+const getDomainTechColorInfo = (domainId: string, tech: string) => {
+  const t = tech.toLowerCase();
+
+  if (domainId === 'tech') {
+    if (t.includes('web')) return { shadow: 'hover:shadow-[4px_4px_0px_#4285F4]', color: '#4285F4' };
+    if (t.includes('app')) return { shadow: 'hover:shadow-[4px_4px_0px_#34A853]', color: '#34A853' };
+    if (t.includes('ai')) return { shadow: 'hover:shadow-[4px_4px_0px_#EA4335]', color: '#EA4335' };
+    return { shadow: 'hover:shadow-[4px_4px_0px_#FBBC04]', color: '#FBBC04' };
+  }
+
+  if (domainId === 'creatives') {
+    if (t.includes('ui')) return { shadow: 'hover:shadow-[4px_4px_0px_#EA4335]', color: '#EA4335' };
+    if (t.includes('graphic')) return { shadow: 'hover:shadow-[4px_4px_0px_#FBBC04]', color: '#FBBC04' };
+    if (t.includes('video')) return { shadow: 'hover:shadow-[4px_4px_0px_#4285F4]', color: '#4285F4' };
+    return { shadow: 'hover:shadow-[4px_4px_0px_#34A853]', color: '#34A853' };
+  }
+
+  if (domainId === 'outreach') {
+    if (t.includes('network')) return { shadow: 'hover:shadow-[4px_4px_0px_#34A853]', color: '#34A853' };
+    if (t.includes('social')) return { shadow: 'hover:shadow-[4px_4px_0px_#4285F4]', color: '#4285F4' };
+    if (t.includes('sponsor')) return { shadow: 'hover:shadow-[4px_4px_0px_#FBBC04]', color: '#FBBC04' };
+    return { shadow: 'hover:shadow-[4px_4px_0px_#EA4335]', color: '#EA4335' };
+  }
+
+  if (domainId === 'events') {
+    if (t.includes('logistic')) return { shadow: 'hover:shadow-[4px_4px_0px_#FBBC04]', color: '#FBBC04' };
+    if (t.includes('operation')) return { shadow: 'hover:shadow-[4px_4px_0px_#EA4335]', color: '#EA4335' };
+    if (t.includes('planning')) return { shadow: 'hover:shadow-[4px_4px_0px_#4285F4]', color: '#4285F4' };
+    return { shadow: 'hover:shadow-[4px_4px_0px_#34A853]', color: '#34A853' };
+  }
+
+  if (domainId === 'photography') {
+    if (t.includes('photo')) return { shadow: 'hover:shadow-[4px_4px_0px_#4285F4]', color: '#4285F4' };
+    if (t.includes('video')) return { shadow: 'hover:shadow-[4px_4px_0px_#EA4335]', color: '#EA4335' };
+    if (t.includes('lightroom')) return { shadow: 'hover:shadow-[4px_4px_0px_#FBBC04]', color: '#FBBC04' };
+    return { shadow: 'hover:shadow-[4px_4px_0px_#34A853]', color: '#34A853' };
+  }
+
+  return { shadow: 'hover:shadow-[4px_4px_0px_#4285F4]', color: '#4285F4' };
+};
+
 // --- Reusable Component ---
 
 const DomainRow = ({
@@ -81,6 +129,8 @@ const DomainRow = ({
   isSlidUp: boolean;
 }) => {
   const isTech = domain.id === 'tech';
+  const [selectedSubDomain, setSelectedSubDomain] = useState<string | null>(null);
+  const activeTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <section id={`domain-${domain.id}`} className={`relative w-full py-20 md:py-32 border-t-[3px] border-[#050505] transition-colors duration-700 ${domain.bgColor} overflow-hidden`}>
@@ -155,18 +205,40 @@ const DomainRow = ({
               }}
               className="flex flex-wrap gap-2 mb-10 md:mb-12"
             >
-              {domain.technologies.map(tech => (
-                <motion.span
-                  key={tech}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8 },
-                    show: { opacity: 1, scale: 1, transition: { duration: 0.4, type: "spring", stiffness: 200 } }
-                  }}
-                  className="px-3 py-1.5 text-xs font-black uppercase tracking-wider text-[#050505] border-[2px] border-[#050505] bg-white shadow-[2px_2px_0px_#050505]"
-                >
-                  {tech}
-                </motion.span>
-              ))}
+              {domain.technologies.map(tech => {
+                const { shadow: hoverShadowClass, color: hoverArrowColor } = getDomainTechColorInfo(domain.id, tech);
+
+                return (
+                  <motion.button
+                    key={tech}
+                    type="button"
+                    id={`${domain.id}-domain-btn-${tech.toLowerCase().replace(/[\s\/&]/g, '-')}`}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.8 },
+                      show: { opacity: 1, scale: 1, transition: { duration: 0.4, type: "spring", stiffness: 200 } }
+                    }}
+                    whileHover={{ y: -2, x: -2 }}
+                    whileTap={{ y: 1, x: 1 }}
+                    onClick={(e) => {
+                      activeTriggerRef.current = e.currentTarget;
+                      setSelectedSubDomain(tech);
+                    }}
+                    aria-haspopup="dialog"
+                    aria-expanded={selectedSubDomain === tech}
+                    aria-label={`Open ${tech} domain information modal`}
+                    className={`group relative inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-black uppercase tracking-wider text-[#050505] border-[2px] border-[#050505] bg-white shadow-[2px_2px_0px_#050505] ${hoverShadowClass} hover:bg-[#FAF9F5] active:shadow-[1px_1px_0px_#050505] transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] focus-visible:ring-offset-2 select-none`}
+                  >
+                    <span>{tech}</span>
+                    <span
+                      className="text-[11px] font-black transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      style={{ color: hoverArrowColor }}
+                      aria-hidden="true"
+                    >
+                      ↗
+                    </span>
+                  </motion.button>
+                );
+              })}
             </motion.div>
 
           </motion.div>
@@ -188,6 +260,56 @@ const DomainRow = ({
         </div>
 
       </div>
+
+      {/* Tech Domain Information Modal */}
+      {domain.id === 'tech' && (
+        <TechDomainModal
+          isOpen={!!selectedSubDomain}
+          domainKey={selectedSubDomain}
+          onClose={() => setSelectedSubDomain(null)}
+          triggerButtonRef={activeTriggerRef}
+        />
+      )}
+
+      {/* Creative Domain Information Modal */}
+      {domain.id === 'creatives' && (
+        <CreativeDomainModal
+          isOpen={!!selectedSubDomain}
+          domainKey={selectedSubDomain}
+          onClose={() => setSelectedSubDomain(null)}
+          triggerButtonRef={activeTriggerRef}
+        />
+      )}
+
+      {/* Outreach Domain Information Modal */}
+      {domain.id === 'outreach' && (
+        <OutreachDomainModal
+          isOpen={!!selectedSubDomain}
+          domainKey={selectedSubDomain}
+          onClose={() => setSelectedSubDomain(null)}
+          triggerButtonRef={activeTriggerRef}
+        />
+      )}
+
+      {/* Events Domain Information Modal */}
+      {domain.id === 'events' && (
+        <EventsDomainModal
+          isOpen={!!selectedSubDomain}
+          domainKey={selectedSubDomain}
+          onClose={() => setSelectedSubDomain(null)}
+          triggerButtonRef={activeTriggerRef}
+        />
+      )}
+
+      {/* Photography Domain Information Modal */}
+      {domain.id === 'photography' && (
+        <PhotographyDomainModal
+          isOpen={!!selectedSubDomain}
+          domainKey={selectedSubDomain}
+          onClose={() => setSelectedSubDomain(null)}
+          triggerButtonRef={activeTriggerRef}
+        />
+      )}
     </section>
   );
 };
