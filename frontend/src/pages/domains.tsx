@@ -179,7 +179,7 @@ const DomainRow = ({
                 hidden: { opacity: 0, y: 30 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="text-lg md:text-xl text-[#575550] max-w-md font-bold leading-relaxed mb-8"
+              className="text-lg md:text-xl text-[#575550] max-w-md font-light leading-relaxed mb-8"
             >
               {domain.description}
             </motion.p>
@@ -390,14 +390,6 @@ const TypewriterHero = ({ onSlidUp }: { onSlidUp?: () => void }) => {
       }}
       className={`fixed inset-0 bg-[#F3F0E8] flex flex-col justify-center z-50 overflow-hidden ${slideUp ? 'pointer-events-none' : ''}`}
     >
-      {/* Background Gridlines for the Curtain */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `linear-gradient(to right,#000 1px,transparent 1px),linear-gradient(to bottom,#000 1px,transparent 1px)`,
-          backgroundSize: '4rem 4rem',
-        }}
-      />
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -436,14 +428,6 @@ export default function Domains() {
       </Head>
 
       <main className="relative min-h-screen bg-[#F3F0E8] font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-x-clip">
-        {/* Background Gridlines */}
-        <div
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `linear-gradient(to right,#000 1px,transparent 1px),linear-gradient(to bottom,#000 1px,transparent 1px)`,
-            backgroundSize: '4rem 4rem',
-          }}
-        />
 
         <Navbar theme="light" />
 

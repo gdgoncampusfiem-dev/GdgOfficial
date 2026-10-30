@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation/Navbar';
 import { GalleryMasonry } from '@/components/gallery/GalleryMasonry';
+import { AllPhotosGallery } from '@/components/gallery/AllPhotosGallery';
 import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
 import { GALLERY_ITEMS, GalleryItem } from '@/data/gallery';
 import { motion } from 'framer-motion';
@@ -12,25 +13,29 @@ import { ArrowUpRight } from 'lucide-react';
 
 export default function GalleryPage() {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [lightboxList, setLightboxList] = useState<GalleryItem[]>(GALLERY_ITEMS);
+  const [selectedEventId, setSelectedEventId] = useState<string>('all');
 
-  // Lightbox index calculations across all photos
+  // Lightbox index calculations across active context
   const currentIndex = selectedItem
-    ? GALLERY_ITEMS.findIndex((item) => item.id === selectedItem.id)
+    ? lightboxList.findIndex((item) => item.id === selectedItem.id)
     : -1;
 
   const handlePrev = () => {
+    if (lightboxList.length === 0) return;
     if (currentIndex <= 0) {
-      setSelectedItem(GALLERY_ITEMS[GALLERY_ITEMS.length - 1]);
+      setSelectedItem(lightboxList[lightboxList.length - 1]);
     } else {
-      setSelectedItem(GALLERY_ITEMS[currentIndex - 1]);
+      setSelectedItem(lightboxList[currentIndex - 1]);
     }
   };
 
   const handleNext = () => {
-    if (currentIndex >= GALLERY_ITEMS.length - 1) {
-      setSelectedItem(GALLERY_ITEMS[0]);
+    if (lightboxList.length === 0) return;
+    if (currentIndex >= lightboxList.length - 1) {
+      setSelectedItem(lightboxList[0]);
     } else {
-      setSelectedItem(GALLERY_ITEMS[currentIndex + 1]);
+      setSelectedItem(lightboxList[currentIndex + 1]);
     }
   };
 
@@ -46,36 +51,42 @@ export default function GalleryPage() {
       </Head>
 
       <main className="relative min-h-screen bg-[#F3F0E8] font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-x-hidden">
-        {/* Architectural Background Grid Texture */}
-        <div
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #000 1px, transparent 1px),
-              linear-gradient(to bottom, #000 1px, transparent 1px)
-            `,
-            backgroundSize: '4rem 4rem',
-          }}
-        />
 
         {/* Global Floating Navbar */}
         <Navbar theme="light" />
 
         {/* =========================================================================
-            THE SIGNATURE PHOTO GALLERY (Jigsaw Canvas inspired by GDG Noida)
-            No external headings or filter bars - the title sits in the center hole!
+            THE SIGNATURE PHOTO GALLERY (Jigsaw Canvas)
+            Integrated event searching, interactive arise wave, and fluid photo grid
            ========================================================================= */}
         <div className="relative z-10 pt-28 md:pt-36">
           <GalleryMasonry
             items={GALLERY_ITEMS}
-            onSelectImage={(item) => setSelectedItem(item)}
+            selectedEventId={selectedEventId}
+            onSelectEvent={setSelectedEventId}
+            onSelectImage={(item, currentPhotos) => {
+              setLightboxList(currentPhotos && currentPhotos.length > 0 ? currentPhotos : GALLERY_ITEMS);
+              setSelectedItem(item);
+            }}
+          />
+
+          {/* =========================================================================
+              COMPLETE PHOTO ARCHIVE (All Photos Grid - Clean, No Filter UI)
+              Full photographic exhibition grid of all community moments
+             ========================================================================= */}
+          <AllPhotosGallery
+            photos={GALLERY_ITEMS}
+            onSelectImage={(item, allPhotos) => {
+              setLightboxList(allPhotos);
+              setSelectedItem(item);
+            }}
           />
 
           {/* Fullscreen Interactive Lightbox Modal */}
           <GalleryLightbox
             item={selectedItem}
             currentIndex={currentIndex}
-            total={GALLERY_ITEMS.length}
+            total={lightboxList.length}
             onClose={() => setSelectedItem(null)}
             onPrev={handlePrev}
             onNext={handleNext}
@@ -93,10 +104,11 @@ export default function GalleryPage() {
                 <span className="inline-block py-1 px-3 border-[2px] border-[#050505] bg-[#F3F0E8] text-[#050505] text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] shadow-[3px_3px_0px_#050505] mb-6">
                   BE IN THE NEXT SHOT
                 </span>
-                <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-[#050505] uppercase tracking-tighter mb-6 leading-[0.95]">
-                  Experience It In Person.
+                <h2 className="text-4xl sm:text-6xl md:text-7xl text-[#050505] uppercase tracking-tighter mb-6 leading-[0.95]">
+                  <span className="subheading-words font-light">Experience It In </span>
+                  <span className="subheading-last font-bold">Person.</span>
                 </h2>
-                <p className="text-base sm:text-lg md:text-xl font-bold text-[#575550] max-w-xl mx-auto mb-10 leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl font-normal text-[#575550] max-w-xl mx-auto mb-10 leading-relaxed">
                   Join upcoming sessions, hackathons, and meetups to build with Kolkata’s most passionate student developers.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4">

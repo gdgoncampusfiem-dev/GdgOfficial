@@ -61,7 +61,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
           alt={member.name}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+          className="object-cover transition-transform duration-700 scale-100 group-hover:scale-105"
         />
         {/* Domain Badge */}
         {member.domain && (

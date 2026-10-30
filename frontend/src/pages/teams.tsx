@@ -13,14 +13,6 @@ export default function Teams() {
       </Head>
 
       <main className="relative min-h-screen bg-white font-sans selection:bg-[#050505] selection:text-[#F3F0E8] overflow-x-clip">
-        {/* Background Gridlines */}
-        <div
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `linear-gradient(to right,#000 1px,transparent 1px),linear-gradient(to bottom,#000 1px,transparent 1px)`,
-            backgroundSize: '4rem 4rem',
-          }}
-        />
 
         <Navbar theme="light" />
         
@@ -38,7 +30,7 @@ export default function Teams() {
               <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-[#050505] tracking-tighter mb-6 uppercase leading-[0.9]">
                 Different Minds.<br />One Community.
               </h1>
-              <p className="text-lg md:text-xl text-[#575550] max-w-2xl font-medium leading-relaxed">
+              <p className="text-lg md:text-xl text-[#575550] max-w-2xl font-light leading-relaxed">
                 Meet the people turning curiosity into creation and bringing our developer community to life.
               </p>
             </motion.div>
@@ -53,8 +45,9 @@ export default function Teams() {
             className="mb-24"
           >
             <div className="text-center w-full mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
-                Faculty Coordinator
+              <h2 className="text-3xl md:text-[48px] text-[#050505] tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
+                <span className="subheading-words font-light">Faculty </span>
+                <span className="subheading-last font-bold">Coordinator</span>
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
@@ -75,8 +68,8 @@ export default function Teams() {
             className="mb-24"
           >
             <div className="text-center w-full mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
-                Organizers
+              <h2 className="text-3xl md:text-[48px] text-[#050505] tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
+                <span className="subheading-last font-bold">Organizers</span>
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
@@ -95,8 +88,9 @@ export default function Teams() {
             className="mb-24"
           >
             <div className="text-center w-full mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-[#050505] uppercase tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
-                Core Team
+              <h2 className="text-3xl md:text-[48px] text-[#050505] tracking-tighter border-b-[3px] border-[#050505] pb-2 inline-block px-4">
+                <span className="subheading-words font-light">Core </span>
+                <span className="subheading-last font-bold">Team</span>
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:gap-8">

@@ -89,10 +89,14 @@ export function Hero() {
       />
 
       {/* Premium Hero Typography Treatment */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-center items-start pointer-events-none select-none px-6 md:px-12 lg:px-24 mt-[-5vh]">
+      <div 
+        className="absolute inset-0 z-20 flex flex-col justify-center items-start pointer-events-none select-none px-6 md:px-12 lg:px-24 mt-[-5vh]"
+        style={{ fontFamily: "'Josefin Sans', system-ui, -apple-system, sans-serif" }}
+      >
         <h1 
-          className="font-sans text-left tracking-tighter text-[#F4F1EA] drop-shadow-2xl"
+          className="text-left tracking-tighter text-[#F4F1EA] drop-shadow-2xl"
           style={{
+            fontFamily: "'Josefin Sans', system-ui, -apple-system, sans-serif",
             fontSize: 'clamp(2.5rem, 5vw, 5.5rem)',
             lineHeight: 0.95,
             letterSpacing: '-0.05em',
@@ -161,8 +165,9 @@ export function Hero() {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: -16 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 2.0 }}
-          className="font-sans font-light text-white/95 max-w-lg text-left drop-shadow-sm"
+          className="font-light text-white/95 max-w-lg text-left drop-shadow-sm"
           style={{
+            fontFamily: "'Josefin Sans', system-ui, -apple-system, sans-serif",
             fontSize: 'clamp(1rem, 1.25vw, 1.125rem)',
             letterSpacing: '0em',
             lineHeight: 1.4,
