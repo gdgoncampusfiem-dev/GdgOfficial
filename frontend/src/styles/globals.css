@@ -74,11 +74,34 @@
   --font-product: 'Product Sans', 'Google Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
+  /* ── Existing brand tokens ── */
   --color-warm-white: #F3F0E8;
   --color-warm-white-darker: #D8D4CB;
   --color-graphite: #575550;
   --color-near-black: #050505;
   --color-near-black-lighter: #151515;
+
+  /* ── GDG Official Core Colors ── */
+  --color-gdg-blue: #4285F4;
+  --color-gdg-green: #34A853;
+  --color-gdg-yellow: #F9AB00;
+  --color-gdg-red: #EA4335;
+
+  /* ── GDG Official Halftones ── */
+  --color-gdg-blue-half: #57CAFF;
+  --color-gdg-green-half: #5CDB6D;
+  --color-gdg-yellow-half: #FFD427;
+  --color-gdg-red-half: #FF7DAF;
+
+  /* ── GDG Official Pastels ── */
+  --color-gdg-blue-pastel: #C3ECF6;
+  --color-gdg-green-pastel: #CCF6C5;
+  --color-gdg-yellow-pastel: #FFE7A5;
+  --color-gdg-red-pastel: #F8D8D8;
+
+  /* ── GDG Grayscale ── */
+  --color-gdg-off-white: #F0F0F0;
+  --color-gdg-black: #1E1E1E;
 }
 
 /* Subheadings default to Product Sans, sans-serif */

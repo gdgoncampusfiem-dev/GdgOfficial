@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
@@ -49,9 +50,17 @@ export function Navbar({ theme = 'dark' }: NavbarProps = {}) {
           {/* Logo */}
           <Link 
             href="/" 
-            className="relative z-10 font-black tracking-tight text-lg transition-opacity hover:opacity-80 font-product"
+            className="relative z-10 flex items-center gap-2.5 font-black tracking-tight text-lg transition-opacity hover:opacity-80 font-product"
           >
-            GDG OC FIEM
+            <Image
+              src="/favicon.png"
+              alt="GDG Logo"
+              width={26}
+              height={26}
+              className="w-6 h-6 md:w-7 md:h-7 object-contain"
+              priority
+            />
+            <span>GDG OC FIEM</span>
           </Link>
 
           {/* Desktop Nav */}

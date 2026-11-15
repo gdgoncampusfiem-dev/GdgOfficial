@@ -13,7 +13,6 @@ export default function Home() {
         <meta name="description" content="A community where developers learn, build, share ideas, and connect through technology in Kolkata." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#050505" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="min-h-screen bg-[#050505] font-sans selection:bg-[#F3F0E8] selection:text-[#050505]">
