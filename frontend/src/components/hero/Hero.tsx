@@ -88,6 +88,15 @@ export function Hero() {
         }}
       />
 
+      {/* Top-edge darkener — kills the grey cast the noise grain creates behind the navbar */}
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-0 right-0 h-28 pointer-events-none z-10"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, transparent 100%)'
+        }}
+      />
+
       {/* Premium Hero Typography Treatment */}
       <div 
         className="absolute inset-0 z-20 flex flex-col justify-center items-start pointer-events-none select-none px-6 md:px-12 lg:px-24 mt-[-5vh]"
