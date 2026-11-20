@@ -292,3 +292,22 @@ p,
   animation: sponsor-marquee 22s linear infinite;
   will-change: transform;
 }
+
+/* Community Voices Vertical Marquee */
+@keyframes marquee-up {
+  0%   { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marquee-down {
+  0%   { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+.animate-marquee-up {
+  animation: marquee-up 35s linear infinite;
+}
+
+.animate-marquee-down {
+  animation: marquee-down 35s linear infinite;
+}
