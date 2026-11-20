@@ -6,15 +6,9 @@ import "@fontsource/josefin-sans/700.css";
 import "@/styles/globals.css";
 import "@/styles/sponsor-deck.css";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { ReactLenis } from "lenis/react";
 
-const SPONSOR_ROUTES = new Set(["/sponsor", "/sponsor-us", "/sponsors"]);
-
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const isSponsorPage = SPONSOR_ROUTES.has(router.pathname);
-
   return (
     <ReactLenis
       root
@@ -25,21 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
         syncTouch: true,
       }}
     >
-      {!isSponsorPage && (
-        <div className="md:hidden fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center">
-          <h1 className="text-white font-sans font-extralight tracking-widest uppercase text-sm">
-            Under Development
-          </h1>
-        </div>
-      )}
-
-      {isSponsorPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <div className="hidden md:block">
-          <Component {...pageProps} />
-        </div>
-      )}
+      <Component {...pageProps} />
     </ReactLenis>
   );
 }
