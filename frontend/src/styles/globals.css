@@ -67,6 +67,28 @@
    */
   --subheading-weight-words: 300;
   --subheading-weight-last: 700;
+
+  /* shadcn UI tokens */
+  --background: 45 29% 93%;
+  --foreground: 0 0% 2%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 2%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 2%;
+  --primary: 0 0% 2%;
+  --primary-foreground: 45 29% 93%;
+  --secondary: 45 15% 85%;
+  --secondary-foreground: 0 0% 9%;
+  --muted: 45 20% 88%;
+  --muted-foreground: 25 5% 33%;
+  --accent: 45 20% 90%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 15%;
+  --input: 0 0% 85%;
+  --ring: 0 0% 2%;
+  --radius: 0.5rem;
 }
 
 @theme {
@@ -102,6 +124,27 @@
   /* ── GDG Grayscale ── */
   --color-gdg-off-white: #F0F0F0;
   --color-gdg-black: #1E1E1E;
+
+  /* ── shadcn semantic color mappings ── */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
 }
 
 /* Subheadings default to Product Sans, sans-serif */

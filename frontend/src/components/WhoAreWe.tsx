@@ -10,22 +10,20 @@ const fadeUp = {
 };
 
 /**
- * =================================================
- * 
- * ========================
+ * =========================================================================
  * SUBHEADING & DESCRIPTION CONFIGURATION
  * =========================================================================
- * - Line 25: Change letter spacing (e.g. '0em', '-0.01em', '0.05em')
- * - Line 26: Description font weight (200 = extra light / thin, 300 = light)
- * - Line 68: Desktop subheading size is 48px (`md:text-[48px]`)
+ * - Line 22: Change letter spacing (e.g. '0em', '-0.01em', '0.05em')
+ * - Line 23: Description font weight (200 = extra light / thin, 300 = light)
+ * - Desktop subheading size is 48px (`md:text-[48px]`)
  */
 export const WHO_ARE_WE_LETTER_SPACING = '0em';
-export const WHO_ARE_WE_DESC_WEIGHT = 200;
+export const WHO_ARE_WE_DESC_WEIGHT = 300;
 
 export function WhoAreWe() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const paragraphText = "We are a collective of engineers, designers, and visionaries dedicated to building a culture where technology meets empathy. We bridge the gap between raw talent and world-class engineering to redefine the digital landscape in Kolkata and beyond.";
+  const paragraphText = "We are a collective of engineers, designers, and visionaries dedicated to building a culture where technology meets empathy—bridging raw talent with world-class engineering to shape what comes next in Kolkata and beyond.";
   const words = paragraphText.split(" ");
 
   // Spring-smoothed Parallax for the collage to eliminate scroll stutter
@@ -46,7 +44,7 @@ export function WhoAreWe() {
 
   return (
     <div ref={containerRef} className="max-w-6xl mx-auto px-6 md:px-12 w-full flex flex-col items-center pt-8 md:pt-12">
-      {/* Centered Heading (Underline removed, closely spaced text) */}
+      {/* Centered Heading */}
       <div className="w-full flex justify-center mb-10 md:mb-14">
         <div className="relative inline-flex flex-col items-center">
           <motion.h2
@@ -64,10 +62,11 @@ export function WhoAreWe() {
       </div>
 
       {/* Adjacent Content: Body Text and Pictures at the same level */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center w-full">
         {/* Left: Body Text */}
-        <div className="lg:col-span-6 flex flex-col justify-start relative z-20">
+        <div className="lg:col-span-6 flex flex-col justify-center relative z-20">
           <motion.p
+            aria-label={paragraphText}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-50px" }}
@@ -75,8 +74,8 @@ export function WhoAreWe() {
               hidden: {},
               show: {
                 transition: {
-                  staggerChildren: 0.025,
-                  delayChildren: 0.2
+                  staggerChildren: 0.02,
+                  delayChildren: 0.15
                 }
               }
             }}
@@ -84,20 +83,22 @@ export function WhoAreWe() {
               fontFamily: "'Product Sans Light', 'Product Sans Thin', 'Product Sans', system-ui, -apple-system, sans-serif",
               fontWeight: WHO_ARE_WE_DESC_WEIGHT,
             }}
-            className="text-2xl md:text-3xl lg:text-[2.05rem] leading-[1.5] tracking-normal text-[#4a4742] flex flex-wrap gap-x-[0.25em] gap-y-2"
+            className="text-lg sm:text-xl lg:text-[1.45rem] xl:text-[1.6rem] leading-[1.45] tracking-tight text-[#423f3a] flex flex-wrap gap-x-[0.24em] gap-y-1.5"
           >
-            {words.map((word, i) => (
-              <motion.span
-                key={i}
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: { opacity: 1, transition: { duration: 0.3 } }
-                }}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
+            <span aria-hidden="true" className="contents">
+              {words.map((word, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: { opacity: 1, transition: { duration: 0.25 } }
+                  }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </span>
           </motion.p>
         </div>
 
@@ -106,11 +107,11 @@ export function WhoAreWe() {
           <div className="w-full max-w-lg grid grid-cols-2 gap-4 lg:gap-5">
             <motion.div
               style={{ y: y1 }}
-              className="col-span-2 aspect-[21/9] sm:aspect-[2/1] relative overflow-hidden rounded-xl bg-black/5"
+              className="col-span-2 aspect-[21/9] sm:aspect-[2/1] relative overflow-hidden rounded-xl bg-black/5 shadow-xs"
             >
               <Image
                 src="https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?q=80&w=800&auto=format&fit=crop"
-                alt="Community Event Placeholder"
+                alt="Community Event"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 hover:scale-105"
@@ -119,11 +120,11 @@ export function WhoAreWe() {
 
             <motion.div
               style={{ y: y2 }}
-              className="col-span-1 aspect-square sm:aspect-[4/3] relative overflow-hidden rounded-xl bg-black/5"
+              className="col-span-1 aspect-square sm:aspect-[4/3] relative overflow-hidden rounded-xl bg-black/5 shadow-xs"
             >
               <Image
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
-                alt="Collaboration Placeholder"
+                alt="Collaboration and discussion"
                 fill
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform duration-700 hover:scale-105"
@@ -132,11 +133,11 @@ export function WhoAreWe() {
 
             <motion.div
               style={{ y: y3 }}
-              className="col-span-1 aspect-square sm:aspect-[4/3] relative overflow-hidden rounded-xl bg-black/5"
+              className="col-span-1 aspect-square sm:aspect-[4/3] relative overflow-hidden rounded-xl bg-black/5 shadow-xs"
             >
               <Image
                 src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800&auto=format&fit=crop"
-                alt="Workshop Placeholder"
+                alt="Technical Workshop Session"
                 fill
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform duration-700 hover:scale-105"

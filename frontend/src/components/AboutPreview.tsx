@@ -3,6 +3,7 @@ import { AboutStats } from './AboutStats';
 import { OurFlagshipEvents } from './ourflagshipevents';
 import { RecentEvents } from './RecentEvents';
 import { OurSponsors } from './OurSponsors';
+import { Testimonials } from './testimonials';
 
 export function AboutPreview() {
   return (
@@ -15,6 +16,7 @@ export function AboutPreview() {
         <AboutStats />
         <RecentEvents />
         <OurFlagshipEvents />
+        <Testimonials />
         <OurSponsors />
       </div>
     </section>

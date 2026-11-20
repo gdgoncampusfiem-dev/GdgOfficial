@@ -94,6 +94,7 @@ export function Hero() {
         style={{ fontFamily: "'Josefin Sans', system-ui, -apple-system, sans-serif" }}
       >
         <h1 
+          aria-label="Beyond the Code. Beyond the Ordinary."
           className="text-left tracking-tighter text-[#F4F1EA] drop-shadow-2xl"
           style={{
             fontFamily: "'Josefin Sans', system-ui, -apple-system, sans-serif",
@@ -111,7 +112,7 @@ export function Hero() {
             transformOrigin: 'left center',
           }}
         >
-          <span className="block font-thin text-white drop-shadow-sm">
+          <span aria-hidden="true" className="block font-thin text-white drop-shadow-sm">
             {"Beyond the ".split('').map((char, i) => (
               <motion.span 
                 key={`l1-${i}`} 
@@ -135,7 +136,7 @@ export function Hero() {
               ))}
             </em>
           </span>
-          <span className="block font-thin text-white drop-shadow-sm">
+          <span aria-hidden="true" className="block font-thin text-white drop-shadow-sm">
             {"Beyond the ".split('').map((char, i) => (
               <motion.span 
                 key={`l2-${i}`} 
@@ -210,5 +211,3 @@ export function Hero() {
     </section>
   );
 }
-
-
