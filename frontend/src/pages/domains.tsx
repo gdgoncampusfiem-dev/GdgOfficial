@@ -423,7 +423,7 @@ export default function Domains() {
   return (
     <>
       <Head>
-        <title>Domains | GDGoc FIEM</title>
+        <title>Domains | GDG on Campus FIEM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

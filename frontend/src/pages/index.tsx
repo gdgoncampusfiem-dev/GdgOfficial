@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>GDGoc FIEM | Built on Ideas. Driven by Innovation.</title>
+        <title>GDG on Campus FIEM | Built on Ideas. Driven by Innovation.</title>
         <meta name="description" content="A community where developers learn, build, share ideas, and connect through technology in Kolkata." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#050505" />

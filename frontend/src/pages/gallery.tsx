@@ -42,7 +42,7 @@ export default function GalleryPage() {
   return (
     <>
       <Head>
-        <title>Photo Gallery | GDGoc FIEM</title>
+        <title>Photo Gallery | GDG on Campus FIEM</title>
         <meta
           name="description"
           content="A visual glimpse into our most memorable events, hackathons, and workshops at GDG on Campus FIEM, Kolkata."
@@ -93,7 +93,7 @@ export default function GalleryPage() {
           />
 
           {/* Signature Closing CTA Section */}
-          <section className="relative w-full py-24 md:py-32 border-t-[3px] border-[#050505] bg-white">
+          <section className="relative w-full py-24 md:py-32 border-t border-[#050505]/10 bg-white">
             <div className="max-w-5xl mx-auto px-6 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -101,7 +101,7 @@ export default function GalleryPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="inline-block py-1 px-3 border-[2px] border-[#050505] bg-[#F3F0E8] text-[#050505] text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] shadow-[3px_3px_0px_#050505] mb-6">
+                <span className="inline-block py-1.5 px-4 rounded-full border border-black/10 bg-[#F3F0E8] text-[#575550] text-[10px] sm:text-xs font-mono font-medium uppercase tracking-[0.2em] shadow-sm mb-6">
                   BE IN THE NEXT SHOT
                 </span>
                 <h2 className="text-4xl sm:text-6xl md:text-7xl text-[#050505] uppercase tracking-tighter mb-6 leading-[0.95]">
@@ -114,14 +114,14 @@ export default function GalleryPage() {
                 <div className="flex flex-wrap items-center justify-center gap-4">
                   <Link
                     href="/events"
-                    className="px-8 py-4 bg-[#050505] text-[#F3F0E8] font-black uppercase tracking-widest text-xs sm:text-sm shadow-[5px_5px_0px_#4285F4] hover:shadow-[2px_2px_0px_#4285F4] hover:translate-x-0.5 hover:translate-y-0.5 transition-all border-[2px] border-[#050505] flex items-center gap-2"
+                    className="px-8 py-3.5 rounded-full bg-[#050505] text-[#F3F0E8] font-medium text-xs sm:text-sm uppercase tracking-wider shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:bg-[#202020] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2"
                   >
                     <span>View Upcoming Events</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </Link>
                   <Link
                     href="/teams"
-                    className="px-8 py-4 bg-white text-[#050505] font-black uppercase tracking-widest text-xs sm:text-sm shadow-[5px_5px_0px_#050505] hover:shadow-[2px_2px_0px_#050505] hover:translate-x-0.5 hover:translate-y-0.5 transition-all border-[2px] border-[#050505]"
+                    className="px-8 py-3.5 rounded-full bg-white text-[#050505] font-medium text-xs sm:text-sm uppercase tracking-wider border border-black/15 shadow-[0_4px_14px_rgba(0,0,0,0.06)] hover:bg-[#F3F0E8] hover:scale-[1.02] active:scale-[0.98] transition-all"
                   >
                     Meet The Organizers
                   </Link>

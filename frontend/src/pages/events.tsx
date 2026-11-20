@@ -204,7 +204,7 @@ export default function EventsPage() {
   return (
     <>
       <Head>
-        <title>Events | GDGoc FIEM</title>
+        <title>Events | GDG on Campus FIEM</title>
         <meta name="description" content="Upcoming and past events by GDG on Campus FIEM, Kolkata." />
       </Head>
 

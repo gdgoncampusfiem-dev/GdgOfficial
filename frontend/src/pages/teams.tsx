@@ -8,7 +8,7 @@ export default function Teams() {
   return (
     <>
       <Head>
-        <title>Team | GDGoc FIEM</title>
+        <title>Team | GDG on Campus FIEM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

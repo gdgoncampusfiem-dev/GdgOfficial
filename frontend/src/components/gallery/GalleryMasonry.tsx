@@ -101,18 +101,6 @@ function CameraShutterFlash({
           {/* Green AF Lock Core LED */}
           <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#34A853] shadow-[0_0_10px_#34A853]" />
         </div>
-
-        {/* Top-Left Camera Exposure HUD Badge */}
-        <div className="absolute top-0.5 left-0.5 flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-[8px] font-mono font-bold tracking-widest text-white uppercase bg-black/75 backdrop-blur-md border border-white/20 shadow-lg">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#EA4335] animate-pulse" />
-          <span>RAW · 1/500s · f/1.8</span>
-        </div>
-
-        {/* Bottom-Right Focus Lock Status Badge */}
-        <div className="absolute bottom-0.5 right-0.5 flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 py-0.5 rounded text-[7px] sm:text-[9px] font-mono font-bold tracking-widest text-white uppercase bg-black/75 backdrop-blur-md border border-white/20 shadow-lg">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] shadow-[0_0_8px_#34A853]" />
-          <span>AF LOCKED</span>
-        </div>
       </motion.div>
 
       {/* 2. Mechanical Shutter Curtain (Micro-Darkness Contrast Pulse) */}
@@ -322,16 +310,16 @@ export function GalleryMasonry({
         >
           {/* Top Badge */}
           {matchedEvent ? (
-            <span className="inline-flex items-center gap-1.5 py-1 px-3 border-2 border-[#050505] bg-white text-[#050505] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-[2px_2px_0px_#050505] mb-3">
+            <span className="inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full border border-black/10 bg-white/80 text-[#050505] text-[10px] font-mono font-semibold uppercase tracking-[0.18em] shadow-[0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-sm mb-3">
               <span className={`w-2 h-2 rounded-full ${googleDotColors[matchedEvent.accentColor] || 'bg-[#4285F4]'}`} />
               EVENT ARCHIVE · {matchedEvent.categoryLabel}
             </span>
           ) : hasNoMatches ? (
-            <span className="inline-block py-1 px-3 border-2 border-[#EA4335] bg-white text-[#EA4335] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-[2px_2px_0px_#EA4335] mb-3">
+            <span className="inline-block py-1 px-3.5 rounded-full border border-[#EA4335]/30 bg-[#FCE8E6] text-[#EA4335] text-[10px] font-mono font-semibold uppercase tracking-[0.18em] shadow-sm mb-3">
               NO ARCHIVES FOUND
             </span>
           ) : (
-            <span className="inline-block py-1 px-3 border-2 border-[#050505] bg-white text-[#050505] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-[2px_2px_0px_#050505] mb-3">
+            <span className="inline-block py-1 px-3.5 rounded-full border border-black/10 bg-white/80 text-[#575550] text-[10px] font-mono font-semibold uppercase tracking-[0.18em] shadow-[0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-sm mb-3">
               The Visual Chronicle
             </span>
           )}
@@ -352,7 +340,7 @@ export function GalleryMasonry({
           </h1>
 
           {/* Clean Minimalist Subtitle - Date and Year Only */}
-          <p className="text-xs text-[#575550] mt-1.5 font-mono font-bold tracking-[0.2em] uppercase">
+          <p className="text-xs text-[#575550] mt-1.5 font-mono font-medium tracking-[0.18em] uppercase">
             {matchedEvent
               ? formatEditorialDate(matchedEvent.date)
               : hasNoMatches
@@ -373,11 +361,11 @@ export function GalleryMasonry({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="mt-3.5 px-4 py-2 rounded-xl border-2 border-[#050505] bg-white text-[#050505] shadow-[2px_2px_0px_#050505] active:translate-y-0.5 flex items-center gap-2 cursor-pointer transition-all"
+                className="mt-3.5 px-4 py-2 rounded-full border border-black/15 bg-white/80 hover:bg-white text-[#050505] shadow-[0_2px_10px_rgba(0,0,0,0.06)] active:scale-95 flex items-center gap-2 cursor-pointer transition-all backdrop-blur-sm"
                 aria-label="Open search"
               >
                 <Search className="w-3.5 h-3.5 text-[#050505]" />
-                <span className="font-mono text-xs font-bold uppercase tracking-wider">
+                <span className="font-mono text-xs font-semibold uppercase tracking-wider">
                   Search Events
                 </span>
               </motion.button>
@@ -567,7 +555,7 @@ export function GalleryMasonry({
                 >
                   {/* Top Badge */}
                   {matchedEvent ? (
-                    <span className="inline-flex items-center gap-1.5 py-1 px-3.5 border-2 border-[#050505] bg-white text-[#050505] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-[2px_2px_0px_#050505] mb-2">
+                    <span className="inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full border border-black/10 bg-white/80 text-[#050505] text-[10px] font-mono font-semibold uppercase tracking-[0.18em] shadow-[0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-sm mb-2">
                       <motion.span
                         animate={{ scale: [1, 1.35, 1] }}
                         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
@@ -576,11 +564,11 @@ export function GalleryMasonry({
                       EVENT ARCHIVE · {matchedEvent.categoryLabel}
                     </span>
                   ) : hasNoMatches ? (
-                    <span className="inline-block py-1 px-3.5 border-2 border-[#EA4335] bg-white text-[#EA4335] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-[2px_2px_0px_#EA4335] mb-2">
+                    <span className="inline-block py-1 px-3.5 rounded-full border border-[#EA4335]/30 bg-[#FCE8E6] text-[#EA4335] text-[10px] font-mono font-semibold uppercase tracking-[0.18em] shadow-sm mb-2">
                       NO ARCHIVES FOUND
                     </span>
                   ) : (
-                    <span className="inline-block py-1 px-3.5 border-2 border-[#050505] bg-white text-[#050505] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-[2px_2px_0px_#050505] mb-2">
+                    <span className="inline-block py-1 px-3.5 rounded-full border border-black/10 bg-white/80 text-[#575550] text-[10px] font-mono font-semibold uppercase tracking-[0.18em] shadow-[0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-sm mb-2">
                       The Visual Chronicle
                     </span>
                   )}
@@ -641,17 +629,17 @@ export function GalleryMasonry({
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    whileHover={{ y: -2, boxShadow: '4px 4px 0px #050505' }}
-                    whileTap={{ y: 0, boxShadow: '2px 2px 0px #050505' }}
-                    className="mt-3.5 px-4 py-2 rounded-xl border-2 border-[#050505] bg-white text-[#050505] shadow-[3px_3px_0px_#050505] flex items-center justify-center gap-2.5 group cursor-pointer transition-all"
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="mt-3.5 px-4 py-2 rounded-full border border-black/15 bg-white/80 hover:bg-white text-[#050505] shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] flex items-center justify-center gap-2.5 group cursor-pointer transition-all backdrop-blur-sm"
                     aria-label="Open event search"
                     title="Click to search events or press /"
                   >
                     <Search className="w-3.5 h-3.5 text-[#050505] group-hover:scale-110 transition-transform" />
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#050505]">
+                    <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#050505]">
                       Search Events
                     </span>
-                    <span className="px-1.5 py-0.5 rounded border border-[#050505]/20 bg-[#F3F0E8] font-mono text-[9px] font-bold text-[#575550]">
+                    <span className="px-1.5 py-0.5 rounded border border-[#050505]/15 bg-[#F3F0E8] font-mono text-[9px] font-bold text-[#575550]">
                       /
                     </span>
                   </motion.button>
